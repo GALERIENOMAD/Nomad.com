@@ -1,71 +1,133 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Galerie Nomad - Bijoux Faits Main</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Galerie Nomad — Bracelet Marin</title>
+  <meta name="description" content="Galerie Nomad — Bracelets faits main au Cameroun. Acier inox, Or & Argent 925. Résistant et élégant." />
+  <style>
+    :root{
+      --maxw:1000px;
+      --accent:#0b3b45;
+      --muted:#777;
+      --bg:#ffffff;
+    }
+    *{box-sizing:border-box}
+    body{font-family:Inter, "Segoe UI", Roboto, Arial; margin:0; color:#222; background:var(--bg); -webkit-font-smoothing:antialiased;}
+    .wrap{max-width:var(--maxw); margin:0 auto; padding:24px;}
+    header{display:flex; align-items:center; gap:16px; justify-content:space-between; padding:14px 0;}
+    .brand{display:flex; align-items:center; gap:12px; text-decoration:none; color:inherit;}
+    .brand img{height:56px; width:auto; display:block;}
+    nav a{margin-left:14px; text-decoration:none; color:var(--muted); font-weight:600;}
+    .hero{display:flex; gap:24px; align-items:center; margin:28px 0; flex-wrap:wrap;}
+    .hero-text{flex:1 1 320px;}
+    .kicker{color:var(--muted); text-transform:uppercase; letter-spacing:1px; font-size:12px;}
+    h1{margin:8px 0 6px; font-size:28px; color:var(--accent);}
+    p.lead{margin:0; color:var(--muted); font-size:16px;}
+    .hero-img{flex:0 0 300px;}
+    .hero-img img{max-width:100%; border-radius:10px; display:block;}
+    section{margin:28px 0; padding:18px 0; border-top:1px solid #f0f0f0;}
+    .grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:20px;}
+    .card{padding:12px; border-radius:8px; background:#fff; box-shadow:0 6px 18px rgba(12,18,20,0.04); text-align:left;}
+    .card img{max-width:100%; border-radius:8px; display:block; margin-bottom:10px;}
+    h3{margin:6px 0; color:#111;}
+    .muted{color:var(--muted); font-size:14px;}
+    .cta{display:inline-block; margin-top:10px; padding:10px 14px; background:var(--accent); color:#fff; text-decoration:none; border-radius:8px; font-weight:700;}
+    footer{padding:18px 0; color:var(--muted); text-align:center; font-size:13px;}
+    .contact-list a{color:var(--accent); text-decoration:none; font-weight:600;}
+    /* responsive */
+    @media(max-width:640px){
+      header{flex-direction:column; align-items:flex-start; gap:10px;}
+      .hero{gap:12px;}
+    }
+  </style>
 </head>
 <body>
-  <header>
-    <div class="logo">
-      <h1>Galerie Nomad</h1>
-      <p>Bijoux artisanaux en acier inoxydable & argent 925</p>
-    </div>
-    <nav>
-      <a href="#apropos">À propos</a>
-      <a href="#produits">Nos créations</a>
-      <a href="#contact">Contact</a>
-    </nav>
-  </header>
+  <div class="wrap">
 
-  <section class="hero">
-    <h2>Un art porté au cou</h2>
-    <p>Des colliers uniques, forgés avec passion et caractère</p>
-  </section>
+    <!-- Header -->
+    <header>
+      <a class="brand" href="#">
+        <img src="images/logo.png" alt="Galerie Nomad — logo" />
+        <div>
+          <div style="font-weight:800; font-size:16px;">Galerie Nomad</div>
+          <div style="font-size:12px; color:var(--muted)">Bracelets faits main — Acier inox · Or · Argent 925</div>
+        </div>
+      </a>
 
-  <section id="apropos" class="section">
-    <h2>À propos</h2>
-    <p>
-      Galerie Nomad est une marque indépendante de bijoux faits main,
-      mêlant inspirations tribales, minimalisme moderne et matériaux durables.
-      Nos pièces sont pensées pour ceux qui veulent porter une identité, pas juste un accessoire.
-    </p>
-  </section>
+      <nav aria-label="menu">
+        <a href="#about">À propos</a>
+        <a href="#creations">Nos créations</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </header>
 
-  <section id="produits" class="section">
-    <h2>Nos créations</h2>
-    <div class="produits">
-      <div class="produit">
-        <img src="https://via.placeholder.com/150" alt="Collier en acier">
-        <h3>Collier Acier Noir</h3>
-        <p>Finition mate, pendentif croix. Élégance brute.</p>
+    <!-- Hero -->
+    <section class="hero" id="intro">
+      <div class="hero-text">
+        <div class="kicker">Nouvelle collection</div>
+        <h1>Bracelet Marin</h1>
+        <p class="lead"><strong>Résistant et élégant</strong> — le compagnon de route des aventuriers modernes. Acier inoxydable, cordon polyester tressé, or & argent 925.</p>
+        <p style="margin-top:12px;"><a class="cta" href="#creations">Découvrir la collection</a></p>
       </div>
-      <div class="produit">
-        <img src="https://via.placeholder.com/150" alt="Pendentif poisson">
-        <h3>Pendentif Poisson Articulé</h3>
-        <p>Argent 925. Mouvement fluide. Détail précis.</p>
-      </div>
-      <div class="produit">
-        <img src="https://via.placeholder.com/150" alt="Bracelet perles">
-        <h3>Bracelet Perles de Verre</h3>
-        <p>Jeu de couleurs sur fond sombre. Vibrant & classe.</p>
-      </div>
-    </div>
-  </section>
 
-  <section id="contact" class="section">
-    <h2>Contact</h2>
-    <p>Pour toute demande ou commande personnalisée :</p>
-    <ul>
-      <li>Email : <a href="mailto:galerienomad@example.com">galerienomad@example.com</a></li>
-      <li>Instagram : <a href="https://instagram.com/galerienomad" target="_blank">@galerienomad</a></li>
-      <li>WhatsApp : <a href="https://wa.me/237XXXXXXXX">+237 XX XX XX XX</a></li>
-    </ul>
-  </section>
+      <div class="hero-img">
+        <img src="images/bracelet-marin.jpg" alt="Bracelet Marin — Galerie Nomad">
+      </div>
+    </section>
 
-  <footer>
-    <p>&copy; 2025 Galerie Nomad — Tous droits réservés</p>
-  </footer>
+    <!-- À propos -->
+    <section id="about" aria-labelledby="about-title">
+      <h2 id="about-title">À propos</h2>
+      <p class="muted">Galerie Nomad est une marque indépendante de bijoux faits main, née au Cameroun. Nous mêlons design moderne, minimalisme et matériaux durables. Chaque pièce est pensée pour ceux qui portent une histoire, pas seulement un accessoire.</p>
+    </section>
+
+    <!-- Nos créations -->
+    <section id="creations" aria-labelledby="creations-title">
+      <h2 id="creations-title">Nos créations</h2>
+
+      <div class="grid">
+
+        <article class="card">
+          <img src="images/bracelet-marin.jpg" alt="Bracelet Marin — cordon tressé et intercalaire acier inox">
+          <h3>Bracelet Marin</h3>
+          <p class="muted">Cordon polyester tressé + intercalaires en acier inox, or ou argent 925. <em>Résistant, élégant, inspiré par la mer.</em></p>
+          <p><a class="cta" href="#contact">Commander</a></p>
+        </article>
+
+        <article class="card">
+          <img src="images/bracelet-full-acier.jpg" alt="Bracelet full acier — Galerie Nomad">
+          <h3>Bracelet Full Acier</h3>
+          <p class="muted">Entièrement en acier inoxydable — finition précise et style affirmé.</p>
+          <p><a class="cta" href="#contact">Commander</a></p>
+        </article>
+
+        <article class="card">
+          <img src="images/bracelet-origin.jpg" alt="Bracelet Origin — jeu de cordons et intercalaire acier">
+          <h3>Bracelet Origin</h3>
+          <p class="muted">Jeu de cordons avec intercalaire en acier inox, or ou argent 925. <em>Vibrant, minimaliste et classe.</em></p>
+          <p><a class="cta" href="#contact">Commander</a></p>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" aria-labelledby="contact-title">
+      <h2 id="contact-title">Contact</h2>
+      <p class="muted">Pour toute demande, commande personnalisée ou collaboration :</p>
+      <ul class="contact-list" style="list-style:none; padding:0; margin:8px 0;">
+        <li>📧 Email : <a href="mailto:galerienomad@yahoo.com">galerienomad@yahoo.com</a></li>
+        <li>📸 Instagram : <a href="https://instagram.com/galerienomad.officiel" target="_blank" rel="noopener">@galerienomad.officiel</a></li>
+        <li>💬 WhatsApp : <a href="https://wa.me/237657697824" target="_blank" rel="noopener">+237 657 69 78 24</a></li>
+      </ul>
+      <p style="margin-top:12px;"><small class="muted">Livraison locale au Cameroun • Paiement Mobile Money possible • Emballage cadeau disponible</small></p>
+    </section>
+
+    <footer>
+      <div style="padding:12px 0;">© 2025 Galerie Nomad — Tous droits réservés</div>
+    </footer>
+
+  </div>
 </body>
 </html>
