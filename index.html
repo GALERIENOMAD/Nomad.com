@@ -231,5 +231,63 @@
     </footer>
 
   </div>
+    <script>
+  const PHONE = "237657697824"; // ton numéro sans + ni espaces
+  const STORAGE_KEY = "galerie_nomad_likes_v1";
+
+  // init likes from localStorage
+  function loadLikes(){
+    try{
+      const raw = localStorage.getItem(STORAGE_KEY);
+      return raw ? JSON.parse(raw) : {};
+    }catch(e){ return {}; }
+  }
+  function saveLikes(data){
+    try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); }catch(e){}
+  }
+
+  const likes = loadLikes();
+  // apply initial counts and states
+  document.querySelectorAll('.card').forEach(card=>{
+    const id = card.dataset.id;
+    const countEl = card.querySelector('.count');
+    const btn = card.querySelector('.like-btn');
+    const state = likes[id] || {count:0, liked:false};
+    countEl.textContent = state.count;
+    btn.textContent = state.liked ? '♥' : '♡';
+    if(state.liked) btn.style.color = '#e0245e';
+    btn.addEventListener('click', ()=>{
+      toggleLike(id,btn,countEl);
+    });
+  });
+        
+  function toggleLike(id, btn, countEl){
+    const state = likes[id] || {count:0, liked:false};
+    if(state.liked){
+      state.liked = false;
+      state.count = Math.max(0, state.count - 1);
+      btn.textContent = '♡';
+      btn.style.color = '';
+    } else {
+      state.liked = true;
+      state.count = state.count + 1;
+      btn.textContent = '♥';
+      btn.style.color = '#e0245e';
+    }
+    likes[id] = state;
+    countEl.textContent = state.count;
+    saveLikes(likes);
+  }
+
+  // WhatsApp order function
+  function orderWhatsApp(e, el){
+    e.preventDefault();
+    const product = el.getAttribute('data-product') || "Produit Galerie Nomad";
+    const price = "6 000 F CFA";
+    const text = encodeURIComponent(`Bonjour, je souhaite commander :\n- Produit : ${product}\n- Prix : ${price}\n- Quantité : 1\nNom : \nAdresse/ville : \n\nMerci.`);
+    const url = `https://wa.me/${PHONE}?text=${text}`;
+    window.open(url, '_blank');
+  }
+</script>
 </body>
 </html>
