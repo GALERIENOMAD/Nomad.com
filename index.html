@@ -204,7 +204,13 @@
 
 <!-- Panneau panier -->
 <div id="cart-panel">
-    <h2>Votre panier</h2>
+
+<button
+onclick="toggleCart ()">Retourner aux produits</ button>
+<button onclick="toggleCart()"
+style="float: right;"> </button>
+  
+  <h2>Votre panier</h2>
     <ul id="cart-items"></ul>
     <p id="cart-total">Total : 0 FCFA</p>
     <button id="checkout-btn" onclick="checkout()">Commander sur WhatsApp</button>
@@ -246,7 +252,7 @@
         <p class="desc">Tour de cou Maille forçat alternée, pendentif ancre</p>
         <div class="material">Argent</div>
         <div class="price">14 000 FCFA</div>
-        <button onclick="addToCart('Nom du produit', 14000)">Ajouter au panier</button>
+        <button onclick="addToCart('Tour de cou Maille forçat alternée, pendentif ancre', 14000)">Ajouter au panier</button>
         <div class="actions">
           <button class="heart" aria-label="Like">♡</button>
           <a class="order" href="#" data-product="Chaîne Warend 1">Commander</a>
@@ -260,7 +266,7 @@
         <p class="desc">Tour de cou avec pendentif Menottes</p>
         <div class="material">Argent</div>
         <div class="price">14 000 FCFA</div>
-        <button onclick="addToCart('Nom du produit', 14000)">Ajouter au panier</button>
+        <button onclick="addToCart('Tour de cou avec pendentif Menottes', 14000)">Ajouter au panier</button>
         <div class="actions">
           <button class="heart" aria-label="Like">♡</button>
           <a class="order" href="#" data-product="Chaîne Warend 2">Commander</a>
