@@ -1,293 +1,242 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Galerie Nomad</title>
 <style>
-    body {
-        font-family: Arial, sans-serif;
-        background-color: #f5f5dc; /* beige clair */
-        margin: 0;
-        padding: 0;
-    }
-    header {
-        background-color: white;
-        padding: 10px 0;
-        text-align: center;
-    }
-    header img {
-        max-height: 60px;
-    }
-    h2 {
-        text-align: center;
-        font-weight: normal;
-        margin-top: 10px;
-    }
-    .produits {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 20px;
-        padding: 20px;
-    }
-    .produit {
-        background: white;
-        padding: 15px;
-        border-radius: 8px;
-        text-align: center;
-        box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
-    .produit img {
-        max-width: 100%;
-        border-radius: 5px;
-    }
-    .nom {
-        font-weight: bold;
-        margin: 10px 0 5px;
-    }
-    .desc {
-        font-size: 14px;
-        color: #555;
-    }
-    .prix {
-        color: #222;
-        font-weight: bold;
-        margin-top: 5px;
-    }
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5dc; /* beige clair */
+    margin: 0; padding: 0;
+    color: #222;
+  }
+  header {
+    background: white;
+    padding: 10px 0;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+  }
+  header img {
+    max-height: 60px;
+  }
+  h2 {
+    text-align: center;
+    font-weight: normal;
+    margin: 15px 0 10px;
+    color: #0b3b45;
+  }
+  .produits {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
+    gap: 20px;
+    padding: 20px;
+    max-width: 1100px;
+    margin: 0 auto 40px;
+  }
+  .produit {
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    position: relative;
+  }
+  .produit img {
+    max-width: 100%;
+    border-radius: 5px;
+  }
+  .nom {
+    font-weight: bold;
+    margin: 10px 0 5px;
+    font-size: 18px;
+    color: #0b3b45;
+  }
+  .desc {
+    font-size: 14px;
+    color: #555;
+    min-height: 40px;
+  }
+  .prix {
+    color: #222;
+    font-weight: bold;
+    margin-top: 8px;
+    font-size: 16px;
+  }
+  .actions {
+    margin-top: 12px;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    align-items: center;
+  }
+  .like {
+    cursor: pointer;
+    font-size: 24px;
+    color: #bbb;
+    user-select: none;
+    transition: color 0.3s;
+  }
+  .like.liked {
+    color: #0b3b45;
+  }
+  .commander {
+    background-color: #25D366; /* WhatsApp green */
+    border: none;
+    padding: 8px 14px;
+    border-radius: 6px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 14px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  footer {
+    background: white;
+    text-align: center;
+    padding: 15px 0;
+    border-top: 1px solid #ddd;
+    font-size: 14px;
+    color: #555;
+  }
+  /* Responsive */
+  @media(max-width: 480px) {
     .actions {
-        margin-top: 10px;
-        display: flex;
-        justify-content: center;
-        gap: 10px;
+      flex-direction: column;
+      gap: 8px;
     }
-    .like {
-        cursor: pointer;
-        font-size: 20px;
-        color: red;
-    }
-    .commander {
-        background-color: transparent;
-        border: none;
-        color: green;
-        font-weight: bold;
-        cursor: pointer;
-        font-size: 14px;
-    }
-    footer {
-        background-color: white;
-        text-align: center;
-        padding: 15px;
-        margin-top: 20px;
-    }
-    .socials a {
-        margin: 0 10px;
-        text-decoration: none;
-        color: black;
-        font-size: 20px;
-    }
+  }
 </style>
 </head>
 <body>
 
 <header>
-    <img src="logo.PNG" alt="Logo Galerie Nomad">
+  <img src="logo.PNG" alt="Logo Galerie Nomad" />
 </header>
 
 <h2>Bracelets premium en acier inoxydable, or pur et argent 925</h2>
 
-    </a>
+<section class="produits" aria-label="Liste des produits">
 
-      <nav aria-label="menu">
-        <a href="#about">À propos</a>
-        <a href="#creations">Nos créations</a>
-        <a href="#contact">Contact</a>
-      </nav>
-    </header>
-
-    <!-- Hero -->
-    <section class="hero" id="intro">
-      <div class="hero-text">
-        <div class="kicker">Nouvelle collection</div>
-        <h1>Bracelet Marin</h1>
-        <p class="lead"><strong>Résistant et élégant</strong> — le compagnon de route des aventuriers modernes. Acier inoxydable, cordon polyester tressé, or & argent 925.</p>
-        <p style="margin-top:12px;"><a class="cta" href="#creations">Découvrir la collection</a></p>
-      </div>
-<div class="produits">
-    <div class="produit">
-        <img src="Chaine argent ancre.PNG" alt="Chaîne Warend 1">
-        <div class="nom">Chaîne Warend 1</div>
-        <div class="desc">Maille forçat alternée, pendentif ancre<br><em>Argent</em></div>
-        <div class="prix">15 000 FCFA</div>
-        <div class="actions">
-            <span class="like">♥</span>
-            <a href="https://wa.me/237XXXXXXXX" target="_blank" class="commander">Commander</a>
-        </div>
+  <article class="produit" data-id="warend1" data-price="15000" data-name="Chaîne Warend 1">
+    <img src="Chaine argent ancre.PNG" alt="Chaîne Warend 1" />
+    <div class="nom">Chaîne Warend 1</div>
+    <div class="desc">Maille forçat alternée, pendentif ancre<br><em>Argent</em></div>
+    <div class="prix">15 000 FCFA</div>
+    <div class="actions">
+      <span role="button" aria-label="Aimer Chaîne Warend 1" class="like" tabindex="0">💙</span>
+      <a href="#" class="commander" aria-label="Commander Chaîne Warend 1">Commander</a>
     </div>
+  </article>
 
-    <div class="produit">
-        <img src="Chaîne argenté 1.jpg" alt="Chaîne Mercure 2">
-        <div class="nom">Chaîne Mercure 2</div>
-        <div class="desc">Chaîne avec pendentif argenté fin vieilli<br><em>Acier inoxydable + argenté fin vieilli</em></div>
-        <div class="prix">8 000 FCFA</div>
-        <div class="actions">
-            <span class="like">♥</span>
-            <a href="https://wa.me/237XXXXXXXX" target="_blank" class="commander">Commander</a>
-        </div>
+  <article class="produit" data-id="mercure2" data-price="8000" data-name="Chaîne Mercure 2">
+    <img src="Chaîne argenté 1.jpg" alt="Chaîne Mercure 2" />
+    <div class="nom">Chaîne Mercure 2</div>
+    <div class="desc">Chaîne avec pendentif argenté fin vieilli<br><em>Acier inoxydable + argenté fin vieilli</em></div>
+    <div class="prix">8 000 FCFA</div>
+    <div class="actions">
+      <span role="button" aria-label="Aimer Chaîne Mercure 2" class="like" tabindex="0">💙</span>
+      <a href="#" class="commander" aria-label="Commander Chaîne Mercure 2">Commander</a>
     </div>
+  </article>
 
-    <div class="produit">
-        <img src="Bracelet origine one .jpg" alt="Bracelet Origine 1">
-        <div class="nom">Bracelet Origine 1</div>
-        <div class="desc">Bracelet sur cordon Menottes Nomad<br><em>Argent</em></div>
-        <div class="prix">6 000 FCFA</div>
-        <div class="actions">
-            <span class="like">♥</span>
-            <a href="https://wa.me/237XXXXXXXX" target="_blank" class="commander">Commander</a>
-        </div>
+  <article class="produit" data-id="origine1" data-price="6000" data-name="Bracelet Origine 1">
+    <img src="Bracelet origine one .jpg" alt="Bracelet Origine 1" />
+    <div class="nom">Bracelet Origine 1</div>
+    <div class="desc">Bracelet sur cordon Menottes Nomad<br><em>Argent</em></div>
+    <div class="prix">6 000 FCFA</div>
+    <div class="actions">
+      <span role="button" aria-label="Aimer Bracelet Origine 1" class="like" tabindex="0">💙</span>
+      <a href="#" class="commander" aria-label="Commander Bracelet Origine 1">Commander</a>
     </div>
+  </article>
 
-    <div class="produit">
-        <img src="bracelet-full-acier.PNG" alt="Bracelet Sable blanc">
-        <div class="nom">Bracelet Sable blanc</div>
-        <div class="desc">Bracelet sur chaîne maille figaro<br><em>Acier inoxydable</em></div>
-        <div class="prix">7 000 FCFA</div>
-        <div class="actions">
-            <span class="like">♥</span>
-            <a href="https://wa.me/237XXXXXXXX" target="_blank" class="commander">Commander</a>
-        </div>
-    </div>
+  <!-- Ajoute ici d'autres produits similaires -->
 
-    <div class="produit">
-        <img src="bracelet-marin.JPG" alt="Bracelet Marin">
-        <div class="nom">Bracelet Marin</div>
-        <div class="desc">Bracelet sur cordon fermoir aimantée Nomad<br><em>Acier inoxydable</em></div>
-        <div class="prix">6 000 FCFA</div>
-        <div class="actions">
-            <span class="like">♥</span>
-            <a href="https://wa.me/237XXXXXXXX" target="_blank" class="commander">Commander</a>
-        </div>
-    </div>
+</section>
 
-    <div class="produit">
-        <img src="bracelet-origin.jpg" alt="Bracelet Origine 2">
-        <div class="nom">Bracelet Origine 2</div>
-        <div class="desc">Bracelet sur cordon Menottes Nomad<br><em>Doré</em></div>
-        <div class="prix">5 000 FCFA</div>
-        <div class="actions">
-            <span class="like">♥</span>
-            <a href="https://wa.me/237XXXXXXXX" target="_blank" class="commander">Commander</a>
-        </div>
-    </div>
+<section id="contact" aria-labelledby="contact-title" style="max-width:1100px; margin: 0 auto 40px; padding: 0 20px;">
+  <h2 id="contact-title">Contact</h2>
+  <p>Pour toute demande, commande personnalisée ou collaboration :</p>
+  <ul style="list-style:none; padding:0; margin:8px 0; color:#555;">
+    <li>📧 Email : <a href="mailto:galerienomad@yahoo.com">galerienomad@yahoo.com</a></li>
+    <li>📸 Instagram : <a href="https://instagram.com/galerienomad.officiel" target="_blank" rel="noopener">@galerienomad.officiel</a></li>
+    <li>💬 WhatsApp : <a href="https://wa.me/237657697824" target="_blank" rel="noopener">+237 657 69 78 24</a></li>
+  </ul>
+  <p><small>Livraison locale au Cameroun • Paiement Mobile Money possible • Emballage cadeau disponible</small></p>
+</section>
 
-    <div class="produit">
-        <img src="Chaine acier incroyable .PNG" alt="Chaîne Mercure 1">
-        <div class="nom">Chaîne Mercure 1</div>
-        <div class="desc">Chaîne avec pendentif<br><em>Acier inoxydable</em></div>
-        <div class="prix">8 000 FCFA</div>
-        <div class="actions">
-            <span class="like">♥</span>
-            <a href="https://wa.me/237XXXXXXXX" target="_blank" class="commander">Commander</a>
-        </div>
-    </div>
+<footer>
+  © 2025 Galerie Nomad — Tous droits réservés
+</footer>
 
-    <div class="produit">
-        <img src="bracelet origin motif doré.jpg" alt="Bracelet motif">
-        <div class="nom">Bracelet motif</div>
-        <div class="desc">Bracelet sur cordon motif religieux Nomad<br><em>Doré</em></div>
-        <div class="prix">4 000 FCFA</div>
-        <div class="actions">
-            <span class="like">♥</span>
-            <a href="https://wa.me/237XXXXXXXX" target="_blank" class="commander">Commander</a>
-        </div>
-    </div>
+<script>
+  const PHONE = "237657697824";
+  const STORAGE_KEY = "galerie_nomad_likes_v2";
 
-    <div class="produit">
-        <img src="Chaîne or croix 1.jpg" alt="Chaîne Jupiter">
-        <div class="nom">Chaîne Jupiter</div>
-        <div class="desc">Chaîne Or laminé pendentif croix<br><em>Or 14 karat</em></div>
-        <div class="prix">18 000 FCFA</div>
-        <div class="actions">
-            <span class="like">♥</span>
-            <a href="https://wa.me/237XXXXXXXX" target="_blank" class="commander">Commander</a>
-        </div>
-    </div>
-</div>
-    </section>
-
-    <!-- Contact -->
-    <section id="contact" aria-labelledby="contact-title">
-      <h2 id="contact-title">Contact</h2>
-      <p class="muted">Pour toute demande, commande personnalisée ou collaboration :</p>
-      <ul class="contact-list" style="list-style:none; padding:0; margin:8px 0;">
-        <li>📧 Email : <a href="mailto:galerienomad@yahoo.com">galerienomad@yahoo.com</a></li>
-        <li>📸 Instagram : <a href="https://instagram.com/galerienomad.officiel" target="_blank" rel="noopener">@galerienomad.officiel</a></li>
-        <li>💬 WhatsApp : <a href="https://wa.me/237657697824" target="_blank" rel="noopener">+237 657 69 78 24</a></li>
-      </ul>
-      <p style="margin-top:12px;"><small class="muted">Livraison locale au Cameroun • Paiement Mobile Money possible • Emballage cadeau disponible</small></p>
-    </section>
-
-    <footer>
-      <div style="padding:12px 0;">© 2025 Galerie Nomad — Tous droits réservés</div>
-    </footer>
-
-  </div>
-    <script>
-  const PHONE = "237657697824"; // ton numéro sans + ni espaces
-  const STORAGE_KEY = "galerie_nomad_likes_v1";
-
-  // init likes from localStorage
-  function loadLikes(){
-    try{
+  // Charger les likes du localStorage
+  function loadLikes() {
+    try {
       const raw = localStorage.getItem(STORAGE_KEY);
       return raw ? JSON.parse(raw) : {};
-    }catch(e){ return {}; }
+    } catch {
+      return {};
+    }
   }
-  function saveLikes(data){
-    try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); }catch(e){}
+
+  // Sauvegarder les likes
+  function saveLikes(data) {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    } catch {}
   }
 
   const likes = loadLikes();
-  // apply initial counts and states
-  document.querySelectorAll('.card').forEach(card=>{
-    const id = card.dataset.id;
-    const countEl = card.querySelector('.count');
-    const btn = card.querySelector('.like-btn');
-    const state = likes[id] || {count:0, liked:false};
-    countEl.textContent = state.count;
-    btn.textContent = state.liked ? '♥' : '♡';
-    if(state.liked) btn.style.color = '#e0245e';
-    btn.addEventListener('click', ()=>{
-      toggleLike(id,btn,countEl);
+
+  // Appliquer l'état initial des likes sur chaque produit
+  document.querySelectorAll('.produit').forEach(prod => {
+    const id = prod.dataset.id;
+    const likeBtn = prod.querySelector('.like');
+    const state = likes[id] || false;
+    if (state) {
+      likeBtn.classList.add('liked');
+    }
+    // Clic ou touche clavier sur le cœur
+    function toggle() {
+      if (likes[id]) {
+        likes[id] = false;
+        likeBtn.classList.remove('liked');
+      } else {
+        likes[id] = true;
+        likeBtn.classList.add('liked');
+      }
+      saveLikes(likes);
+    }
+    likeBtn.addEventListener('click', toggle);
+    likeBtn.addEventListener('keypress', e => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        toggle();
+      }
     });
   });
-        
-  function toggleLike(id, btn, countEl){
-    const state = likes[id] || {count:0, liked:false};
-    if(state.liked){
-      state.liked = false;
-      state.count = Math.max(0, state.count - 1);
-      btn.textContent = '♡';
-      btn.style.color = '';
-    } else {
-      state.liked = true;
-      state.count = state.count + 1;
-      btn.textContent = '♥';
-      btn.style.color = '#e0245e';
-    }
-    likes[id] = state;
-    countEl.textContent = state.count;
-    saveLikes(likes);
-  }
 
-  // WhatsApp order function
-  function orderWhatsApp(e, el){
-    e.preventDefault();
-    const product = el.getAttribute('data-product') || "Produit Galerie Nomad";
-    const price = "6 000 F CFA";
-    const text = encodeURIComponent(`Bonjour, je souhaite commander :\n- Produit : ${product}\n- Prix : ${price}\n- Quantité : 1\nNom : \nAdresse/ville : \n\nMerci.`);
-    const url = `https://wa.me/${PHONE}?text=${text}`;
-    window.open(url, '_blank');
-  }
+  // Fonction commande WhatsApp avec message pré-rempli
+  document.querySelectorAll('.commander').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.preventDefault();
+      const prod = btn.closest('.produit');
+      const name = prod.dataset.name || "Produit Galerie Nomad";
+      const price = prod.dataset.price || "";
+      const msg = encodeURIComponent(`Bonjour, je souhaite commander :\n- Produit : ${name}\n- Prix : ${price} FCFA\n- Quantité : 1\nNom : \nAdresse/ville : \n\nMerci.`);
+      const url = `https://wa.me/${PHONE}?text=${msg}`;
+      window.open(url, '_blank');
+    });
+  });
 </script>
+
 </body>
 </html>
