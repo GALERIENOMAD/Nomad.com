@@ -425,17 +425,7 @@
     });
   });
 
-  // Simple heart toggle (no counter)
-  document.querySelectorAll('.heart').forEach(btn=>{
-    btn.addEventListener('click', function(){
-      this.classList.toggle('liked');
-      this.textContent = this.classList.contains('liked') ? '♥' : '♡';
-    });
-  });
-</script>
-
-<script>
-let cart = [];
+  let cart = [];
 
 function addToCart(productName, price) {
     cart.push({ name: productName, price: price });
@@ -478,6 +468,15 @@ function checkout() {
     let url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
     window.open(url, "_blank");
 }
-</script>  
+
+  // Simple heart toggle (no counter)
+  document.querySelectorAll('.heart').forEach(btn=>{
+    btn.addEventListener('click', function(){
+      this.classList.toggle('liked');
+      this.textContent = this.classList.contains('liked') ? '♥' : '♡';
+    });
+  });
+</script>
+
 </body>
 </html>
