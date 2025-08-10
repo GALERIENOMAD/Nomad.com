@@ -5,6 +5,70 @@
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Galerie Nomad — Boutique</title>
 <style>
+  /* Icône panier */
+#cart-icon {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: gold;
+    padding: 10px 15px;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 18px;
+    z-index: 999;
+}
+
+/* Compteur */
+#cart-icon span {
+    background: red;
+    color: white;
+    border-radius: 50%;
+    padding: 2px 6px;
+    font-size: 14px;
+}
+
+/* Panneau panier */
+#cart-panel {
+    position: fixed;
+    top: 0;
+    right: -350px;
+    width: 300px;
+    height: 100%;
+    background: white;
+    box-shadow: -2px 0px 5px rgba(0,0,0,0.2);
+    padding: 20px;
+    transition: 0.3s;
+    z-index: 1000;
+}
+
+#cart-panel.open {
+    right: 0;
+}
+
+#cart-panel h2 {
+    margin-top: 0;
+}
+
+#cart-items {
+    list-style: none;
+    padding: 0;
+}
+
+#cart-items li {
+    margin-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 5px;
+}
+
+#checkout-btn {
+    background: green;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    font-size: 16px;
+}
   :root {
     --bg: #f5f5dc; /* beige clair */
     --card-bg: #ffffff;
@@ -133,6 +197,18 @@
 <body>
 
   <header>
+    <!-- Panier flottant -->
+<div id="cart-icon" onclick="toggleCart()">
+    🛒 <span id="cart-count">0</span>
+</div>
+
+<!-- Panneau panier -->
+<div id="cart-panel">
+    <h2>Votre panier</h2>
+    <ul id="cart-items"></ul>
+    <p id="cart-total">Total : 0 FCFA</p>
+    <button id="checkout-btn" onclick="checkout()">Commander sur WhatsApp</button>
+</div>
     <!-- logo file exactly: logo.PNG -->
     <img src="logo.PNG" alt="Galerie Nomad">
       <nav aria-label="menu">
@@ -347,5 +423,51 @@
   });
 </script>
 
+<script>
+let cart = [];
+
+function addToCart(productName, price) {
+    cart.push({ name: productName, price: price });
+    updateCart();
+}
+
+function updateCart() {
+    document.getElementById("cart-count").innerText = cart.length;
+    let cartItems = document.getElementById("cart-items");
+    cartItems.innerHTML = "";
+    let total = 0;
+
+    cart.forEach((item, index) => {
+        total += item.price;
+        cartItems.innerHTML += `<li>${item.name} - ${item.price.toLocaleString()} FCFA 
+        <button onclick="removeFromCart(${index})">❌</button></li>`;
+    });
+
+    document.getElementById("cart-total").innerText = `Total : ${total.toLocaleString()} FCFA`;
+}
+
+function removeFromCart(index) {
+    cart.splice(index, 1);
+    updateCart();
+}
+
+function toggleCart() {
+    document.getElementById("cart-panel").classList.toggle("open");
+}
+
+function checkout() {
+    let message = "Bonjour, je souhaite commander :\n";
+    let total = 0;
+    cart.forEach(item => {
+        message += `- ${item.name} : ${item.price.toLocaleString()} FCFA\n`;
+        total += item.price;
+    });
+    message += `\nTotal : ${total.toLocaleString()} FCFA`;
+    let phone = "237657697824"; // Ton numéro WhatsApp
+    let url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+    window.open(url, "_blank");
+}
+</script>
+  
 </body>
 </html>
