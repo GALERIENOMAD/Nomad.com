@@ -29,6 +29,34 @@
     border-radius: 50%;
 }
 
+#preloader {
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background-color: white;
+display: flex;
+justify-content: center;
+align-items: center;
+z-index: 9999;
+opacity: 1;
+visibility: visible;
+transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+#preloader.hidden {
+opacity: 0;
+visibility: hidden;
+}
+.preloader-logo {
+width: 200px; /* Ajustez la taille selon votre logo */
+animation: fadeIn 1s ease-in-out;
+}
+@keyframes fadeIn {
+from { opacity: 0; }
+to { opacity: 1; }
+}
+  
 #menu-toggle {
     position: fixed;
     top: 20px;
@@ -267,6 +295,10 @@
         <span class="menu-bar"></span>
         <span class="menu-bar"></span>
     </div>
+
+  <div id="preloader">
+     <img src="logo1.PNG" alt="Galerie Nomad" class="preloader-logo">
+   </div>
     
     <div id="promo-banner">
         Fin des soldes dans : <span id="countdown"></span>
@@ -585,6 +617,15 @@ document.querySelectorAll('.heart').forEach(btn=>{
         this.classList.toggle('liked');
         this.textContent = this.classList.contains('liked') ? '♥' : '♡';
     });
+});
+</script>
+
+<script>
+window.addEventListener('load', function() {
+setTimeout(function() {
+const preloader = document.getElementById('preloader');
+preloader.classList.add('hidden');
+}, 2000); // 2000 millisecondes = 2 secondes
 });
 </script>
   
