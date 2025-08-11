@@ -25,11 +25,11 @@
             padding: 15px;
             font-size: 1.2em;
             font-weight: bold;
-        }
+}
         #countdown {
             margin-left: 10px;
             font-family: monospace;
-        }
+}
   
 /* Compteur */
 #cart-icon span {
@@ -217,7 +217,7 @@
 
  <div id="promo-banner">
         Les soldes se terminent dans : <span id="countdown"></span>
-    </div>
+  </div>
     
 <!-- Panneau panier -->
 <div id="cart-panel">
@@ -459,25 +459,8 @@ style="float: right;"> </button>
     });
   });
 </script>
-
-<script>
- let endDate = new Date("Dec 31, 2025 23:59:59").getTime();
- let x = setInterval(function() {
- let now = new Date().getTime();
- let distance = endDate - now;
- let days = Math.floor(distance / (1000 * 60 * 60 * 24));
- let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
- let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
- let seconds = Math.floor((distance % (1000 * 60)) / 1000);
- document.getElementById("countdown").innerHTML = days + "j " + hours + "h " + minutes + "m " + seconds + "s ";
- if (distance < 0) {
-        clearInterval(x);
-        document.getElementById("countdown").innerHTML = "Les soldes sont terminés !";
-    }
-}, 1000);
-  </script>
     
-  <script>
+ <script>
 let cart = [];
 
 function addToCart(productName, price) {
@@ -523,5 +506,22 @@ function checkout() {
 }
 </script>
 
+<script>
+ let endDate = new Date("Dec 31, 2025 23:59:59").getTime();
+ let x = setInterval(function() {
+ let now = new Date().getTime();
+ let distance = endDate - now;
+ let days = Math.floor(distance / (1000 * 60 * 60 * 24));
+ let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+ let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+ let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+ document.getElementById("countdown").innerHTML = days + "j " + hours + "h " + minutes + "m " + seconds + "s ";
+ if (distance < 0) {
+        clearInterval(x);
+        document.getElementById("countdown").innerHTML = "Les soldes sont terminés !";
+    }
+}, 1000);
+</script>
+  
 </body>
 </html>
