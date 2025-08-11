@@ -500,13 +500,19 @@ function updateCart() {
     cartItems.innerHTML = "";
     let total = 0;
 
+    const formatter = new Intl.NumberFormat('fr-FR', {
+        style: 'currency',
+        currency: 'XAF',
+        minimumFractionDigits: 0
+    });
+
     cart.forEach((item, index) => {
         total += item.price;
-        cartItems.innerHTML += `<li>${item.name} - ${item.price.toLocaleString()} FCFA 
+        cartItems.innerHTML += `<li>${item.name} - ${formatter.format(item.price)} 
         <button onclick="removeFromCart(${index})">❌</button></li>`;
     });
 
-    document.getElementById("cart-total").innerText = `Total : ${total.toLocaleString()} FCFA`;
+    document.getElementById("cart-total").innerText = `Total : ${formatter.format(total)}`;
 }
 
 function removeFromCart(index) {
@@ -521,11 +527,17 @@ function toggleCart() {
 function checkout() {
     let message = "Bonjour, je souhaite commander :\n";
     let total = 0;
+    const formatter = new Intl.NumberFormat('fr-FR', {
+        style: 'currency',
+        currency: 'XAF',
+        minimumFractionDigits: 0
+    });
+
     cart.forEach(item => {
-        message += `- ${item.name} : ${item.price.toLocaleString()} FCFA\n`;
+        message += `- ${item.name} : ${formatter.format(item.price)}\n`;
         total += item.price;
     });
-    message += `\nTotal : ${total.toLocaleString()} FCFA`;
+    message += `\nTotal : ${formatter.format(total)}`;
     let phone = "237657697824"; // Ton numéro WhatsApp
     let url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
     window.open(url, "_blank");
@@ -552,7 +564,6 @@ let x = setInterval(function() {
         document.getElementById("countdown").innerHTML = "Les soldes sont terminés !";
     }
 }, 1000);
-
 
 // Script de commande WhatsApp
 const WHATSAPP_NUMBER = "237657697824";
