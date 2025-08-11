@@ -486,29 +486,7 @@ style="float: right;"> </button>
   </footer>
 
 <script>
-  // WhatsApp ordering: open wa.me with prefilled text
-  const WHATSAPP_NUMBER = "237657697824";
-
-  document.querySelectorAll('.order').forEach(a=>{
-    a.addEventListener('click', function(e){
-      e.preventDefault();
-      const product = this.dataset.product || 'Produit Galerie Nomad';
-      const text = encodeURIComponent(`Bonjour, je souhaite commander : ${product}.\nQuantité : 1\nNom : \nAdresse/ville : `);
-      const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${text}`;
-      window.open(url, '_blank');
-    });
-  });
-
-  // Simple heart toggle (no counter)
-  document.querySelectorAll('.heart').forEach(btn=>{
-    btn.addEventListener('click', function(){
-      this.classList.toggle('liked');
-      this.textContent = this.classList.contains('liked') ? '♥' : '♡';
-    });
-  });
-</script>
-    
- <script>
+// Fonctions du panier
 let cart = [];
 
 function addToCart(productName, price) {
@@ -552,23 +530,50 @@ function checkout() {
     let url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
     window.open(url, "_blank");
 }
-</script>
 
-<script>
- let endDate = new Date("Dec 31, 2025 23:59:59").getTime();
- let x = setInterval(function() {
- let now = new Date().getTime();
- let distance = endDate - now;
- let days = Math.floor(distance / (1000 * 60 * 60 * 24));
- let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
- let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
- let seconds = Math.floor((distance % (1000 * 60)) / 1000);
- document.getElementById("countdown").innerHTML = days + "j " + hours + "h " + minutes + "m " + seconds + "s ";
- if (distance < 0) {
+// Fonction du menu hamburger
+function toggleMenu() {
+    const navMenu = document.querySelector('header nav');
+    navMenu.classList.toggle('active');
+}
+
+// Script du compte à rebours
+let endDate = new Date("Dec 31, 2025 23:59:59").getTime();
+let x = setInterval(function() {
+    let now = new Date().getTime();
+    let distance = endDate - now;
+    let days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    document.getElementById("countdown").innerHTML = days + "j " + hours + "h " + minutes + "m " + seconds + "s ";
+    if (distance < 0) {
         clearInterval(x);
         document.getElementById("countdown").innerHTML = "Les soldes sont terminés !";
     }
 }, 1000);
+
+
+// Script de commande WhatsApp
+const WHATSAPP_NUMBER = "237657697824";
+
+document.querySelectorAll('.order').forEach(a=>{
+    a.addEventListener('click', function(e){
+        e.preventDefault();
+        const product = this.dataset.product || 'Produit Galerie Nomad';
+        const text = encodeURIComponent(`Bonjour, je souhaite commander : ${product}.\nQuantité : 1\nNom : \nAdresse/ville : `);
+        const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${text}`;
+        window.open(url, '_blank');
+    });
+});
+
+// Script du bouton "J'aime"
+document.querySelectorAll('.heart').forEach(btn=>{
+    btn.addEventListener('click', function(){
+        this.classList.toggle('liked');
+        this.textContent = this.classList.contains('liked') ? '♥' : '♡';
+    });
+});
 </script>
   
 </body>
