@@ -7,16 +7,18 @@
 <style>
   /* Icône panier */
 .cart-icon {
-    position: relative;
-    display: inline-block;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 999;
+    background: gold;
+    padding: 10px 15px;
+    border-radius: 30px;
     cursor: pointer;
+    font-size: 18px;
 }
 
-.cart-icon svg {
-    width: 28px;
-    height: 28px;
-}
-
+/* Compteur */
 .cart-count {
     position: absolute;
     top: -6px;
