@@ -5,23 +5,21 @@
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Galerie Nomad — Boutique</title>
 <style>
-  /* Icône panier */
+  /* Icône panier et compteur */
+.cart-icon {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 999;
+    background: gold;
+    padding: 10px 15px;
+    border-radius: 30px;
+    cursor: pointer;
+}
+
 .cart-count {
     position: absolute;
     top: 2px;
-    right: 2px;
-    background: red;
-    color: white;
-    font-size: 12px;
-    font-weight: bold;
-    padding: 2px 6px;
-    border-radius: 50%;
-}
-
-/* Compteur */
-.cart-count {
-    position: absolute;
-    top:  2px;
     right: 2px;
     background: red;
     color: white;
@@ -53,28 +51,19 @@
 }
   
 #promo-banner {
-            background-color: red;
-            color: white;
-            text-align: center;
-            padding: 8px;
-            font-size: 1em;
-            font-weight: bold;
-            margin-top: 40px;
+    background-color: red;
+    color: white;
+    text-align: center;
+    padding: 8px;
+    font-size: 1em;
+    font-weight: bold;
+    margin-top: 40px;
 }
-        #countdown {
-            margin-left: 10px;
-            font-family: monospace;
+#countdown {
+    margin-left: 10px;
+    font-family: monospace;
 }
   
-/* Compteur */
-#cart-icon span {
-    background: red;
-    color: white;
-    border-radius: 50%;
-    padding: 2px 6px;
-    font-size: 14px;
-}
-
 /* Panneau panier */
 #cart-panel {
     position: fixed;
@@ -240,56 +229,67 @@
   .socials{ display:inline-flex; gap:12px; align-items:center; }
   .socials a img{ width:28px; height:28px; display:inline-block; }
   .copyright{ margin-top:10px; color:#666; font-size:0.9rem; }
+  
+  /* Menu hamburger */
+  @media(max-width: 760px) {
+    nav[aria-label="menu"] {
+      display: none;
+      position: absolute;
+      top: 60px;
+      left: 0;
+      width: 100%;
+      background-color: white;
+      padding: 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    nav[aria-label="menu"].active {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+  }
 </style>
 </head>
 <body>
 
   <header>
-    <!-- Panier flottant -->
-<div class="cart-icon">
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M6 7l1-3h10l1 3"></path>
-    <path d="M3 7h18l-1.5 14H4.5L3 7z"></path>
-    <path d="M8 10V6a4 4 0 0 1 8 0v4"></path>
-  </svg>
-  <span class="cart-count">0</span>
-</div>
+    <div class="cart-icon" onclick="toggleCart()">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M6 7l1-3h10l1 3"></path>
+        <path d="M3 7h18l-1.5 14H4.5L3 7z"></path>
+        <path d="M8 10V6a4 4 0 0 1 8 0v4"></path>
+      </svg>
+      <span id="cart-count" class="cart-count">0</span>
+    </div>
 
-<div id="menu-toggle" onclick="toggleMenu()">
+    <div id="menu-toggle" onclick="toggleMenu()">
         <span class="menu-bar"></span>
         <span class="menu-bar"></span>
         <span class="menu-bar"></span>
-</div>
+    </div>
     
- <div id="promo-banner">
+    <div id="promo-banner">
         Fin des soldes dans : <span id="countdown"></span>
-  </div>
+    </div>
     
-<!-- Panneau panier -->
-<div id="cart-panel">
+    <div id="cart-panel">
+      <button onclick="toggleCart()" style="position: absolute; top: 10px; right: 10px; border: none; background: none; font-size: 20px; cursor: pointer;">❌</button>
+      <h2>Votre panier</h2>
+      <ul id="cart-items"></ul>
+      <p id="cart-total">Total : 0 FCFA</p>
+      <button id="checkout-btn" onclick="checkout()">Commander sur WhatsApp</button>
+    </div>
 
-<button
-onclick="toggleCart ()">Retourner aux produits</ button>
-<button onclick="toggleCart()"
-style="float: right;"> </button>
-  
-  <h2>Votre panier</h2>
-    <ul id="cart-items"></ul>
-    <p id="cart-total">Total : 0 FCFA</p>
-    <button id="checkout-btn" onclick="checkout()">Commander sur WhatsApp</button>
-</div>
-    <!-- logo file exactly: logo.PNG -->
     <div style="text-align: center; padding: 20px;">
-    <img src="logo.PNG" alt="Galerie Nomad" style="height: 95px; object-fit: contain;">
-     </div>
-      <nav aria-label="menu">
+        <img src="logo.PNG" alt="Galerie Nomad" style="height: 95px; object-fit: contain;">
+    </div>
+    <nav aria-label="menu">
         <a href="#about">l'élégance</a>
         <a href="#creations">à travers</a>
         <a href="#contact">le temps</a>
-      </nav>
-   </header>
+    </nav>
+  </header>
 
-    <!-- Hero -->
     <section class="hero" id="intro">
       <div class="hero-text">
         <p style="margin-top:12px;"><a class="cta" href="#creations">Découvrez nos collections</a></p>
@@ -310,7 +310,6 @@ style="float: right;"> </button>
 
     <section class="products" id="products">
 
-      <!-- Produit 1 -->
       <article class="product" data-name="Chaîne Warend 1">
         <img src="Cha1.jpg" alt="Chaîne Warend 1">
         <div class="title">Chaîne Warend 1</div>
@@ -325,7 +324,6 @@ style="float: right;"> </button>
         </div>
       </article>
 
-      <!-- Chaîne Warend 2 (nouveau) -->
       <article class="product" data-name="Chaîne Warend 2">
         <img src="Cha5.jpg" alt="Chaîne Warend 2">
         <div class="title">Chaîne Warend 2</div>
@@ -340,7 +338,6 @@ style="float: right;"> </button>
         </div>
       </article>
 
-      <!-- Produit 3 -->
       <article class="product" data-name="Chaîne Mercure 2">
         <img src="Cha3.jpg" alt="Chaîne Mercure 2">
         <div class="title">Chaîne Mercure 2</div>
@@ -354,7 +351,6 @@ style="float: right;"> </button>
         </div>
       </article>
 
-      <!-- Produit 4 -->
       <article class="product" data-name="Bracelet Origine 1">
         <img src="Bra1.jpg" alt="Bracelet Origine 1">
         <div class="title">Bracelet Origine 1</div>
@@ -368,7 +364,6 @@ style="float: right;"> </button>
         </div>
       </article>
 
-      <!-- Produit 5 -->
       <article class="product" data-name="Bracelet Sable blanc">
         <img src="Bra5.jpg" alt="Bracelet Sable blanc">
         <div class="title">Bracelet Sable blanc</div>
@@ -382,7 +377,6 @@ style="float: right;"> </button>
         </div>
       </article>
 
-      <!-- Produit 6 -->
       <article class="product" data-name="Bracelet Marin">
         <img src="Bra4.jpg" alt="Bracelet Marin">
         <div class="title">Bracelet Marin</div>
@@ -396,7 +390,6 @@ style="float: right;"> </button>
         </div>
       </article>
 
-      <!-- Produit 7 -->
       <article class="product" data-name="Bracelet Origine 2">
         <img src="Bra3.jpg" alt="Bracelet Origine 2">
         <div class="title">Bracelet Origine 2</div>
@@ -410,7 +403,6 @@ style="float: right;"> </button>
         </div>
       </article>
 
-      <!-- Produit 8 -->
       <article class="product" data-name="Chaîne Mercure 1">
         <img src="Cha2.jpg" alt="Chaîne Mercure 1">
         <div class="title">Chaîne Mercure 1</div>
@@ -424,7 +416,6 @@ style="float: right;"> </button>
         </div>
       </article>
 
-      <!-- Produit 9 -->
       <article class="product" data-name="Bracelet motif">
         <img src="Bra2.jpg" alt="Bracelet motif">
         <div class="title">Bracelet motif</div>
@@ -438,7 +429,6 @@ style="float: right;"> </button>
         </div>
       </article>
 
-      <!-- Produit 10 -->
       <article class="product" data-name="Chaîne Jupiter">
         <img src="Cha4.jpg" alt="Chaîne Jupiter">
         <div class="title">Chaîne Jupiter</div>
@@ -453,7 +443,6 @@ style="float: right;"> </button>
         </div>
       </article>
       
-      <!-- Produit 11 -->
       <article class="product" data-name="Bracelet Sable blanc avec initial">
         <img src="Bra6.PNG" alt="Bracelet Sable blanc avec initial">
         <div class="title">Bracelet Sable blanc avec initial</div>
@@ -564,6 +553,7 @@ let x = setInterval(function() {
         document.getElementById("countdown").innerHTML = "Les soldes sont terminés !";
     }
 }, 1000);
+
 
 // Script de commande WhatsApp
 const WHATSAPP_NUMBER = "237657697824";
