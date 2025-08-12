@@ -62,10 +62,14 @@ to { opacity: 1; }
     background: none;
     border: none;
     cursor: pointer;
-    margin-right: 15px; /* Ajustez l'espacement si besoin */
     padding: 0;
-    color: #222; /* Couleur de l'icône */
+    color: var(--primary-color);
+    position: fixed;
+    top: 20px;
+    right: 70px;
+    z-index: 1000;
 }
+
 
 /* Champ de recherche caché par défaut */
 #search-input {
@@ -670,6 +674,27 @@ setTimeout(function() {
 const preloader = document.getElementById('preloader');
 preloader.classList.add('hidden');
 }, 1000); // 1000 millisecondes = 1 secondes
+});
+
+  const searchIcon = document.querySelector('.search-icon');
+const searchInput = document.getElementById('search-input');
+const products = document.querySelectorAll('.product');
+
+searchIcon.addEventListener('click', () => {
+    searchInput.classList.toggle('visible');
+    searchInput.focus();
+});
+
+searchInput.addEventListener('input', (event) => {
+    const searchTerm = event.target.value.toLowerCase();
+    products.forEach(product => {
+        const productName = product.dataset.name.toLowerCase();
+        if (productName.includes(searchTerm)) {
+            product.style.display = 'block';
+        } else {
+            product.style.display = 'none';
+        }
+    });
 });
 </script>
   
