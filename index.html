@@ -363,7 +363,7 @@
     background:transparent;
   }
   .heart.liked{ color:#e02b4a; transform:scale(1.08); }
-  .order{
+  .add-to-cart-btn{
     color:var(--wa-green);
     font-weight:700;
     text-decoration:none;
@@ -372,8 +372,9 @@
     border-radius:6px;
     transition:background .12s ease, color .12s ease, transform .12s ease;
     background:transparent;
+    cursor: pointer;
   }
-  .order:hover{
+  .add-to-cart-btn:hover{
     background: rgba(37,211,102,0.08);
     transform:translateY(-2px);
   }
@@ -425,7 +426,7 @@
     <h2>Votre panier</h2>
     <ul id="cart-items"></ul>
     <p id="cart-total">Total : 0 FCFA</p>
-    <button id="checkout-btn" onclick="checkout()">Commander sur WhatsApp</button>
+    <button id="checkout-btn">Commander sur WhatsApp</button>
   </div>
   
   <header>
@@ -462,149 +463,138 @@
 
     <section class="products" id="products">
 
-      <article class="product" data-name="Chaîne Warend 1">
+      <article class="product" data-name="Chaîne Warend 1" data-price="14000">
         <img src="Cha1.jpg" alt="Chaîne Warend 1">
         <div class="title">Chaîne Warend 1</div>
         <p class="desc">Tour de cou Maille forçat alternée, pendentif ancre</p>
         <div class="material">Argent</div>
         <span style="text-decoration: line-through; color: red;">18 000 FCFA</span>
         <div class="price">14 000 FCFA</div>
-        <button onclick="addToCart('Chaîne Warend 1', 14000)">Ajouter au panier</button>
         <div class="actions">
           <button class="heart" aria-label="Like">♡</button>
-          <a class="order" href="#" data-product="Chaîne Warend 1">Commander</a>
+          <button class="add-to-cart-btn" aria-label="Ajouter Chaîne Warend 1 au panier">Ajouter au panier</button>
         </div>
       </article>
 
-      <article class="product" data-name="Chaîne Warend 2">
+      <article class="product" data-name="Chaîne Warend 2" data-price="14000">
         <img src="Cha5.jpg" alt="Chaîne Warend 2">
         <div class="title">Chaîne Warend 2</div>
         <p class="desc">Tour de cou avec pendentif Menottes</p>
         <div class="material">Argent</div>
         <span style="text-decoration: line-through; color: red;">18 000 FCFA</span>
         <div class="price">14 000 FCFA</div>
-        <button onclick="addToCart('Chaîne Warend 2', 14000)">Ajouter au panier</button>
         <div class="actions">
           <button class="heart" aria-label="Like">♡</button>
-          <a class="order" href="#" data-product="Chaîne Warend 2">Commander</a>
+          <button class="add-to-cart-btn" aria-label="Ajouter Chaîne Warend 2 au panier">Ajouter au panier</button>
         </div>
       </article>
 
-      <article class="product" data-name="Chaîne Mercure 2">
+      <article class="product" data-name="Chaîne Mercure 2" data-price="8000">
         <img src="Cha3.jpg" alt="Chaîne Mercure 2">
         <div class="title">Chaîne Mercure 2</div>
         <p class="desc">Tour de cou avec pendentif argenté fin vieilli</p>
         <div class="material">Acier inoxydable + argenté fin vieilli</div>
         <div class="price">8 000 FCFA</div>
-        <button onclick="addToCart('Chaîne Mercure 2', 8000)">Ajouter au panier</button>
         <div class="actions">
           <button class="heart" aria-label="Like">♡</button>
-          <a class="order" href="#" data-product="Chaîne Mercure 2">Commander</a>
+          <button class="add-to-cart-btn" aria-label="Ajouter Chaîne Mercure 2 au panier">Ajouter au panier</button>
         </div>
       </article>
 
-      <article class="product" data-name="Bracelet Origine 1">
+      <article class="product" data-name="Bracelet Origine 1" data-price="6000">
         <img src="Bra1.jpg" alt="Bracelet Origine 1">
         <div class="title">Bracelet Origine 1</div>
         <p class="desc">Jeu de cordon sur Menottes Nomad</p>
         <div class="material">Argent</div>
         <div class="price">6 000 FCFA</div>
-        <button onclick="addToCart('Bracelet Origine 1', 6000)">Ajouter au panier</button>
         <div class="actions">
           <button class="heart" aria-label="Like">♡</button>
-          <a class="order" href="#" data-product="Bracelet Origine 1">Commander</a>
+          <button class="add-to-cart-btn" aria-label="Ajouter Bracelet Origine 1 au panier">Ajouter au panier</button>
         </div>
       </article>
 
-      <article class="product" data-name="Bracelet Sable blanc">
+      <article class="product" data-name="Bracelet Sable blanc" data-price="6000">
         <img src="Bra5.jpg" alt="Bracelet Sable blanc">
         <div class="title">Bracelet Sable blanc</div>
         <p class="desc">Bracelet sur chaîne maille figaro</p>
         <div class="material">Acier inoxydable</div>
         <div class="price">6 000 FCFA</div>
-        <button onclick="addToCart('Bracelet Sable blanc', 6000)">Ajouter au panier</button>
         <div class="actions">
           <button class="heart" aria-label="Like">♡</button>
-          <a class="order" href="#" data-product="Bracelet Sable blanc">Commander</a>
+          <button class="add-to-cart-btn" aria-label="Ajouter Bracelet Sable blanc au panier">Ajouter au panier</button>
         </div>
       </article>
 
-      <article class="product" data-name="Bracelet Marin">
+      <article class="product" data-name="Bracelet Marin" data-price="6000">
         <img src="Bra4.jpg" alt="Bracelet Marin">
         <div class="title">Bracelet Marin</div>
         <p class="desc">Jeu de cordon sur fermoir aimantée Nomad</p>
         <div class="material">Acier inoxydable</div>
         <div class="price">6 000 FCFA</div>
-        <button onclick="addToCart('Bracelet Marin', 6000)">Ajouter au panier</button>
         <div class="actions">
           <button class="heart" aria-label="Like">♡</button>
-          <a class="order" href="#" data-product="Bracelet Marin">Commander</a>
+          <button class="add-to-cart-btn" aria-label="Ajouter Bracelet Marin au panier">Ajouter au panier</button>
         </div>
       </article>
 
-      <article class="product" data-name="Bracelet Origine 2">
+      <article class="product" data-name="Bracelet Origine 2" data-price="5000">
         <img src="Bra3.jpg" alt="Bracelet Origine 2">
         <div class="title">Bracelet Origine 2</div>
         <p class="desc">Jeu de cordon sur Menottes Nomad</p>
         <div class="material">Doré</div>
         <div class="price">5 000 FCFA</div>
-        <button onclick="addToCart('Bracelet Origine 2', 5000)">Ajouter au panier</button>
         <div class="actions">
           <button class="heart" aria-label="Like">♡</button>
-          <a class="order" href="#" data-product="Bracelet Origine 2">Commander</a>
+          <button class="add-to-cart-btn" aria-label="Ajouter Bracelet Origine 2 au panier">Ajouter au panier</button>
         </div>
       </article>
 
-      <article class="product" data-name="Chaîne Mercure 1">
+      <article class="product" data-name="Chaîne Mercure 1" data-price="8000">
         <img src="Cha2.jpg" alt="Chaîne Mercure 1">
         <div class="title">Chaîne Mercure 1</div>
         <p class="desc">Tour de cou avec pendentif croix</p>
         <div class="material">Acier inoxydable</div>
         <div class="price">8 000 FCFA</div>
-        <button onclick="addToCart('Chaîne Mercure 1', 8000)">Ajouter au panier</button>
         <div class="actions">
           <button class="heart" aria-label="Like">♡</button>
-          <a class="order" href="#" data-product="Chaîne Mercure 1">Commander</a>
+          <button class="add-to-cart-btn" aria-label="Ajouter Chaîne Mercure 1 au panier">Ajouter au panier</button>
         </div>
       </article>
 
-      <article class="product" data-name="Bracelet motif">
+      <article class="product" data-name="Bracelet motif" data-price="4000">
         <img src="Bra2.jpg" alt="Bracelet motif">
         <div class="title">Bracelet motif</div>
         <p class="desc">Jeu de cordon sur motif religieux Nomad</p>
         <div class="material">Doré</div>
         <div class="price">4 000 FCFA</div>
-        <button onclick="addToCart('Bracelet motif', 4000)">Ajouter au panier</button>
         <div class="actions">
           <button class="heart" aria-label="Like">♡</button>
-          <a class="order" href="#" data-product="Bracelet motif">Commander</a>
+          <button class="add-to-cart-btn" aria-label="Ajouter Bracelet motif au panier">Ajouter au panier</button>
         </div>
       </article>
 
-      <article class="product" data-name="Chaîne Jupiter">
+      <article class="product" data-name="Chaîne Jupiter" data-price="18000">
         <img src="Cha4.jpg" alt="Chaîne Jupiter">
         <div class="title">Chaîne Jupiter</div>
         <p class="desc">Tour de cou Or laminé pendentif croix</p>
         <div class="material">Or 14 karat</div>
         <span style="text-decoration: line-through; color: red;">22 000 FCFA</span>
         <div class="price">18 000 FCFA</div>
-        <button onclick="addToCart('Chaîne Jupiter', 18000)">Ajouter au panier</button>
         <div class="actions">
           <button class="heart" aria-label="Like">♡</button>
-          <a class="order" href="#" data-product="Chaîne Jupiter">Commander</a>
+          <button class="add-to-cart-btn" aria-label="Ajouter Chaîne Jupiter au panier">Ajouter au panier</button>
         </div>
       </article>
 
-      <article class="product" data-name="Bracelet Sable blanc avec initial">
+      <article class="product" data-name="Bracelet Sable blanc avec initial" data-price="6000">
         <img src="Bra6.PNG" alt="Bracelet Sable blanc avec initial">
         <div class="title">Bracelet Sable blanc avec initial</div>
         <p class="desc">Bracelet sur chaîne maille figaro avec initial</p>
         <div class="material">Acier inoxydable</div>
         <div class="price">6 000 FCFA</div>
-        <button onclick="addToCart('Bracelet Sable blanc avec initial', 6000)">Ajouter au panier</button>
         <div class="actions">
           <button class="heart" aria-label="Like">♡</button>
-          <a class="order" href="#" data-product="Bracelet Sable blanc avec initial">Commander</a>
+          <button class="add-to-cart-btn" aria-label="Ajouter Bracelet Sable blanc avec initial au panier">Ajouter au panier</button>
         </div>
        </article>
       
@@ -627,9 +617,13 @@
   </footer>
 
 <script>
-// --- Fonctions de gestion du panier ---
+// --- Constantes et initialisation ---
+const WHATSAPP_NUMBER = "237657697824";
+const promoEndDate = new Date("Dec 31, 2025 23:59:59").getTime();
+
 let cart = [];
 
+// --- Fonctions de gestion du panier ---
 function addToCart(productName, price) {
     const existingItem = cart.find(item => item.name === productName);
     if (existingItem) {
@@ -638,27 +632,28 @@ function addToCart(productName, price) {
         cart.push({ name: productName, price: price, quantity: 1 });
     }
     updateCart();
+    toggleCart(true); // Ouvre le panier
 }
 
 function updateCart() {
     let totalItems = 0;
     let total = 0;
-    const cartItems = document.getElementById("cart-items");
-    cartItems.innerHTML = "";
+    const cartItemsList = document.getElementById("cart-items");
+    cartItemsList.innerHTML = "";
 
     cart.forEach((item, index) => {
         totalItems += item.quantity;
         total += item.price * item.quantity;
-        cartItems.innerHTML += `
+        cartItemsList.innerHTML += `
             <li>
                 <div class="cart-item-name">${item.name}</div>
                 <div class="cart-item-controls">
-                    <button onclick="decreaseQuantity(${index})">–</button>
+                    <button data-index="${index}" class="decrease-btn">–</button>
                     <span>${item.quantity}</span>
-                    <button onclick="increaseQuantity(${index})">+</button>
+                    <button data-index="${index}" class="increase-btn">+</button>
                 </div>
                 <div class="cart-item-price">${(item.price * item.quantity).toLocaleString()} FCFA</div>
-                <button onclick="removeFromCart(${index})" class="remove-btn">❌</button>
+                <button data-index="${index}" class="remove-btn">❌</button>
             </li>
         `;
     });
@@ -686,8 +681,13 @@ function decreaseQuantity(index) {
     updateCart();
 }
 
-function toggleCart() {
-    document.getElementById("cart-panel").classList.toggle("open");
+function toggleCart(forceOpen) {
+    const cartPanel = document.getElementById("cart-panel");
+    if (forceOpen === true) {
+      cartPanel.classList.add("open");
+    } else {
+      cartPanel.classList.toggle("open");
+    }
 }
 
 function checkout() {
@@ -698,11 +698,9 @@ function checkout() {
         total += item.price * item.quantity;
     });
     message += `\nTotal : ${total.toLocaleString()} FCFA`;
-    let phone = "237657697824";
-    let url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+    const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
     window.open(url, "_blank");
 }
-
 
 // --- Fonctions de l'interface utilisateur ---
 function toggleMenu() {
@@ -720,7 +718,6 @@ searchIcon.addEventListener('click', () => {
     searchInput.classList.toggle('visible');
     suggestionsContainer.classList.remove('visible');
     searchInput.focus();
-    // Affiche tous les produits si la barre est fermée
     if (!searchInput.classList.contains('visible')) {
         products.forEach(p => p.style.display = 'block');
     }
@@ -729,7 +726,6 @@ searchIcon.addEventListener('click', () => {
 searchInput.addEventListener('input', (event) => {
     const searchTerm = event.target.value.toLowerCase();
     
-    // Si l'utilisateur tape au moins 3 lettres
     if (searchTerm.length >= 3) {
         suggestionsContainer.innerHTML = '';
         let matchingProducts = [];
@@ -738,9 +734,9 @@ searchInput.addEventListener('input', (event) => {
             const productName = product.dataset.name.toLowerCase();
             if (productName.includes(searchTerm)) {
                 matchingProducts.push(productName);
-                product.style.display = 'block'; // Affiche le produit dans la grille
+                product.style.display = 'block';
             } else {
-                product.style.display = 'none'; // Cache les autres
+                product.style.display = 'none';
             }
         });
 
@@ -755,7 +751,6 @@ searchInput.addEventListener('input', (event) => {
                 suggestionDiv.addEventListener('click', () => {
                     searchInput.value = name;
                     suggestionsContainer.classList.remove('visible');
-                    // Affiche uniquement le produit cliqué
                     products.forEach(p => {
                         p.style.display = p.dataset.name.toLowerCase() === name.toLowerCase() ? 'block' : 'none';
                     });
@@ -766,7 +761,6 @@ searchInput.addEventListener('input', (event) => {
         }
 
     } else {
-        // Moins de 3 lettres : cache les suggestions et affiche tous les produits
         suggestionsContainer.classList.remove('visible');
         products.forEach(product => {
             product.style.display = 'block';
@@ -775,13 +769,45 @@ searchInput.addEventListener('input', (event) => {
 });
 
 
-// --- Scripts d'événements et d'initialisation ---
+// --- Écouteurs d'événements et initialisation ---
+
+// Ajout des produits au panier
+document.querySelectorAll('.add-to-cart-btn').forEach(button => {
+    button.addEventListener('click', function(e) {
+        const productArticle = e.target.closest('.product');
+        const productName = productArticle.dataset.name;
+        const productPrice = parseInt(productArticle.dataset.price);
+        addToCart(productName, productPrice);
+    });
+});
+
+// Écouteur pour le panneau du panier (boutons +, -, ❌)
+document.getElementById('cart-panel').addEventListener('click', function(e) {
+    const target = e.target;
+    if (target.classList.contains('increase-btn')) {
+        increaseQuantity(target.dataset.index);
+    } else if (target.classList.contains('decrease-btn')) {
+        decreaseQuantity(target.dataset.index);
+    } else if (target.classList.contains('remove-btn')) {
+        removeFromCart(target.dataset.index);
+    }
+});
+
+// Écouteur pour le bouton de validation du panier
+document.getElementById('checkout-btn').addEventListener('click', checkout);
+
+// Bouton "J'aime"
+document.querySelectorAll('.heart').forEach(btn => {
+    btn.addEventListener('click', function() {
+        this.classList.toggle('liked');
+        this.textContent = this.classList.contains('liked') ? '♥' : '♡';
+    });
+});
 
 // Minuteur pour la promotion
-let endDate = new Date("Dec 31, 2025 23:59:59").getTime();
 let x = setInterval(function() {
     let now = new Date().getTime();
-    let distance = endDate - now;
+    let distance = promoEndDate - now;
     let days = Math.floor(distance / (1000 * 60 * 60 * 24));
     let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
     let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
@@ -792,27 +818,6 @@ let x = setInterval(function() {
         document.getElementById("countdown").innerHTML = "Les soldes sont terminés !";
     }
 }, 1000);
-
-
-// Script de commande individuelle (bouton "Commander")
-const WHATSAPP_NUMBER = "237657697824";
-document.querySelectorAll('.order').forEach(a => {
-    a.addEventListener('click', function(e) {
-        e.preventDefault();
-        const product = this.dataset.product || 'Produit Galerie Nomad';
-        const text = encodeURIComponent(`Bonjour, je souhaite commander : ${product}.\nQuantité : 1\nNom : \nAdresse/ville : `);
-        const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${text}`;
-        window.open(url, '_blank');
-    });
-});
-
-// Script du bouton "J'aime"
-document.querySelectorAll('.heart').forEach(btn => {
-    btn.addEventListener('click', function() {
-        this.classList.toggle('liked');
-        this.textContent = this.classList.contains('liked') ? '♥' : '♡';
-    });
-});
 
 // Gestion du préchargeur
 window.addEventListener('load', function() {
