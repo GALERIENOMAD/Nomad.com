@@ -632,9 +632,7 @@ function addToCart(productName, price) {
         cart.push({ name: productName, price: price, quantity: 1 });
     }
     updateCart();
-    toggleCart(true); // Ouvre le panier
-}
-
+    
 function updateCart() {
     let totalItems = 0;
     let total = 0;
@@ -824,7 +822,7 @@ window.addEventListener('load', function() {
     setTimeout(function() {
         const preloader = document.getElementById('preloader');
         preloader.classList.add('hidden');
-    }, 2000);
+    }, 1000);
 });
 </script>
 </body>
