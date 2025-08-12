@@ -5,173 +5,14 @@
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Galerie Nomad — Boutique</title>
 <style>
-  /* Icône panier et compteur */
-.cart-icon {
-    position: fixed;
-    top: 9px;
-    right: 20px;
-    z-index: 999;
-    background: none;
-    padding: 10px 15px;
-    border-radius: 30px;
-    cursor: pointer;
-}
-
-.cart-count {
-    position: absolute;
-    top: 2px;
-    right: 2px;
-    background: red;
-    color: white;
-    font-size: 12px;
-    font-weight: bold;
-    padding: 2px 6px;
-    border-radius: 50%;
-}
-
-#preloader {
-position: fixed;
-top: 0;
-left: 0;
-width: 100%;
-height: 100%;
-background-color: white;
-display: flex;
-justify-content: center;
-align-items: center;
-z-index: 9999;
-opacity: 1;
-visibility: visible;
-transition: opacity 0.5s ease, visibility 0.5s ease;
-}
-#preloader.hidden {
-opacity: 0;
-visibility: hidden;
-}
-.preloader-logo {
-width: 500px; /* Ajustez la taille selon votre logo */
-animation: fadeIn 1s ease-in-out;
-}
-@keyframes fadeIn {
-from { opacity: 0; }
-to { opacity: 1; }
-}
-
-/* Style de l'icône de recherche */
-.search-icon {
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0;
-    color: var(--primary-color);
-    position: fixed;
-    top: 20px;
-    right: 70px;
-    z-index: 1000;
-}
-
-
-/* Champ de recherche caché par défaut */
-#search-input {
-    width: 0;
-    border: none;
-    border-bottom: 2px solid #222;
-    background: transparent;
-    transition: width 0.3s ease-in-out;
-    padding: 5px 0;
-    opacity: 0;
-}
-
-/* Le champ de recherche devient visible et prend de la largeur */
-#search-input.visible {
-    width: 250px; /* Ajustez la largeur désirée */
-    opacity: 1;
-    padding: 5px;
-}
-
-#menu-toggle {
-    position: fixed;
-    top: 20px;
-    left: 20px;
-    width: 30px;
-    height: 30px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    cursor: pointer;
-    z-index: 1000;
-}
-
-.menu-bar {
-    width: 100%;
-    height: 4px;
-    background-color: #222;
-    border-radius: 2px;
-    transition: all 0.3s ease-in-out;
-}
-  
-#promo-banner {
-    background-color: red;
-    color: white;
-    text-align: center;
-    padding: 8px;
-    font-size: 1em;
-    font-weight: bold;
-    margin-top: 40px;
-}
-#countdown {
-    margin-left: 10px;
-    font-family: monospace;
-}
-  
-/* Panneau panier */
-#cart-panel {
-    position: fixed;
-    top: 0;
-    right: -350px;
-    width: 300px;
-    height: 100%;
-    background: white;
-    box-shadow: -2px 0px 5px rgba(0,0,0,0.2);
-    padding: 20px;
-    transition: 0.3s;
-    z-index: 1000;
-}
-
-#cart-panel.open {
-    right: 0;
-}
-
-#cart-panel h2 {
-    margin-top: 0;
-}
-
-#cart-items {
-    list-style: none;
-    padding: 0;
-}
-
-#cart-items li {
-    margin-bottom: 10px;
-    border-bottom: 1px solid #ddd;
-    padding-bottom: 5px;
-}
-
-#checkout-btn {
-    background: green;
-    color: white;
-    padding: 10px;
-    border: none;
-    cursor: pointer;
-    width: 100%;
-    font-size: 16px;
-}
+  /* Variables de couleur et styles de base */
   :root {
     --bg: #ffffff; /* blanc */
     --card-bg: #ffffff;
     --muted: #666;
     --accent: #0b3b45;
     --wa-green: #25D366;
+    --primary-color: #222;
   }
   *{box-sizing:border-box}
   body{
@@ -181,34 +22,300 @@ to { opacity: 1; }
     color:#222;
     -webkit-font-smoothing:antialiased;
   }
-
-  header{
-    background: var(--card-bg);
-    text-align:center;
-    padding:24px 16px;
-    border-bottom:1px solid rgba(0,0,0,0.04);
+  
+  /* En-tête */
+  header {
+    position: relative;
+    padding: 16px;
+    border-bottom: 1px solid rgba(0,0,0,0.04);
   }
-  header img{ height:86px; object-fit:contain; display:inline-block; }
+  .header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .logo-container {
+      flex: 1;
+      text-align: center;
+  }
+  header img{ 
+    height:86px; 
+    object-fit:contain; 
+  }
+  header nav{
+    text-align:center;
+    padding:10px 0;
+  }
 
+  /* Menu de navigation */
+  nav[aria-label="menu"] {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    font-weight: bold;
+  }
+  nav[aria-label="menu"] a {
+      text-decoration: none;
+      color: var(--primary-color);
+  }
+
+  /* Styles mobiles pour le menu hamburger */
+  #menu-toggle {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    cursor: pointer;
+    z-index: 1002;
+    background: white;
+  }
+  .menu-bar {
+    width: 100%;
+    height: 4px;
+    background-color: #222;
+    border-radius: 2px;
+    transition: all 0.3s ease-in-out;
+  }
+  @media(max-width: 760px) {
+    nav[aria-label="menu"] {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: white;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+      z-index: 998;
+    }
+    nav[aria-label="menu"].active {
+      display: flex;
+    }
+  }
+
+  /* Icône panier, compteur et recherche */
+  .cart-icon, .search-icon {
+    position: fixed;
+    top: 20px;
+    z-index: 1001;
+    color: var(--primary-color);
+    background: none;
+    padding: 10px 15px;
+    border-radius: 30px;
+    cursor: pointer;
+    border: none;
+  }
+  .search-icon {
+    right: 70px;
+  }
+  .cart-icon {
+    right: 20px;
+  }
+  .cart-icon svg {
+    width: 28px;
+    height: 28px;
+  }
+  .cart-count {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    background: red;
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 2px 6px;
+    border-radius: 50%;
+    z-index: 1002;
+  }
+
+  /* Préchargeur */
+  #preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+  }
+  #preloader.hidden {
+    opacity: 0;
+    visibility: hidden;
+  }
+  .preloader-logo {
+    width: 500px;
+    animation: fadeIn 1s ease-in-out;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  /* Bannière de promotion */
+  #promo-banner {
+    background-color: red;
+    color: white;
+    text-align: center;
+    padding: 8px;
+    font-size: 1em;
+    font-weight: bold;
+    margin-top: 40px;
+  }
+  #countdown {
+    margin-left: 10px;
+    font-family: monospace;
+  }
+
+  /* Panneau panier */
+  #cart-panel {
+    position: fixed;
+    top: 0;
+    right: -350px;
+    width: 300px;
+    height: 100%;
+    background: white;
+    box-shadow: -2px 0px 5px rgba(0,0,0,0.2);
+    padding: 20px;
+    transition: 0.3s;
+    z-index: 2000;
+  }
+  #cart-panel.open {
+    right: 0;
+  }
+  #cart-panel h2 {
+    margin-top: 0;
+  }
+  #cart-items {
+    list-style: none;
+    padding: 0;
+  }
+  #cart-items li {
+    margin-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  #checkout-btn {
+    background: var(--wa-green);
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    font-size: 16px;
+  }
+  .remove-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+  }
+  .cart-item-controls {
+      display: flex;
+      gap: 5px;
+      align-items: center;
+  }
+  .cart-item-controls button {
+      background: #f0f0f0;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      width: 24px;
+      height: 24px;
+      cursor: pointer;
+  }
+
+  /* Champ de recherche avec suggestions */
+  #search-input {
+    position: fixed;
+    top: 70px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    border: none;
+    border-bottom: 2px solid var(--primary-color);
+    background: transparent;
+    transition: width 0.3s ease-in-out, opacity 0.3s ease-in-out;
+    padding: 5px 0;
+    opacity: 0;
+    z-index: 997;
+  }
+  #search-input.visible {
+    width: 80%;
+    opacity: 1;
+    padding: 5px;
+  }
+  #search-suggestions {
+    position: fixed;
+    top: 110px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-top: none;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 997;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: none;
+  }
+  #search-suggestions.visible {
+    display: block;
+  }
+  .suggestion-item {
+    padding: 10px;
+    cursor: pointer;
+    border-bottom: 1px solid #eee;
+  }
+  .suggestion-item:last-child {
+    border-bottom: none;
+  }
+  .suggestion-item:hover {
+    background-color: #f5f5f5;
+  }
+  
+  /* Sections de contenu */
+  main{ max-width:1100px; margin:24px auto; padding:0 16px; }
   .tagline{
     text-align:center;
     color:var(--muted);
     margin:12px 0 0;
     font-size:0.95rem;
   }
-
-  main{ max-width:1100px; margin:24px auto; padding:0 16px; }
-
+  .hero-img {
+      text-align: center;
+  }
+  .hero-img img {
+      width: 100%;
+      max-width: 800px;
+      height: auto;
+      object-fit: cover;
+  }
   .products {
     display:grid;
     grid-template-columns: 1fr;
     gap:20px;
   }
-  /* two columns on larger screens */
   @media(min-width:760px){
     .products { grid-template-columns: 1fr 1fr; }
   }
-
   .product {
     background:var(--card-bg);
     border-radius:10px;
@@ -221,7 +328,6 @@ to { opacity: 1; }
     transform:translateY(-6px);
     box-shadow:0 18px 40px rgba(10,10,10,0.06);
   }
-
   .product img{
     width:100%;
     height:260px;
@@ -230,7 +336,6 @@ to { opacity: 1; }
     transition:transform .28s ease;
   }
   .product img:hover { transform:scale(1.03); }
-
   .title{
     margin:12px 0 6px;
     font-weight:700;
@@ -240,7 +345,6 @@ to { opacity: 1; }
   .desc{ margin:0; color:var(--muted); font-size:0.92rem; line-height:1.2; }
   .material{ margin:6px 0 8px; color:#777; font-size:0.88rem; font-style:italic; }
   .price{ font-weight:800; margin:8px 0; color:#111; }
-
   .actions{
     display:flex;
     align-items:center;
@@ -248,8 +352,6 @@ to { opacity: 1; }
     gap:12px;
     margin-top:10px;
   }
-
-  /* heart simple */
   .heart{
     font-size:20px;
     line-height:1;
@@ -261,8 +363,6 @@ to { opacity: 1; }
     background:transparent;
   }
   .heart.liked{ color:#e02b4a; transform:scale(1.08); }
-
-  /* WhatsApp text link (green) */
   .order{
     color:var(--wa-green);
     font-weight:700;
@@ -289,77 +389,46 @@ to { opacity: 1; }
   .socials{ display:inline-flex; gap:12px; align-items:center; }
   .socials a img{ width:28px; height:28px; display:inline-block; }
   .copyright{ margin-top:10px; color:#666; font-size:0.9rem; }
-  
-  /* Menu hamburger */
-  @media(max-width: 760px) {
-    nav[aria-label="menu"] {
-      display: none;
-      position: absolute;
-      top: 60px;
-      left: 0;
-      width: 100%;
-      background-color: white;
-      padding: 10px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    }
-    nav[aria-label="menu"].active {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-  }
 </style>
 </head>
 <body>
 
-  <header>
-    <div class="cart-icon" onclick="toggleCart()">
+  <div id="preloader">
+    <img src="logo1.jpg" alt="Galerie Nomad" class="preloader-logo">
+  </div>
+  
+  <button class="search-icon" aria-label="Rechercher">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </svg>
+  </button>
+  <a class="cart-icon" onclick="toggleCart()">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M6 7l1-3h10l1 3"></path>
-        <path d="M3 7h18l-1.5 14H4.5L3 7z"></path>
-        <path d="M8 10V6a4 4 0 0 1 8 0v4"></path>
+          <path d="M6 7l1-3h10l1 3"></path>
+          <path d="M3 7h18l-1.5 14H4.5L3 7z"></path>
+          <path d="M8 10V6a4 4 0 0 1 8 0v4"></path>
       </svg>
       <span id="cart-count" class="cart-count">0</span>
-    </div>
+  </a>
+  <div id="menu-toggle" onclick="toggleMenu()">
+      <span class="menu-bar"></span>
+      <span class="menu-bar"></span>
+      <span class="menu-bar"></span>
+  </div>
+  
+  <input type="text" id="search-input" placeholder="Rechercher un produit...">
+  <div id="search-suggestions"></div>
 
-<div class="actions">
-    <button class="search-icon" aria-label="Rechercher">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="11" cy="11" r="8"></circle>
-            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-        </svg>
-    </button>
-    <a class="cart-icon" onclick="toggleCart()">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-            </svg>
-        <span id="cart-count" class="cart-count">0</span>
-    </a>
-</div>
-
-<input type="text" id="search-input" placeholder="Rechercher un produit...">
-    
-    <div id="menu-toggle" onclick="toggleMenu()">
-        <span class="menu-bar"></span>
-        <span class="menu-bar"></span>
-        <span class="menu-bar"></span>
-    </div>
-
-  <div id="preloader">
-     <img src="logo1.jpg" alt="Galerie Nomad" class="preloader-logo">
-   </div>
-    
-    <div id="promo-banner">
-        Fin des soldes dans : <span id="countdown"></span>
-    </div>
-    
-    <div id="cart-panel">
-      <button onclick="toggleCart()" style="position: absolute; top: 10px; right: 10px; border: none; background: none; font-size: 20px; cursor: pointer;">❌</button>
-      <h2>Votre panier</h2>
-      <ul id="cart-items"></ul>
-      <p id="cart-total">Total : 0 FCFA</p>
-      <button id="checkout-btn" onclick="checkout()">Commander sur WhatsApp</button>
-    </div>
-
+  <div id="cart-panel">
+    <button onclick="toggleCart()" style="position: absolute; top: 10px; right: 10px; border: none; background: none; font-size: 20px; cursor: pointer;">❌</button>
+    <h2>Votre panier</h2>
+    <ul id="cart-items"></ul>
+    <p id="cart-total">Total : 0 FCFA</p>
+    <button id="checkout-btn" onclick="checkout()">Commander sur WhatsApp</button>
+  </div>
+  
+  <header>
     <div style="text-align: center; padding: 20px;">
         <img src="logo.PNG" alt="Galerie Nomad" style="height: 150px; object-fit: contain;">
     </div>
@@ -370,15 +439,18 @@ to { opacity: 1; }
     </nav>
   </header>
 
-    <section class="hero" id="intro">
-      <div class="hero-text">
-        <p style="margin-top:12px;"><a class="cta" href="#creations">Découvrez nos collections</a></p>
-      </div>
+  <div id="promo-banner">
+      Fin des soldes dans : <span id="countdown"></span>
+  </div>
 
-      <div class="hero-img">
-        <img src="Man1.jpg" alt="Bracelet Marin — Galerie Nomad">
-      </div>
-   </section>
+  <section class="hero" id="intro">
+    <div class="hero-text">
+      <p style="margin-top:12px;"><a class="cta" href="#creations">Découvrez nos collections</a></p>
+    </div>
+    <div class="hero-img">
+      <img src="Man1.jpg" alt="Bracelet Marin — Galerie Nomad">
+    </div>
+ </section>
 
   <section id="intro">
     <h2 class="tagline">L'art des bracelets uniques</h2>
@@ -390,7 +462,6 @@ to { opacity: 1; }
 
     <section class="products" id="products">
 
-      <!-- Produit 1 -->
       <article class="product" data-name="Chaîne Warend 1">
         <img src="Cha1.jpg" alt="Chaîne Warend 1">
         <div class="title">Chaîne Warend 1</div>
@@ -398,14 +469,13 @@ to { opacity: 1; }
         <div class="material">Argent</div>
         <span style="text-decoration: line-through; color: red;">18 000 FCFA</span>
         <div class="price">14 000 FCFA</div>
-        <button onclick="addToCart('Tour de cou Maille forçat alternée, pendentif ancre', 14000)">Ajouter au panier</button>
+        <button onclick="addToCart('Chaîne Warend 1', 14000)">Ajouter au panier</button>
         <div class="actions">
           <button class="heart" aria-label="Like">♡</button>
           <a class="order" href="#" data-product="Chaîne Warend 1">Commander</a>
         </div>
       </article>
 
-      <!-- Produit 2 -->
       <article class="product" data-name="Chaîne Warend 2">
         <img src="Cha5.jpg" alt="Chaîne Warend 2">
         <div class="title">Chaîne Warend 2</div>
@@ -413,112 +483,104 @@ to { opacity: 1; }
         <div class="material">Argent</div>
         <span style="text-decoration: line-through; color: red;">18 000 FCFA</span>
         <div class="price">14 000 FCFA</div>
-        <button onclick="addToCart('Tour de cou avec pendentif Menottes', 14000)">Ajouter au panier</button>
+        <button onclick="addToCart('Chaîne Warend 2', 14000)">Ajouter au panier</button>
         <div class="actions">
           <button class="heart" aria-label="Like">♡</button>
           <a class="order" href="#" data-product="Chaîne Warend 2">Commander</a>
         </div>
       </article>
 
-      <!-- Produit 3 -->
       <article class="product" data-name="Chaîne Mercure 2">
         <img src="Cha3.jpg" alt="Chaîne Mercure 2">
         <div class="title">Chaîne Mercure 2</div>
         <p class="desc">Tour de cou avec pendentif argenté fin vieilli</p>
         <div class="material">Acier inoxydable + argenté fin vieilli</div>
         <div class="price">8 000 FCFA</div>
-        <button onclick="addToCart('Tour de cou avec pendentif argenté fin vieilli', 8000)">Ajouter au panier</button>
+        <button onclick="addToCart('Chaîne Mercure 2', 8000)">Ajouter au panier</button>
         <div class="actions">
           <button class="heart" aria-label="Like">♡</button>
           <a class="order" href="#" data-product="Chaîne Mercure 2">Commander</a>
         </div>
       </article>
 
-      <!-- Produit 4 -->
       <article class="product" data-name="Bracelet Origine 1">
         <img src="Bra1.jpg" alt="Bracelet Origine 1">
         <div class="title">Bracelet Origine 1</div>
         <p class="desc">Jeu de cordon sur Menottes Nomad</p>
         <div class="material">Argent</div>
         <div class="price">6 000 FCFA</div>
-        <button onclick="addToCart('Jeu de cordon sur Menottes Nomad', 6000)">Ajouter au panier</button>
+        <button onclick="addToCart('Bracelet Origine 1', 6000)">Ajouter au panier</button>
         <div class="actions">
           <button class="heart" aria-label="Like">♡</button>
           <a class="order" href="#" data-product="Bracelet Origine 1">Commander</a>
         </div>
       </article>
 
-      <!-- Produit 5 -->
       <article class="product" data-name="Bracelet Sable blanc">
         <img src="Bra5.jpg" alt="Bracelet Sable blanc">
         <div class="title">Bracelet Sable blanc</div>
         <p class="desc">Bracelet sur chaîne maille figaro</p>
         <div class="material">Acier inoxydable</div>
         <div class="price">6 000 FCFA</div>
-        <button onclick="addToCart('Bracelet sur chaîne maille figaro', 6000)">Ajouter au panier</button>
+        <button onclick="addToCart('Bracelet Sable blanc', 6000)">Ajouter au panier</button>
         <div class="actions">
           <button class="heart" aria-label="Like">♡</button>
           <a class="order" href="#" data-product="Bracelet Sable blanc">Commander</a>
         </div>
       </article>
 
-      <!-- Produit 6 -->
       <article class="product" data-name="Bracelet Marin">
         <img src="Bra4.jpg" alt="Bracelet Marin">
         <div class="title">Bracelet Marin</div>
         <p class="desc">Jeu de cordon sur fermoir aimantée Nomad</p>
         <div class="material">Acier inoxydable</div>
         <div class="price">6 000 FCFA</div>
-        <button onclick="addToCart('Jeu de cordon sur fermoir aimantée Nomad', 6000)">Ajouter au panier</button>
+        <button onclick="addToCart('Bracelet Marin', 6000)">Ajouter au panier</button>
         <div class="actions">
           <button class="heart" aria-label="Like">♡</button>
           <a class="order" href="#" data-product="Bracelet Marin">Commander</a>
         </div>
       </article>
 
-      <!-- Produit 7 -->
       <article class="product" data-name="Bracelet Origine 2">
         <img src="Bra3.jpg" alt="Bracelet Origine 2">
         <div class="title">Bracelet Origine 2</div>
         <p class="desc">Jeu de cordon sur Menottes Nomad</p>
         <div class="material">Doré</div>
         <div class="price">5 000 FCFA</div>
-        <button onclick="addToCart('Jeu de cordon sur Menottes Nomad', 5000)">Ajouter au panier</button>
+        <button onclick="addToCart('Bracelet Origine 2', 5000)">Ajouter au panier</button>
         <div class="actions">
           <button class="heart" aria-label="Like">♡</button>
           <a class="order" href="#" data-product="Bracelet Origine 2">Commander</a>
         </div>
       </article>
 
-      <!-- Produit 8 -->
       <article class="product" data-name="Chaîne Mercure 1">
         <img src="Cha2.jpg" alt="Chaîne Mercure 1">
         <div class="title">Chaîne Mercure 1</div>
         <p class="desc">Tour de cou avec pendentif croix</p>
         <div class="material">Acier inoxydable</div>
         <div class="price">8 000 FCFA</div>
-        <button onclick="addToCart('Tour de cou avec pendentif croix', 8000)">Ajouter au panier</button>
+        <button onclick="addToCart('Chaîne Mercure 1', 8000)">Ajouter au panier</button>
         <div class="actions">
           <button class="heart" aria-label="Like">♡</button>
           <a class="order" href="#" data-product="Chaîne Mercure 1">Commander</a>
         </div>
       </article>
 
-      <!-- Produit 9 -->
       <article class="product" data-name="Bracelet motif">
         <img src="Bra2.jpg" alt="Bracelet motif">
         <div class="title">Bracelet motif</div>
         <p class="desc">Jeu de cordon sur motif religieux Nomad</p>
         <div class="material">Doré</div>
         <div class="price">4 000 FCFA</div>
-        <button onclick="addToCart('Jeu de cordon sur motif religieux Nomad', 4000)">Ajouter au panier</button>
+        <button onclick="addToCart('Bracelet motif', 4000)">Ajouter au panier</button>
         <div class="actions">
           <button class="heart" aria-label="Like">♡</button>
           <a class="order" href="#" data-product="Bracelet motif">Commander</a>
         </div>
       </article>
 
-      <!-- Produit 10 -->
       <article class="product" data-name="Chaîne Jupiter">
         <img src="Cha4.jpg" alt="Chaîne Jupiter">
         <div class="title">Chaîne Jupiter</div>
@@ -526,24 +588,23 @@ to { opacity: 1; }
         <div class="material">Or 14 karat</div>
         <span style="text-decoration: line-through; color: red;">22 000 FCFA</span>
         <div class="price">18 000 FCFA</div>
-        <button onclick="addToCart('Tour de cou Or laminé pendentif croix', 18000)">Ajouter au panier</button>
+        <button onclick="addToCart('Chaîne Jupiter', 18000)">Ajouter au panier</button>
         <div class="actions">
           <button class="heart" aria-label="Like">♡</button>
           <a class="order" href="#" data-product="Chaîne Jupiter">Commander</a>
         </div>
       </article>
 
-      <!-- Produit 11 -->
       <article class="product" data-name="Bracelet Sable blanc avec initial">
         <img src="Bra6.PNG" alt="Bracelet Sable blanc avec initial">
         <div class="title">Bracelet Sable blanc avec initial</div>
         <p class="desc">Bracelet sur chaîne maille figaro avec initial</p>
         <div class="material">Acier inoxydable</div>
         <div class="price">6 000 FCFA</div>
-        <button onclick="addToCart('Bracelet sur chaîne maille figaro avec initial', 6000)">Ajouter au panier</button>
+        <button onclick="addToCart('Bracelet Sable blanc avec initial', 6000)">Ajouter au panier</button>
         <div class="actions">
           <button class="heart" aria-label="Like">♡</button>
-          <a class="order" href="#" data-product="Bracelet Sable blanc">Commander</a>
+          <a class="order" href="#" data-product="Bracelet Sable blanc avec initial">Commander</a>
         </div>
        </article>
       
@@ -584,12 +645,6 @@ function updateCart() {
     let total = 0;
     const cartItems = document.getElementById("cart-items");
     cartItems.innerHTML = "";
-
-    const formatter = new Intl.NumberFormat('fr-FR', {
-        style: 'currency',
-        currency: 'XAF',
-        minimumFractionDigits: 0
-    });
 
     cart.forEach((item, index) => {
         totalItems += item.quantity;
@@ -655,26 +710,62 @@ function toggleMenu() {
     navMenu.classList.toggle('active');
 }
 
-// Gestion de la barre de recherche
+// Gestion de la barre de recherche avec suggestions
 const searchIcon = document.querySelector('.search-icon');
 const searchInput = document.getElementById('search-input');
 const products = document.querySelectorAll('.product');
+const suggestionsContainer = document.getElementById('search-suggestions');
 
 searchIcon.addEventListener('click', () => {
     searchInput.classList.toggle('visible');
+    suggestionsContainer.classList.toggle('visible');
     searchInput.focus();
 });
 
 searchInput.addEventListener('input', (event) => {
     const searchTerm = event.target.value.toLowerCase();
-    products.forEach(product => {
-        const productName = product.dataset.name.toLowerCase();
-        if (productName.includes(searchTerm)) {
-            product.style.display = 'block';
+    
+    if (searchTerm.length >= 3) {
+        suggestionsContainer.innerHTML = '';
+        let matchingProducts = [];
+
+        products.forEach(product => {
+            const productName = product.dataset.name.toLowerCase();
+            if (productName.includes(searchTerm)) {
+                product.style.display = 'block'; 
+                matchingProducts.push(productName);
+            } else {
+                product.style.display = 'none';
+            }
+        });
+
+        if (matchingProducts.length > 0) {
+            suggestionsContainer.classList.add('visible');
+            matchingProducts.forEach(name => {
+                const suggestionDiv = document.createElement('div');
+                suggestionDiv.className = 'suggestion-item';
+                suggestionDiv.textContent = name;
+                suggestionsContainer.appendChild(suggestionDiv);
+                
+                suggestionDiv.addEventListener('click', () => {
+                    searchInput.value = name;
+                    suggestionsContainer.innerHTML = '';
+                    suggestionsContainer.classList.remove('visible');
+                    products.forEach(p => {
+                        p.style.display = p.dataset.name.toLowerCase() === name.toLowerCase() ? 'block' : 'none';
+                    });
+                });
+            });
         } else {
-            product.style.display = 'none';
+            suggestionsContainer.classList.remove('visible');
         }
-    });
+
+    } else {
+        suggestionsContainer.classList.remove('visible');
+        products.forEach(product => {
+            product.style.display = 'block';
+        });
+    }
 });
 
 
@@ -697,7 +788,7 @@ let x = setInterval(function() {
 }, 1000);
 
 
-// Gestion de la commande individuelle (bouton "Commander")
+// Script de commande individuelle (bouton "Commander")
 const WHATSAPP_NUMBER = "237657697824";
 document.querySelectorAll('.order').forEach(a => {
     a.addEventListener('click', function(e) {
@@ -722,9 +813,8 @@ window.addEventListener('load', function() {
     setTimeout(function() {
         const preloader = document.getElementById('preloader');
         preloader.classList.add('hidden');
-    }, 2000); // Durée du préchargeur en millisecondes
+    }, 2000);
 });
 </script>
-
 </body>
 </html>
