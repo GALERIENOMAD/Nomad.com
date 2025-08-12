@@ -105,7 +105,7 @@
   /* Icône panier, compteur et recherche */
   .cart-icon, .search-icon {
     position: fixed;
-    top: 20px;
+    top: 13px;
     z-index: 1001;
     color: var(--primary-color);
     background: none;
@@ -718,13 +718,18 @@ const suggestionsContainer = document.getElementById('search-suggestions');
 
 searchIcon.addEventListener('click', () => {
     searchInput.classList.toggle('visible');
-    suggestionsContainer.classList.toggle('visible');
+    suggestionsContainer.classList.remove('visible');
     searchInput.focus();
+    // Affiche tous les produits si la barre est fermée
+    if (!searchInput.classList.contains('visible')) {
+        products.forEach(p => p.style.display = 'block');
+    }
 });
 
 searchInput.addEventListener('input', (event) => {
     const searchTerm = event.target.value.toLowerCase();
     
+    // Si l'utilisateur tape au moins 3 lettres
     if (searchTerm.length >= 3) {
         suggestionsContainer.innerHTML = '';
         let matchingProducts = [];
@@ -732,10 +737,10 @@ searchInput.addEventListener('input', (event) => {
         products.forEach(product => {
             const productName = product.dataset.name.toLowerCase();
             if (productName.includes(searchTerm)) {
-                product.style.display = 'block'; 
                 matchingProducts.push(productName);
+                product.style.display = 'block'; // Affiche le produit dans la grille
             } else {
-                product.style.display = 'none';
+                product.style.display = 'none'; // Cache les autres
             }
         });
 
@@ -749,8 +754,8 @@ searchInput.addEventListener('input', (event) => {
                 
                 suggestionDiv.addEventListener('click', () => {
                     searchInput.value = name;
-                    suggestionsContainer.innerHTML = '';
                     suggestionsContainer.classList.remove('visible');
+                    // Affiche uniquement le produit cliqué
                     products.forEach(p => {
                         p.style.display = p.dataset.name.toLowerCase() === name.toLowerCase() ? 'block' : 'none';
                     });
@@ -761,6 +766,7 @@ searchInput.addEventListener('input', (event) => {
         }
 
     } else {
+        // Moins de 3 lettres : cache les suggestions et affiche tous les produits
         suggestionsContainer.classList.remove('visible');
         products.forEach(product => {
             product.style.display = 'block';
