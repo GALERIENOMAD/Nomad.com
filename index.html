@@ -390,6 +390,49 @@
   .socials{ display:inline-flex; gap:12px; align-items:center; }
   .socials a img{ width:28px; height:28px; display:inline-block; }
   .copyright{ margin-top:10px; color:#666; font-size:0.9rem; }
+
+  /* Styles pour le slider d'images */
+  #image-slider {
+      position: relative;
+      width: 100%;
+      margin-top: 20px;
+      overflow: hidden;
+  }
+  .slider-container {
+      width: 100%;
+      overflow: hidden;
+  }
+  .slider-track {
+      display: flex;
+      transition: transform 0.5s ease-in-out;
+  }
+  .slider-track img {
+      width: 100%;
+      height: 400px; /* Hauteur fixe pour toutes les images */
+      object-fit: cover;
+      flex-shrink: 0; /* Empêche les images de rétrécir */
+  }
+  .slider-dots-container {
+      display: flex;
+      justify-content: center;
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      gap: 10px;
+  }
+  .slider-dot {
+      width: 12px;
+      height: 12px;
+      background-color: rgba(255, 255, 255, 0.5);
+      border-radius: 50%;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      border: 2px solid white;
+  }
+  .slider-dot.active {
+      background-color: white;
+  }
 </style>
 </head>
 <body>
@@ -600,6 +643,21 @@
       
     </section>
   </main>
+
+  <section id="image-slider">
+      <div class="slider-container">
+          <div class="slider-track">
+              <img src="image1.jpg" alt="Slide 1">
+              <img src="image2.jpg" alt="Slide 2">
+              <img src="image3.jpg" alt="Slide 3">
+          </div>
+      </div>
+      <div class="slider-dots-container">
+          <div class="slider-dot active" data-slide="0"></div>
+          <div class="slider-dot" data-slide="1"></div>
+          <div class="slider-dot" data-slide="2"></div>
+      </div>
+  </section>
 
   <footer>
     <div class="socials">
@@ -822,6 +880,51 @@ document.addEventListener('DOMContentLoaded', function() {
             preloader.classList.add('hidden');
         }
     }, 2000);
+});
+
+// --- Gestion du slider d'images ---
+const sliderTrack = document.querySelector('.slider-track');
+const sliderDots = document.querySelectorAll('.slider-dot');
+const sliderContainer = document.getElementById('image-slider');
+const slides = document.querySelectorAll('.slider-track img');
+let currentSlide = 0;
+let slideInterval;
+
+const slideTo = (index) => {
+    currentSlide = index;
+    const offset = -currentSlide * 100;
+    sliderTrack.style.transform = `translateX(${offset}%)`;
+
+    sliderDots.forEach(dot => dot.classList.remove('active'));
+    sliderDots[currentSlide].classList.add('active');
+};
+
+const nextSlide = () => {
+    currentSlide = (currentSlide + 1) % slides.length;
+    slideTo(currentSlide);
+};
+
+const startSlider = () => {
+    slideInterval = setInterval(nextSlide, 3000); // Change de slide toutes les 3 secondes
+};
+
+const stopSlider = () => {
+    clearInterval(slideInterval);
+};
+
+// Initialisation et événements
+startSlider();
+
+// Arrête le slider au survol et le redémarre quand la souris quitte
+sliderContainer.addEventListener('mouseenter', stopSlider);
+sliderContainer.addEventListener('mouseleave', startSlider);
+
+// Gère le clic sur les points de navigation
+sliderDots.forEach(dot => {
+    dot.addEventListener('click', (e) => {
+        const slideIndex = parseInt(e.target.dataset.slide);
+        slideTo(slideIndex);
+    });
 });
 </script>
 
