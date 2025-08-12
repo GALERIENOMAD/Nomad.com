@@ -85,20 +85,22 @@
   @media(max-width: 760px) {
     nav[aria-label="menu"] {
       display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: white;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      gap: 20px;
-      z-index: 998;
-    }
-    nav[aria-label="menu"].active {
-      display: flex;
+  position: fixed;
+  top: 50%;                  /* centré verticalement */
+  left: 50%;                 /* centré horizontalement */
+  transform: translate(-50%, -50%); /* vrai centrage */
+  background-color: white;
+  padding: 20px 40px;        /* espace autour du texte */
+  border-radius: 8px;        /* angles arrondis */
+  font-size: 14px;           /* texte plus petit */
+  line-height: 1.6;
+  max-width: 600px;          /* largeur max */
+  text-align: center;        /* texte centré */
+  z-index: 998;
+}
+
+nav[aria-label="menu"].active {
+  display: block;
     }
   }
 
