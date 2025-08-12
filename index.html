@@ -566,19 +566,24 @@ to { opacity: 1; }
   </footer>
 
 <script>
-// Fonctions du panier
+// --- Fonctions de gestion du panier ---
 let cart = [];
 
 function addToCart(productName, price) {
-    cart.push({ name: productName, price: price });
+    const existingItem = cart.find(item => item.name === productName);
+    if (existingItem) {
+        existingItem.quantity++;
+    } else {
+        cart.push({ name: productName, price: price, quantity: 1 });
+    }
     updateCart();
 }
 
 function updateCart() {
-    document.getElementById("cart-count").innerText = cart.length;
-    let cartItems = document.getElementById("cart-items");
-    cartItems.innerHTML = "";
+    let totalItems = 0;
     let total = 0;
+    const cartItems = document.getElementById("cart-items");
+    cartItems.innerHTML = "";
 
     const formatter = new Intl.NumberFormat('fr-FR', {
         style: 'currency',
@@ -587,16 +592,42 @@ function updateCart() {
     });
 
     cart.forEach((item, index) => {
-        total += item.price;
-        cartItems.innerHTML += `<li>${item.name} - ${formatter.format(item.price)} 
-        <button onclick="removeFromCart(${index})">❌</button></li>`;
+        totalItems += item.quantity;
+        total += item.price * item.quantity;
+        cartItems.innerHTML += `
+            <li>
+                <div class="cart-item-name">${item.name}</div>
+                <div class="cart-item-controls">
+                    <button onclick="decreaseQuantity(${index})">–</button>
+                    <span>${item.quantity}</span>
+                    <button onclick="increaseQuantity(${index})">+</button>
+                </div>
+                <div class="cart-item-price">${(item.price * item.quantity).toLocaleString()} FCFA</div>
+                <button onclick="removeFromCart(${index})" class="remove-btn">❌</button>
+            </li>
+        `;
     });
 
-    document.getElementById("cart-total").innerText = `Total : ${formatter.format(total)}`;
+    document.getElementById("cart-count").innerText = totalItems;
+    document.getElementById("cart-total").innerText = `Total : ${total.toLocaleString()} FCFA`;
 }
 
 function removeFromCart(index) {
     cart.splice(index, 1);
+    updateCart();
+}
+
+function increaseQuantity(index) {
+    cart[index].quantity++;
+    updateCart();
+}
+
+function decreaseQuantity(index) {
+    if (cart[index].quantity > 1) {
+        cart[index].quantity--;
+    } else {
+        removeFromCart(index);
+    }
     updateCart();
 }
 
@@ -607,76 +638,25 @@ function toggleCart() {
 function checkout() {
     let message = "Bonjour, je souhaite commander :\n";
     let total = 0;
-    const formatter = new Intl.NumberFormat('fr-FR', {
-        style: 'currency',
-        currency: 'XAF',
-        minimumFractionDigits: 0
-    });
-
     cart.forEach(item => {
-        message += `- ${item.name} : ${formatter.format(item.price)}\n`;
-        total += item.price;
+        message += `- ${item.name} (x${item.quantity}) : ${(item.price * item.quantity).toLocaleString()} FCFA\n`;
+        total += item.price * item.quantity;
     });
-    message += `\nTotal : ${formatter.format(total)}`;
-    let phone = "237657697824"; // Ton numéro WhatsApp
+    message += `\nTotal : ${total.toLocaleString()} FCFA`;
+    let phone = "237657697824";
     let url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
     window.open(url, "_blank");
 }
 
-// Fonction du menu hamburger
+
+// --- Fonctions de l'interface utilisateur ---
 function toggleMenu() {
     const navMenu = document.querySelector('header nav');
     navMenu.classList.toggle('active');
 }
 
-// Script du compte à rebours
-let endDate = new Date("Dec 31, 2025 23:59:59").getTime();
-let x = setInterval(function() {
-    let now = new Date().getTime();
-    let distance = endDate - now;
-    let days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    let seconds = Math.floor((distance % (1000 * 60)) / 1000);
-    document.getElementById("countdown").innerHTML = days + "j " + hours + "h " + minutes + "m " + seconds + "s ";
-    if (distance < 0) {
-        clearInterval(x);
-        document.getElementById("countdown").innerHTML = "Les soldes sont terminés !";
-    }
-}, 1000);
-
-
-// Script de commande WhatsApp
-const WHATSAPP_NUMBER = "237657697824";
-
-document.querySelectorAll('.order').forEach(a=>{
-    a.addEventListener('click', function(e){
-        e.preventDefault();
-        const product = this.dataset.product || 'Produit Galerie Nomad';
-        const text = encodeURIComponent(`Bonjour, je souhaite commander : ${product}.\nQuantité : 1\nNom : \nAdresse/ville : `);
-        const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${text}`;
-        window.open(url, '_blank');
-    });
-});
-
-// Script du bouton "J'aime"
-document.querySelectorAll('.heart').forEach(btn=>{
-    btn.addEventListener('click', function(){
-        this.classList.toggle('liked');
-        this.textContent = this.classList.contains('liked') ? '♥' : '♡';
-    });
-});
-</script>
-
-<script>
-window.addEventListener('load', function() {
-setTimeout(function() {
-const preloader = document.getElementById('preloader');
-preloader.classList.add('hidden');
-}, 1000); // 1000 millisecondes = 1 secondes
-});
-
-  const searchIcon = document.querySelector('.search-icon');
+// Gestion de la barre de recherche
+const searchIcon = document.querySelector('.search-icon');
 const searchInput = document.getElementById('search-input');
 const products = document.querySelectorAll('.product');
 
@@ -695,6 +675,54 @@ searchInput.addEventListener('input', (event) => {
             product.style.display = 'none';
         }
     });
+});
+
+
+// --- Scripts d'événements et d'initialisation ---
+
+// Minuteur pour la promotion
+let endDate = new Date("Dec 31, 2025 23:59:59").getTime();
+let x = setInterval(function() {
+    let now = new Date().getTime();
+    let distance = endDate - now;
+    let days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    document.getElementById("countdown").innerHTML = days + "j " + hours + "h " + minutes + "m " + seconds + "s ";
+    if (distance < 0) {
+        clearInterval(x);
+        document.getElementById("countdown").innerHTML = "Les soldes sont terminés !";
+    }
+}, 1000);
+
+
+// Gestion de la commande individuelle (bouton "Commander")
+const WHATSAPP_NUMBER = "237657697824";
+document.querySelectorAll('.order').forEach(a => {
+    a.addEventListener('click', function(e) {
+        e.preventDefault();
+        const product = this.dataset.product || 'Produit Galerie Nomad';
+        const text = encodeURIComponent(`Bonjour, je souhaite commander : ${product}.\nQuantité : 1\nNom : \nAdresse/ville : `);
+        const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${text}`;
+        window.open(url, '_blank');
+    });
+});
+
+// Script du bouton "J'aime"
+document.querySelectorAll('.heart').forEach(btn => {
+    btn.addEventListener('click', function() {
+        this.classList.toggle('liked');
+        this.textContent = this.classList.contains('liked') ? '♥' : '♡';
+    });
+});
+
+// Gestion du préchargeur
+window.addEventListener('load', function() {
+    setTimeout(function() {
+        const preloader = document.getElementById('preloader');
+        preloader.classList.add('hidden');
+    }, 2000); // Durée du préchargeur en millisecondes
 });
 </script>
   
