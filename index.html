@@ -56,7 +56,35 @@ animation: fadeIn 1s ease-in-out;
 from { opacity: 0; }
 to { opacity: 1; }
 }
-  
+
+/* Style de l'icône de recherche */
+.search-icon {
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-right: 15px; /* Ajustez l'espacement si besoin */
+    padding: 0;
+    color: #222; /* Couleur de l'icône */
+}
+
+/* Champ de recherche caché par défaut */
+#search-input {
+    width: 0;
+    border: none;
+    border-bottom: 2px solid #222;
+    background: transparent;
+    transition: width 0.3s ease-in-out;
+    padding: 5px 0;
+    opacity: 0;
+}
+
+/* Le champ de recherche devient visible et prend de la largeur */
+#search-input.visible {
+    width: 250px; /* Ajustez la largeur désirée */
+    opacity: 1;
+    padding: 5px;
+}
+
 #menu-toggle {
     position: fixed;
     top: 20px;
@@ -290,6 +318,22 @@ to { opacity: 1; }
       <span id="cart-count" class="cart-count">0</span>
     </div>
 
+<div class="actions">
+    <button class="search-icon" aria-label="Rechercher">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+    </button>
+    <a class="cart-icon" onclick="toggleCart()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+            </svg>
+        <span id="cart-count" class="cart-count">0</span>
+    </a>
+</div>
+
+<input type="text" id="search-input" placeholder="Rechercher un produit...">
+    
     <div id="menu-toggle" onclick="toggleMenu()">
         <span class="menu-bar"></span>
         <span class="menu-bar"></span>
