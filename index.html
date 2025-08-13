@@ -277,7 +277,7 @@
     font-size: 24px;
     line-height: 1;
     padding: 0 5px;
-    color: var(--primary-color);
+    color: red; /* Changement : le bouton de retour est maintenant rouge */
     display: none;
   }
   #search-suggestions {
@@ -912,18 +912,20 @@ backButton.addEventListener('click', () => {
     searchContainer.classList.remove('visible');
 });
 
+// Écouteur pour la touche "Entrée" sur le champ de recherche
 searchInput.addEventListener('keydown', (event) => {
     if (event.key === 'Enter') {
-        const visibleProducts = document.querySelectorAll('.product[style*="display: block"]');
-        
-        const firstVisibleProduct = visibleProducts[0];
+        const searchTerm = searchInput.value.toLowerCase();
+        const firstMatchingProduct = [...products].find(p => p.dataset.name.toLowerCase().includes(searchTerm));
 
-        if (firstVisibleProduct) {
-            firstVisibleProduct.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        if (firstMatchingProduct) {
+            firstMatchingProduct.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
+            // Ferme la barre de recherche après un court délai
             setTimeout(() => {
                 searchContainer.classList.remove('visible');
                 suggestionsContainer.classList.remove('visible');
+                searchInput.value = '';
             }, 500);
         }
     }
