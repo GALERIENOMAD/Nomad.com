@@ -290,7 +290,7 @@
   .suggestion-item:hover {
     background-color: #f5f5f5;
   }
-
+  
   #back-to-home-btn {
       display: none;
       position: fixed;
@@ -840,37 +840,27 @@ const suggestionsContainer = document.getElementById('search-suggestions');
 const backToHomeBtn = document.getElementById('back-to-home-btn');
 
 function showAllProducts() {
-    // Rend tous les produits visibles
     products.forEach(p => p.style.display = 'block');
-    // Cache le bouton de retour et vide l'input de recherche
     backToHomeBtn.style.display = 'none';
     searchInput.value = '';
-    // Assurez-vous que la barre de recherche est fermée
-    searchInput.classList.remove('visible');
-    suggestionsContainer.classList.remove('visible');
 }
 
 searchIcon.addEventListener('click', () => {
-    // Si la barre de recherche est visible, la cacher et afficher tous les produits
-    if (searchInput.classList.contains('visible')) {
-        searchInput.classList.remove('visible');
-        suggestionsContainer.classList.remove('visible');
+    searchInput.classList.toggle('visible');
+    suggestionsContainer.classList.remove('visible');
+    searchInput.focus();
+    if (!searchInput.classList.contains('visible')) {
         showAllProducts();
-    } else {
-        // Sinon, l'afficher et y mettre le focus
-        searchInput.classList.add('visible');
-        searchInput.focus();
     }
 });
 
 searchInput.addEventListener('input', (event) => {
     const searchTerm = event.target.value.toLowerCase();
     
-    // Si le terme de recherche a au moins 3 caractères
     if (searchTerm.length >= 3) {
         suggestionsContainer.innerHTML = '';
         let matchingProducts = [];
-        
+
         products.forEach(product => {
             const productName = product.dataset.name.toLowerCase();
             if (productName.includes(searchTerm)) {
@@ -890,30 +880,27 @@ searchInput.addEventListener('input', (event) => {
                 suggestionsContainer.appendChild(suggestionDiv);
                 
                 suggestionDiv.addEventListener('click', () => {
-                    // Masquer la barre de recherche et les suggestions
                     searchInput.classList.remove('visible');
                     suggestionsContainer.classList.remove('visible');
                     searchInput.value = '';
 
-                    // Afficher uniquement le produit sélectionné
                     products.forEach(p => {
-                        if (p.dataset.name.toLowerCase() === name) {
+                        if (p.dataset.name.toLowerCase() === name.toLowerCase()) {
                             p.style.display = 'block';
                             p.scrollIntoView({ behavior: 'smooth', block: 'center' });
                         } else {
                             p.style.display = 'none';
                         }
                     });
-                    // Afficher le bouton de retour
                     backToHomeBtn.style.display = 'block';
                 });
             });
         } else {
             suggestionsContainer.classList.remove('visible');
-            backToHomeBtn.style.display = 'block'; // Permet de revenir si aucun résultat n'est trouvé
+            backToHomeBtn.style.display = 'block';
         }
+
     } else {
-        // Moins de 3 caractères, tout afficher et cacher les suggestions
         suggestionsContainer.classList.remove('visible');
         showAllProducts();
     }
@@ -922,6 +909,7 @@ searchInput.addEventListener('input', (event) => {
 searchInput.addEventListener('keydown', (event) => {
     if (event.key === 'Enter') {
         event.preventDefault();
+        
         const visibleProducts = document.querySelectorAll('.product[style*="display: block"]');
         if (visibleProducts.length === 1) {
             visibleProducts[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -932,7 +920,6 @@ searchInput.addEventListener('keydown', (event) => {
     }
 });
 
-// Écouteur pour le bouton de retour au catalogue
 backToHomeBtn.addEventListener('click', (e) => {
     e.preventDefault();
     showAllProducts();
