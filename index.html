@@ -873,6 +873,25 @@ searchInput.addEventListener('input', (event) => {
     }
 });
 
+// NOUVEAU: Gérer l'action de recherche avec la touche "Entrée"
+searchInput.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter') {
+        const visibleProducts = document.querySelectorAll('.product[style*="display: block"]');
+        if (visibleProducts.length === 1) {
+            // Un seul produit est visible, faire défiler la page vers ce produit
+            visibleProducts[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+            // Fermer la barre de recherche et les suggestions pour un résultat propre
+            searchInput.classList.remove('visible');
+            suggestionsContainer.classList.remove('visible');
+            searchInput.value = ''; // Vider le champ de recherche
+            
+            // Afficher tous les produits à nouveau après la recherche
+            products.forEach(p => p.style.display = 'block');
+        }
+    }
+});
+
 
 // --- Écouteurs d'événements et initialisation ---
 
