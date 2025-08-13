@@ -866,12 +866,11 @@ function toggleMenu() {
     navMenu.classList.toggle('active');
 }
 
-// Gestion de la barre de recherche avec suggestions et bouton de retour
+// --- Fonctions de gestion de la barre de recherche ---
 const searchIcon = document.querySelector('.search-icon');
 const searchInput = document.getElementById('search-input');
 const products = document.querySelectorAll('.product');
 const suggestionsContainer = document.getElementById('search-suggestions');
-const searchBackButton = document.getElementById('search-back-button');
 const searchContainer = document.getElementById('search-container');
 const productReturnButtonContainer = document.getElementById('product-return-button-container');
 
@@ -896,40 +895,31 @@ function showSingleProduct(productElement) {
     productElement.closest('.collection').querySelector('h2').style.display = 'block';
 
     const actionsContainer = productElement.querySelector('.actions');
-    const returnButtonContainer = document.getElementById('product-return-button-container');
-    
-    // Ajoute le bouton de retour sous les boutons "Ajouter au panier" et "J'aime"
-    actionsContainer.after(returnButtonContainer); 
-    returnButtonContainer.classList.add('visible');
-    
+    actionsContainer.after(productReturnButtonContainer);
+    productReturnButtonContainer.classList.add('visible');
+
     productElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
 
-
+// Ouvre et ferme la barre de recherche
 searchIcon.addEventListener('click', () => {
     searchContainer.classList.toggle('visible');
     suggestionsContainer.classList.remove('visible');
     searchInput.focus();
     if (!searchContainer.classList.contains('visible')) {
         showAllProducts();
-        searchBackButton.style.display = 'none';
         searchInput.value = '';
     }
 });
 
 searchInput.addEventListener('input', (event) => {
     const searchTerm = event.target.value.toLowerCase();
-
     if (searchTerm === '') {
-        showAllProducts();
         suggestionsContainer.classList.remove('visible');
-        searchBackButton.style.display = 'none';
         return;
     }
 
-    searchBackButton.style.display = 'block';
     let matchingProducts = [];
-
     products.forEach(product => {
         const productName = product.dataset.name.toLowerCase();
         if (productName.includes(searchTerm)) {
@@ -952,6 +942,8 @@ searchInput.addEventListener('input', (event) => {
                 const selectedProduct = [...products].find(p => p.dataset.name.toLowerCase() === name.toLowerCase());
                 if (selectedProduct) {
                     showSingleProduct(selectedProduct);
+                    searchContainer.classList.remove('visible'); // Ferme la barre après la sélection
+                    searchInput.value = '';
                 }
             });
         });
@@ -960,24 +952,16 @@ searchInput.addEventListener('input', (event) => {
     }
 });
 
-searchBackButton.addEventListener('click', () => {
-    searchInput.value = '';
-    showAllProducts();
-    searchBackButton.style.display = 'none';
-    searchContainer.classList.remove('visible');
-});
-
-// Écouteur pour la touche "Entrée" sur le champ de recherche
+// Écouteur pour la touche "Entrée"
 searchInput.addEventListener('keydown', (event) => {
     if (event.key === 'Enter') {
-        event.preventDefault(); // Empêche l'envoi du formulaire par défaut
+        event.preventDefault();
         const searchTerm = searchInput.value.toLowerCase();
         const firstMatchingProduct = [...products].find(p => p.dataset.name.toLowerCase().includes(searchTerm));
 
         if (firstMatchingProduct) {
             showSingleProduct(firstMatchingProduct);
-            // Ferme la barre de recherche immédiatement
-            searchContainer.classList.remove('visible');
+            searchContainer.classList.remove('visible'); // Ferme la barre immédiatement
             suggestionsContainer.classList.remove('visible');
             searchInput.value = '';
         } else {
@@ -986,11 +970,10 @@ searchInput.addEventListener('keydown', (event) => {
     }
 });
 
-// Écouteur pour le nouveau bouton de retour sous le produit
+// Écouteur pour le bouton de retour
 document.getElementById('product-return-button').addEventListener('click', () => {
     showAllProducts();
 });
-
 
 // --- Écouteurs d'événements et initialisation ---
 
