@@ -822,8 +822,8 @@ searchIcon.addEventListener('click', () => {
     searchInput.classList.toggle('visible');
     suggestionsContainer.classList.remove('visible');
     searchInput.focus();
+    // Quand la barre de recherche est fermée, on s'assure que tous les produits sont visibles
     if (!searchInput.classList.contains('visible')) {
-        // Cacher tous les produits quand la recherche est fermée
         products.forEach(p => p.style.display = 'block');
     }
 });
@@ -839,9 +839,7 @@ searchInput.addEventListener('input', (event) => {
             const productName = product.dataset.name.toLowerCase();
             if (productName.includes(searchTerm)) {
                 matchingProducts.push(productName);
-                product.style.display = 'block';
-            } else {
-                product.style.display = 'none';
+                // On ne masque plus les produits
             }
         });
 
@@ -853,23 +851,20 @@ searchInput.addEventListener('input', (event) => {
                 suggestionDiv.textContent = name;
                 suggestionsContainer.appendChild(suggestionDiv);
                 
-                // Nouvelle fonctionnalité : clic sur la suggestion
                 suggestionDiv.addEventListener('click', () => {
-                    // Masquer la barre de recherche et les suggestions
+                    // Ferme la barre de recherche et les suggestions
                     searchInput.classList.remove('visible');
                     suggestionsContainer.classList.remove('visible');
                     searchInput.value = '';
 
-                    // Afficher uniquement le produit sélectionné
-                    products.forEach(p => {
-                        if (p.dataset.name.toLowerCase() === name.toLowerCase()) {
-                            p.style.display = 'block';
-                            // Faire défiler la page vers le produit
-                            p.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                        } else {
-                            p.style.display = 'none';
-                        }
-                    });
+                    // Fait défiler la page vers le produit sélectionné
+                    const productElement = document.querySelector(`.product[data-name="${name}"]`);
+                    if (productElement) {
+                        productElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                    
+                    // On ne masque plus les autres produits, donc tout reste affiché
+                    products.forEach(p => p.style.display = 'block');
                 });
             });
         } else {
@@ -887,25 +882,28 @@ searchInput.addEventListener('input', (event) => {
 // Gérer l'action de recherche avec la touche "Entrée"
 searchInput.addEventListener('keydown', (event) => {
     if (event.key === 'Enter') {
-        // Empêche le comportement par défaut (comme le zoom)
         event.preventDefault();
         
-        const visibleProducts = document.querySelectorAll('.product[style*="display: block"]');
-        if (visibleProducts.length === 1) {
-            // Un seul produit est visible, faire défiler la page vers ce produit
-            visibleProducts[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
+        const searchTerm = searchInput.value.toLowerCase();
+        const productElement = document.querySelector(`.product[data-name*="${searchTerm}"]`);
+        
+        if (productElement) {
+            // Fait défiler la page vers le produit trouvé
+            productElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
-            // Fermer la barre de recherche et les suggestions pour un résultat propre
+            // Ferme la barre de recherche et les suggestions
             searchInput.classList.remove('visible');
             suggestionsContainer.classList.remove('visible');
-            searchInput.value = ''; // Vider le champ de recherche
+            searchInput.value = '';
             
-            // Afficher tous les produits à nouveau après la recherche
+            // S'assure que tous les produits sont visibles après la recherche
             products.forEach(p => p.style.display = 'block');
+        } else {
+            // Optionnel : afficher un message si le produit n'est pas trouvé
+            alert('Aucun produit correspondant trouvé.');
         }
     }
 });
-
 
 // --- Écouteurs d'événements et initialisation ---
 
