@@ -270,14 +270,14 @@
   #search-input:focus {
     outline: none;
   }
-  #back-button {
+  #search-back-button {
     background: none;
     border: none;
     cursor: pointer;
     font-size: 24px;
     line-height: 1;
     padding: 0 5px;
-    color: red; /* Changement : le bouton de retour est maintenant rouge */
+    color: red;
     display: none;
   }
   #search-suggestions {
@@ -309,7 +309,30 @@
   .suggestion-item:hover {
     background-color: #f5f5f5;
   }
-  
+
+  /* Styles pour le bouton de retour sous le produit */
+  .product-return-button-container {
+    text-align: center;
+    margin-top: 20px;
+    display: none;
+  }
+  .product-return-button-container.visible {
+    display: block;
+  }
+  #product-return-button {
+    background-color: #ff3333;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.2s ease;
+  }
+  #product-return-button:hover {
+    background-color: #cc0000;
+  }
+
   /* Sections de contenu */
   main{ max-width:1100px; margin:24px auto; padding:0 16px; }
   .tagline{
@@ -508,7 +531,7 @@
   
   <div id="search-container">
       <input type="text" id="search-input" placeholder="Rechercher un produit...">
-      <button id="back-button" aria-label="Retour à la page principale">
+      <button id="search-back-button" aria-label="Retour à la page principale">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M19 12H5"></path>
               <polyline points="12 19 5 12 12 5"></polyline>
@@ -720,6 +743,11 @@
             <button class="next-btn" data-slider="slider-chaines-precieux">›</button>
         </div>
     </section>
+
+    <div class="product-return-button-container" id="product-return-button-container">
+      <button id="product-return-button">Retour</button>
+    </div>
+
   </main>
 
   <section id="image-slider">
@@ -843,43 +871,69 @@ const searchIcon = document.querySelector('.search-icon');
 const searchInput = document.getElementById('search-input');
 const products = document.querySelectorAll('.product');
 const suggestionsContainer = document.getElementById('search-suggestions');
-const backButton = document.getElementById('back-button');
+const searchBackButton = document.getElementById('search-back-button');
 const searchContainer = document.getElementById('search-container');
+const productReturnButtonContainer = document.getElementById('product-return-button-container');
+
+function showAllProducts() {
+    products.forEach(p => {
+        p.style.display = 'block';
+        p.closest('.collection-slider').style.display = 'flex';
+        p.closest('.collection').querySelector('h2').style.display = 'block';
+    });
+    productReturnButtonContainer.classList.remove('visible');
+}
+
+function showSingleProduct(productElement) {
+    products.forEach(p => {
+        p.style.display = 'none';
+        p.closest('.collection-slider').style.display = 'none';
+        p.closest('.collection').querySelector('h2').style.display = 'none';
+    });
+
+    productElement.style.display = 'block';
+    productElement.closest('.collection-slider').style.display = 'flex';
+    productElement.closest('.collection').querySelector('h2').style.display = 'block';
+
+    const actionsContainer = productElement.querySelector('.actions');
+    const returnButtonContainer = document.getElementById('product-return-button-container');
+    
+    // Ajoute le bouton de retour sous les boutons "Ajouter au panier" et "J'aime"
+    actionsContainer.after(returnButtonContainer); 
+    returnButtonContainer.classList.add('visible');
+    
+    productElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
 
 searchIcon.addEventListener('click', () => {
     searchContainer.classList.toggle('visible');
     suggestionsContainer.classList.remove('visible');
     searchInput.focus();
     if (!searchContainer.classList.contains('visible')) {
-        products.forEach(p => p.style.display = 'block');
-        backButton.style.display = 'none';
+        showAllProducts();
+        searchBackButton.style.display = 'none';
         searchInput.value = '';
     }
 });
 
 searchInput.addEventListener('input', (event) => {
     const searchTerm = event.target.value.toLowerCase();
-    
+
     if (searchTerm === '') {
-        products.forEach(product => {
-            product.style.display = 'block';
-        });
+        showAllProducts();
         suggestionsContainer.classList.remove('visible');
-        backButton.style.display = 'none';
+        searchBackButton.style.display = 'none';
         return;
     }
 
-    backButton.style.display = 'block';
-
+    searchBackButton.style.display = 'block';
     let matchingProducts = [];
 
     products.forEach(product => {
         const productName = product.dataset.name.toLowerCase();
         if (productName.includes(searchTerm)) {
             matchingProducts.push(productName);
-            product.style.display = 'block';
-        } else {
-            product.style.display = 'none';
         }
     });
 
@@ -891,13 +945,14 @@ searchInput.addEventListener('input', (event) => {
             suggestionDiv.className = 'suggestion-item';
             suggestionDiv.textContent = name;
             suggestionsContainer.appendChild(suggestionDiv);
-            
+
             suggestionDiv.addEventListener('click', () => {
                 searchInput.value = name;
                 suggestionsContainer.classList.remove('visible');
-                products.forEach(p => {
-                    p.style.display = p.dataset.name.toLowerCase() === name.toLowerCase() ? 'block' : 'none';
-                });
+                const selectedProduct = [...products].find(p => p.dataset.name.toLowerCase() === name.toLowerCase());
+                if (selectedProduct) {
+                    showSingleProduct(selectedProduct);
+                }
             });
         });
     } else {
@@ -905,10 +960,10 @@ searchInput.addEventListener('input', (event) => {
     }
 });
 
-backButton.addEventListener('click', () => {
+searchBackButton.addEventListener('click', () => {
     searchInput.value = '';
-    products.forEach(p => p.style.display = 'block');
-    backButton.style.display = 'none';
+    showAllProducts();
+    searchBackButton.style.display = 'none';
     searchContainer.classList.remove('visible');
 });
 
@@ -919,16 +974,22 @@ searchInput.addEventListener('keydown', (event) => {
         const firstMatchingProduct = [...products].find(p => p.dataset.name.toLowerCase().includes(searchTerm));
 
         if (firstMatchingProduct) {
-            firstMatchingProduct.scrollIntoView({ behavior: 'smooth', block: 'center' });
-
+            showSingleProduct(firstMatchingProduct);
             // Ferme la barre de recherche après un court délai
             setTimeout(() => {
                 searchContainer.classList.remove('visible');
                 suggestionsContainer.classList.remove('visible');
                 searchInput.value = '';
             }, 500);
+        } else {
+            alert("Aucun produit ne correspond à votre recherche.");
         }
     }
+});
+
+// Écouteur pour le nouveau bouton de retour sous le produit
+document.getElementById('product-return-button').addEventListener('click', () => {
+    showAllProducts();
 });
 
 
