@@ -349,8 +349,8 @@
   }
   .product img{
     width:100%;
-    height:260px;
-    object-fit:cover;
+    height: auto; /* Rendre la hauteur automatique pour éviter le rognage */
+    object-fit: contain; /* Adapter l'image à la taille du conteneur sans la couper */
     border-radius:8px;
     transition:transform .28s ease;
   }
@@ -402,15 +402,7 @@
     margin-top: 15px;
   }
   .slider-controls button {
-    background: #f0f0f0;
-    border: 1px solid #ccc;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    font-size: 20px;
-    font-weight: bold;
-    cursor: pointer;
-    margin: 0 5px;
+    display: none; /* Masquer les boutons de contrôle des sliders */
   }
 
   /* Footer */
@@ -986,29 +978,6 @@ sliderDots.forEach(dot => {
         slideTo(slideIndex);
     });
 });
-
-// --- Gestion des sliders de collections (nouveau) ---
-function setupCollectionSlider(sliderId) {
-    const slider = document.getElementById(sliderId);
-    const prevBtn = document.querySelector(`.prev-btn[data-slider="${sliderId}"]`);
-    const nextBtn = document.querySelector(`.next-btn[data-slider="${sliderId}"]`);
-
-    prevBtn.addEventListener('click', () => {
-        const scrollAmount = slider.offsetWidth; // Défile d'une largeur de conteneur
-        slider.scrollLeft -= scrollAmount;
-    });
-
-    nextBtn.addEventListener('click', () => {
-        const scrollAmount = slider.offsetWidth;
-        slider.scrollLeft += scrollAmount;
-    });
-}
-
-// Appeler la fonction pour chaque slider de collection
-setupCollectionSlider('slider-bracelets-cordons');
-setupCollectionSlider('slider-bracelets-inox');
-setupCollectionSlider('slider-chaines-inox');
-setupCollectionSlider('slider-chaines-precieux');
 </script>
 
 </body>
