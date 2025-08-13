@@ -242,24 +242,43 @@
   }
 
   /* Champ de recherche avec suggestions */
-  #search-input {
+  #search-container {
     position: fixed;
     top: 70px;
     left: 50%;
     transform: translateX(-50%);
     width: 0;
-    border: none;
-    border-bottom: 2px solid var(--primary-color);
-    background: transparent;
-    transition: width 0.3s ease-in-out, opacity 0.3s ease-in-out;
-    padding: 5px 0;
     opacity: 0;
     z-index: 997;
+    transition: width 0.3s ease-in-out, opacity 0.3s ease-in-out;
+    display: flex;
+    align-items: center;
+    border-bottom: 2px solid var(--primary-color);
+    background: white;
+    padding: 5px;
   }
-  #search-input.visible {
+  #search-container.visible {
     width: 80%;
     opacity: 1;
-    padding: 5px;
+  }
+  #search-input {
+    border: none;
+    background: transparent;
+    flex-grow: 1;
+    font-size: 16px;
+  }
+  #search-input:focus {
+    outline: none;
+  }
+  #back-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 24px;
+    line-height: 1;
+    padding: 0 5px;
+    color: var(--primary-color);
+    display: none;
   }
   #search-suggestions {
     position: fixed;
@@ -289,20 +308,6 @@
   }
   .suggestion-item:hover {
     background-color: #f5f5f5;
-  }
-
-  #back-button {
-      display: none;
-      position: fixed;
-      top: 115px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 997;
-      padding: 10px 20px;
-      border: 1px solid #ccc;
-      background-color: #f0f0f0;
-      cursor: pointer;
-      border-radius: 5px;
   }
   
   /* Sections de contenu */
@@ -501,11 +506,16 @@
       <span class="menu-bar"></span>
   </div>
   
-  <input type="text" id="search-input" placeholder="Rechercher un produit...">
+  <div id="search-container">
+      <input type="text" id="search-input" placeholder="Rechercher un produit...">
+      <button id="back-button" aria-label="Retour à la page principale">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M19 12H5"></path>
+              <polyline points="12 19 5 12 12 5"></polyline>
+          </svg>
+      </button>
+  </div>
   <div id="search-suggestions"></div>
-  <button id="back-button" style="display:none; position: fixed; top: 115px; left: 50%; transform: translateX(-50%); z-index: 997; padding: 10px 20px; border: 1px solid #ccc; background-color: #f0f0f0; cursor: pointer; border-radius: 5px;">
-    Retour à la page principale
-  </button>
 
   <div id="cart-panel">
     <button onclick="toggleCart()" style="position: absolute; top: 10px; right: 10px; border: none; background: none; font-size: 20px; cursor: pointer;">❌</button>
@@ -834,23 +844,22 @@ const searchInput = document.getElementById('search-input');
 const products = document.querySelectorAll('.product');
 const suggestionsContainer = document.getElementById('search-suggestions');
 const backButton = document.getElementById('back-button');
+const searchContainer = document.getElementById('search-container');
 
 searchIcon.addEventListener('click', () => {
-    searchInput.classList.toggle('visible');
+    searchContainer.classList.toggle('visible');
     suggestionsContainer.classList.remove('visible');
     searchInput.focus();
-    if (!searchInput.classList.contains('visible')) {
-        // Affiche tous les produits quand la recherche est fermée
+    if (!searchContainer.classList.contains('visible')) {
         products.forEach(p => p.style.display = 'block');
         backButton.style.display = 'none';
-        searchInput.value = ''; // Réinitialise le champ de recherche
+        searchInput.value = '';
     }
 });
 
 searchInput.addEventListener('input', (event) => {
     const searchTerm = event.target.value.toLowerCase();
     
-    // Si le terme de recherche est vide, on réinitialise tout
     if (searchTerm === '') {
         products.forEach(product => {
             product.style.display = 'block';
@@ -860,7 +869,6 @@ searchInput.addEventListener('input', (event) => {
         return;
     }
 
-    // Affiche le bouton de retour dès qu'une recherche est active
     backButton.style.display = 'block';
 
     let matchingProducts = [];
@@ -901,24 +909,20 @@ backButton.addEventListener('click', () => {
     searchInput.value = '';
     products.forEach(p => p.style.display = 'block');
     backButton.style.display = 'none';
-    searchInput.classList.remove('visible');
+    searchContainer.classList.remove('visible');
 });
 
-// Gérer l'action de recherche avec la touche "Entrée"
 searchInput.addEventListener('keydown', (event) => {
     if (event.key === 'Enter') {
         const visibleProducts = document.querySelectorAll('.product[style*="display: block"]');
         
-        // Ciblez le premier produit visible, s'il y en a un
         const firstVisibleProduct = visibleProducts[0];
 
         if (firstVisibleProduct) {
-            // Faites défiler jusqu'au produit
             firstVisibleProduct.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
-            // Masquez la barre de recherche et les suggestions après un court délai
             setTimeout(() => {
-                searchInput.classList.remove('visible');
+                searchContainer.classList.remove('visible');
                 suggestionsContainer.classList.remove('visible');
             }, 500);
         }
@@ -1009,21 +1013,18 @@ const nextSlide = () => {
 };
 
 const startSlider = () => {
-    slideInterval = setInterval(nextSlide, 3000); // Change de slide toutes les 3 secondes
+    slideInterval = setInterval(nextSlide, 3000);
 };
 
 const stopSlider = () => {
     clearInterval(slideInterval);
 };
 
-// Initialisation et événements
 startSlider();
 
-// Arrête le slider au survol et le redémarre quand la souris quitte
 sliderContainer.addEventListener('mouseenter', stopSlider);
 sliderContainer.addEventListener('mouseleave', startSlider);
 
-// Gère le clic sur les points de navigation
 sliderDots.forEach(dot => {
     dot.addEventListener('click', (e) => {
         const slideIndex = parseInt(e.target.dataset.slide);
