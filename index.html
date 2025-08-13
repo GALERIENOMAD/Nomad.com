@@ -876,6 +876,9 @@ searchInput.addEventListener('input', (event) => {
 // NOUVEAU: Gérer l'action de recherche avec la touche "Entrée"
 searchInput.addEventListener('keydown', (event) => {
     if (event.key === 'Enter') {
+        // Empêche le comportement par défaut (comme le zoom)
+        event.preventDefault();
+        
         const visibleProducts = document.querySelectorAll('.product[style*="display: block"]');
         if (visibleProducts.length === 1) {
             // Un seul produit est visible, faire défiler la page vers ce produit
