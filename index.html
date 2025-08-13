@@ -853,11 +853,22 @@ searchInput.addEventListener('input', (event) => {
                 suggestionDiv.textContent = name;
                 suggestionsContainer.appendChild(suggestionDiv);
                 
+                // Nouvelle fonctionnalité : clic sur la suggestion
                 suggestionDiv.addEventListener('click', () => {
-                    searchInput.value = name;
+                    // Masquer la barre de recherche et les suggestions
+                    searchInput.classList.remove('visible');
                     suggestionsContainer.classList.remove('visible');
+                    searchInput.value = '';
+
+                    // Afficher uniquement le produit sélectionné
                     products.forEach(p => {
-                        p.style.display = p.dataset.name.toLowerCase() === name.toLowerCase() ? 'block' : 'none';
+                        if (p.dataset.name.toLowerCase() === name.toLowerCase()) {
+                            p.style.display = 'block';
+                            // Faire défiler la page vers le produit
+                            p.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        } else {
+                            p.style.display = 'none';
+                        }
                     });
                 });
             });
@@ -873,7 +884,7 @@ searchInput.addEventListener('input', (event) => {
     }
 });
 
-// NOUVEAU: Gérer l'action de recherche avec la touche "Entrée"
+// Gérer l'action de recherche avec la touche "Entrée"
 searchInput.addEventListener('keydown', (event) => {
     if (event.key === 'Enter') {
         // Empêche le comportement par défaut (comme le zoom)
