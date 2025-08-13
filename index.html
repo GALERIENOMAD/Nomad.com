@@ -968,19 +968,19 @@ searchBackButton.addEventListener('click', () => {
 });
 
 // Écouteur pour la touche "Entrée" sur le champ de recherche
+// Écouteur pour la touche "Entrée" sur le champ de recherche
 searchInput.addEventListener('keydown', (event) => {
     if (event.key === 'Enter') {
+        event.preventDefault(); // Empêche l'envoi du formulaire par défaut
         const searchTerm = searchInput.value.toLowerCase();
         const firstMatchingProduct = [...products].find(p => p.dataset.name.toLowerCase().includes(searchTerm));
 
         if (firstMatchingProduct) {
             showSingleProduct(firstMatchingProduct);
-            // Ferme la barre de recherche après un court délai
-            setTimeout(() => {
-                searchContainer.classList.remove('visible');
-                suggestionsContainer.classList.remove('visible');
-                searchInput.value = '';
-            }, 500);
+            // Ferme la barre de recherche immédiatement
+            searchContainer.classList.remove('visible');
+            suggestionsContainer.classList.remove('visible');
+            searchInput.value = '';
         } else {
             alert("Aucun produit ne correspond à votre recherche.");
         }
