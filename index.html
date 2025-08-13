@@ -840,57 +840,60 @@ searchIcon.addEventListener('click', () => {
     suggestionsContainer.classList.remove('visible');
     searchInput.focus();
     if (!searchInput.classList.contains('visible')) {
-        // Cacher tous les produits quand la recherche est fermée
+        // Affiche tous les produits quand la recherche est fermée
         products.forEach(p => p.style.display = 'block');
         backButton.style.display = 'none';
+        searchInput.value = ''; // Réinitialise le champ de recherche
     }
 });
 
 searchInput.addEventListener('input', (event) => {
     const searchTerm = event.target.value.toLowerCase();
     
-    if (searchTerm.length >= 3) {
-        suggestionsContainer.innerHTML = '';
-        let matchingProducts = [];
-
-        products.forEach(product => {
-            const productName = product.dataset.name.toLowerCase();
-            if (productName.includes(searchTerm)) {
-                matchingProducts.push(productName);
-                product.style.display = 'block';
-            } else {
-                product.style.display = 'none';
-            }
-        });
-
-        if (matchingProducts.length > 0) {
-            suggestionsContainer.classList.add('visible');
-            backButton.style.display = 'block';
-            matchingProducts.forEach(name => {
-                const suggestionDiv = document.createElement('div');
-                suggestionDiv.className = 'suggestion-item';
-                suggestionDiv.textContent = name;
-                suggestionsContainer.appendChild(suggestionDiv);
-                
-                suggestionDiv.addEventListener('click', () => {
-                    searchInput.value = name;
-                    suggestionsContainer.classList.remove('visible');
-                    products.forEach(p => {
-                        p.style.display = p.dataset.name.toLowerCase() === name.toLowerCase() ? 'block' : 'none';
-                    });
-                });
-            });
-        } else {
-            suggestionsContainer.classList.remove('visible');
-            backButton.style.display = 'none';
-        }
-
-    } else {
-        suggestionsContainer.classList.remove('visible');
+    // Si le terme de recherche est vide, on réinitialise tout
+    if (searchTerm === '') {
         products.forEach(product => {
             product.style.display = 'block';
         });
+        suggestionsContainer.classList.remove('visible');
         backButton.style.display = 'none';
+        return;
+    }
+
+    // Affiche le bouton de retour dès qu'une recherche est active
+    backButton.style.display = 'block';
+
+    let matchingProducts = [];
+
+    products.forEach(product => {
+        const productName = product.dataset.name.toLowerCase();
+        if (productName.includes(searchTerm)) {
+            matchingProducts.push(productName);
+            product.style.display = 'block';
+        } else {
+            product.style.display = 'none';
+        }
+    });
+
+    suggestionsContainer.innerHTML = '';
+    if (matchingProducts.length > 0) {
+        suggestionsContainer.classList.add('visible');
+        matchingProducts.forEach(name => {
+            const suggestionDiv = document.createElement('div');
+            suggestionDiv.className = 'suggestion-item';
+            suggestionDiv.textContent = name;
+            suggestionsContainer.appendChild(suggestionDiv);
+            
+            suggestionDiv.addEventListener('click', () => {
+                searchInput.value = name;
+                suggestionsContainer.classList.remove('visible');
+                products.forEach(p => {
+                    p.style.display = p.dataset.name.toLowerCase() === name.toLowerCase() ? 'block' : 'none';
+                });
+            });
+        });
+    } else {
+        suggestionsContainer.classList.remove('visible');
     }
 });
 
