@@ -308,15 +308,34 @@
       height: auto;
       object-fit: cover;
   }
-  .products {
-    display:grid;
-    grid-template-columns: 1fr;
-    gap:20px;
+  
+  /* Styles pour les collections avec slider */
+  .collection {
+    position: relative;
+    margin-bottom: 40px;
   }
-  @media(min-width:760px){
-    .products { grid-template-columns: 1fr 1fr; }
+  .collection h2 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  .collection-slider {
+    display: flex;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    gap: 20px;
+    padding: 10px;
+  }
+  /* Masquer la barre de défilement pour les navigateurs basés sur WebKit */
+  .collection-slider::-webkit-scrollbar {
+    display: none;
+  }
+  .collection-slider {
+    -ms-overflow-style: none;  /* Masquer la barre de défilement pour IE et Edge */
+    scrollbar-width: none;  /* Masquer la barre de défilement pour Firefox */
   }
   .product {
+    min-width: 300px; /* Largeur fixe pour chaque produit dans le slider */
     background:var(--card-bg);
     border-radius:10px;
     padding:14px;
@@ -377,6 +396,21 @@
   .add-to-cart-btn:hover{
     background: rgba(37,211,102,0.08);
     transform:translateY(-2px);
+  }
+  .slider-controls {
+    text-align: center;
+    margin-top: 15px;
+  }
+  .slider-controls button {
+    background: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    margin: 0 5px;
   }
 
   /* Footer */
@@ -504,143 +538,168 @@
   <main>
     <p class="tagline">Bracelets premium en acier inoxydable, or pur et argent 925</p>
 
-    <section class="products" id="products">
-
-      <article class="product" data-name="Chaîne Warend 1" data-price="14000">
-        <img src="Cha1.jpg" alt="Chaîne Warend 1">
-        <div class="title">Chaîne Warend 1</div>
-        <p class="desc">Tour de cou Maille forçat alternée, pendentif ancre</p>
-        <div class="material">Argent</div>
-        <span style="text-decoration: line-through; color: red;">18 000 FCFA</span>
-        <div class="price">14 000 FCFA</div>
-        <div class="actions">
-          <button class="heart" aria-label="Like">♡</button>
-          <button class="add-to-cart-btn" aria-label="Ajouter Chaîne Warend 1 au panier">Ajouter au panier</button>
+    <section class="collection" id="bracelets-cordons">
+        <h2>Bracelets Cordons</h2>
+        <div class="collection-slider" id="slider-bracelets-cordons">
+            <article class="product" data-name="Bracelet Origine 1" data-price="6000">
+                <img src="Bra1.jpg" alt="Bracelet Origine 1">
+                <div class="title">Bracelet Origine 1</div>
+                <p class="desc">Jeu de cordon sur Menottes Nomad</p>
+                <div class="material">Argent</div>
+                <div class="price">6 000 FCFA</div>
+                <div class="actions">
+                  <button class="heart" aria-label="Like">♡</button>
+                  <button class="add-to-cart-btn" aria-label="Ajouter Bracelet Origine 1 au panier">Ajouter au panier</button>
+                </div>
+            </article>
+            <article class="product" data-name="Bracelet Marin" data-price="6000">
+                <img src="Bra4.jpg" alt="Bracelet Marin">
+                <div class="title">Bracelet Marin</div>
+                <p class="desc">Jeu de cordon sur fermoir aimantée Nomad</p>
+                <div class="material">Acier inoxydable</div>
+                <div class="price">6 000 FCFA</div>
+                <div class="actions">
+                  <button class="heart" aria-label="Like">♡</button>
+                  <button class="add-to-cart-btn" aria-label="Ajouter Bracelet Marin au panier">Ajouter au panier</button>
+                </div>
+            </article>
+            <article class="product" data-name="Bracelet Origine 2" data-price="5000">
+                <img src="Bra3.jpg" alt="Bracelet Origine 2">
+                <div class="title">Bracelet Origine 2</div>
+                <p class="desc">Jeu de cordon sur Menottes Nomad</p>
+                <div class="material">Doré</div>
+                <div class="price">5 000 FCFA</div>
+                <div class="actions">
+                  <button class="heart" aria-label="Like">♡</button>
+                  <button class="add-to-cart-btn" aria-label="Ajouter Bracelet Origine 2 au panier">Ajouter au panier</button>
+                </div>
+            </article>
+            <article class="product" data-name="Bracelet motif" data-price="4000">
+                <img src="Bra2.jpg" alt="Bracelet motif">
+                <div class="title">Bracelet motif</div>
+                <p class="desc">Jeu de cordon sur motif religieux Nomad</p>
+                <div class="material">Doré</div>
+                <div class="price">4 000 FCFA</div>
+                <div class="actions">
+                  <button class="heart" aria-label="Like">♡</button>
+                  <button class="add-to-cart-btn" aria-label="Ajouter Bracelet motif au panier">Ajouter au panier</button>
+                </div>
+            </article>
         </div>
-      </article>
-
-      <article class="product" data-name="Chaîne Warend 2" data-price="14000">
-        <img src="Cha5.jpg" alt="Chaîne Warend 2">
-        <div class="title">Chaîne Warend 2</div>
-        <p class="desc">Tour de cou avec pendentif Menottes</p>
-        <div class="material">Argent</div>
-        <span style="text-decoration: line-through; color: red;">18 000 FCFA</span>
-        <div class="price">14 000 FCFA</div>
-        <div class="actions">
-          <button class="heart" aria-label="Like">♡</button>
-          <button class="add-to-cart-btn" aria-label="Ajouter Chaîne Warend 2 au panier">Ajouter au panier</button>
+        <div class="slider-controls">
+            <button class="prev-btn" data-slider="slider-bracelets-cordons">‹</button>
+            <button class="next-btn" data-slider="slider-bracelets-cordons">›</button>
         </div>
-      </article>
+    </section>
 
-      <article class="product" data-name="Chaîne Mercure 2" data-price="8000">
-        <img src="Cha3.jpg" alt="Chaîne Mercure 2">
-        <div class="title">Chaîne Mercure 2</div>
-        <p class="desc">Tour de cou avec pendentif argenté fin vieilli</p>
-        <div class="material">Acier inoxydable + argenté fin vieilli</div>
-        <div class="price">8 000 FCFA</div>
-        <div class="actions">
-          <button class="heart" aria-label="Like">♡</button>
-          <button class="add-to-cart-btn" aria-label="Ajouter Chaîne Mercure 2 au panier">Ajouter au panier</button>
+    <section class="collection" id="bracelets-inox">
+        <h2>Bracelets Acier Inoxydable</h2>
+        <div class="collection-slider" id="slider-bracelets-inox">
+            <article class="product" data-name="Bracelet Sable blanc" data-price="6000">
+                <img src="Bra5.jpg" alt="Bracelet Sable blanc">
+                <div class="title">Bracelet Sable blanc</div>
+                <p class="desc">Bracelet sur chaîne maille figaro</p>
+                <div class="material">Acier inoxydable</div>
+                <div class="price">6 000 FCFA</div>
+                <div class="actions">
+                  <button class="heart" aria-label="Like">♡</button>
+                  <button class="add-to-cart-btn" aria-label="Ajouter Bracelet Sable blanc au panier">Ajouter au panier</button>
+                </div>
+            </article>
+            <article class="product" data-name="Bracelet Sable blanc avec initial" data-price="6000">
+                <img src="Bra6.PNG" alt="Bracelet Sable blanc avec initial">
+                <div class="title">Bracelet Sable blanc avec initial</div>
+                <p class="desc">Bracelet sur chaîne maille figaro avec initial</p>
+                <div class="material">Acier inoxydable</div>
+                <div class="price">6 000 FCFA</div>
+                <div class="actions">
+                  <button class="heart" aria-label="Like">♡</button>
+                  <button class="add-to-cart-btn" aria-label="Ajouter Bracelet Sable blanc avec initial au panier">Ajouter au panier</button>
+                </div>
+            </article>
+            </div>
+        <div class="slider-controls">
+            <button class="prev-btn" data-slider="slider-bracelets-inox">‹</button>
+            <button class="next-btn" data-slider="slider-bracelets-inox">›</button>
         </div>
-      </article>
+    </section>
 
-      <article class="product" data-name="Bracelet Origine 1" data-price="6000">
-        <img src="Bra1.jpg" alt="Bracelet Origine 1">
-        <div class="title">Bracelet Origine 1</div>
-        <p class="desc">Jeu de cordon sur Menottes Nomad</p>
-        <div class="material">Argent</div>
-        <div class="price">6 000 FCFA</div>
-        <div class="actions">
-          <button class="heart" aria-label="Like">♡</button>
-          <button class="add-to-cart-btn" aria-label="Ajouter Bracelet Origine 1 au panier">Ajouter au panier</button>
+    <section class="collection" id="chaines-inox">
+        <h2>Chaînes Acier Inoxydable</h2>
+        <div class="collection-slider" id="slider-chaines-inox">
+            <article class="product" data-name="Chaîne Mercure 2" data-price="8000">
+                <img src="Cha3.jpg" alt="Chaîne Mercure 2">
+                <div class="title">Chaîne Mercure 2</div>
+                <p class="desc">Tour de cou avec pendentif argenté fin vieilli</p>
+                <div class="material">Acier inoxydable + argenté fin vieilli</div>
+                <div class="price">8 000 FCFA</div>
+                <div class="actions">
+                  <button class="heart" aria-label="Like">♡</button>
+                  <button class="add-to-cart-btn" aria-label="Ajouter Chaîne Mercure 2 au panier">Ajouter au panier</button>
+                </div>
+            </article>
+            <article class="product" data-name="Chaîne Mercure 1" data-price="8000">
+                <img src="Cha2.jpg" alt="Chaîne Mercure 1">
+                <div class="title">Chaîne Mercure 1</div>
+                <p class="desc">Tour de cou avec pendentif croix</p>
+                <div class="material">Acier inoxydable</div>
+                <div class="price">8 000 FCFA</div>
+                <div class="actions">
+                  <button class="heart" aria-label="Like">♡</button>
+                  <button class="add-to-cart-btn" aria-label="Ajouter Chaîne Mercure 1 au panier">Ajouter au panier</button>
+                </div>
+            </article>
+            </div>
+        <div class="slider-controls">
+            <button class="prev-btn" data-slider="slider-chaines-inox">‹</button>
+            <button class="next-btn" data-slider="slider-chaines-inox">›</button>
         </div>
-      </article>
+    </section>
 
-      <article class="product" data-name="Bracelet Sable blanc" data-price="6000">
-        <img src="Bra5.jpg" alt="Bracelet Sable blanc">
-        <div class="title">Bracelet Sable blanc</div>
-        <p class="desc">Bracelet sur chaîne maille figaro</p>
-        <div class="material">Acier inoxydable</div>
-        <div class="price">6 000 FCFA</div>
-        <div class="actions">
-          <button class="heart" aria-label="Like">♡</button>
-          <button class="add-to-cart-btn" aria-label="Ajouter Bracelet Sable blanc au panier">Ajouter au panier</button>
+    <section class="collection" id="chaines-precieux">
+        <h2>Chaînes Précieux</h2>
+        <div class="collection-slider" id="slider-chaines-precieux">
+            <article class="product" data-name="Chaîne Warend 1" data-price="14000">
+                <img src="Cha1.jpg" alt="Chaîne Warend 1">
+                <div class="title">Chaîne Warend 1</div>
+                <p class="desc">Tour de cou Maille forçat alternée, pendentif ancre</p>
+                <div class="material">Argent</div>
+                <span style="text-decoration: line-through; color: red;">18 000 FCFA</span>
+                <div class="price">14 000 FCFA</div>
+                <div class="actions">
+                  <button class="heart" aria-label="Like">♡</button>
+                  <button class="add-to-cart-btn" aria-label="Ajouter Chaîne Warend 1 au panier">Ajouter au panier</button>
+                </div>
+            </article>
+            <article class="product" data-name="Chaîne Warend 2" data-price="14000">
+                <img src="Cha5.jpg" alt="Chaîne Warend 2">
+                <div class="title">Chaîne Warend 2</div>
+                <p class="desc">Tour de cou avec pendentif Menottes</p>
+                <div class="material">Argent</div>
+                <span style="text-decoration: line-through; color: red;">18 000 FCFA</span>
+                <div class="price">14 000 FCFA</div>
+                <div class="actions">
+                  <button class="heart" aria-label="Like">♡</button>
+                  <button class="add-to-cart-btn" aria-label="Ajouter Chaîne Warend 2 au panier">Ajouter au panier</button>
+                </div>
+            </article>
+            <article class="product" data-name="Chaîne Jupiter" data-price="18000">
+                <img src="Cha4.jpg" alt="Chaîne Jupiter">
+                <div class="title">Chaîne Jupiter</div>
+                <p class="desc">Tour de cou Or laminé pendentif croix</p>
+                <div class="material">Or 14 karat</div>
+                <span style="text-decoration: line-through; color: red;">22 000 FCFA</span>
+                <div class="price">18 000 FCFA</div>
+                <div class="actions">
+                  <button class="heart" aria-label="Like">♡</button>
+                  <button class="add-to-cart-btn" aria-label="Ajouter Chaîne Jupiter au panier">Ajouter au panier</button>
+                </div>
+            </article>
+            </div>
+        <div class="slider-controls">
+            <button class="prev-btn" data-slider="slider-chaines-precieux">‹</button>
+            <button class="next-btn" data-slider="slider-chaines-precieux">›</button>
         </div>
-      </article>
-
-      <article class="product" data-name="Bracelet Marin" data-price="6000">
-        <img src="Bra4.jpg" alt="Bracelet Marin">
-        <div class="title">Bracelet Marin</div>
-        <p class="desc">Jeu de cordon sur fermoir aimantée Nomad</p>
-        <div class="material">Acier inoxydable</div>
-        <div class="price">6 000 FCFA</div>
-        <div class="actions">
-          <button class="heart" aria-label="Like">♡</button>
-          <button class="add-to-cart-btn" aria-label="Ajouter Bracelet Marin au panier">Ajouter au panier</button>
-        </div>
-      </article>
-
-      <article class="product" data-name="Bracelet Origine 2" data-price="5000">
-        <img src="Bra3.jpg" alt="Bracelet Origine 2">
-        <div class="title">Bracelet Origine 2</div>
-        <p class="desc">Jeu de cordon sur Menottes Nomad</p>
-        <div class="material">Doré</div>
-        <div class="price">5 000 FCFA</div>
-        <div class="actions">
-          <button class="heart" aria-label="Like">♡</button>
-          <button class="add-to-cart-btn" aria-label="Ajouter Bracelet Origine 2 au panier">Ajouter au panier</button>
-        </div>
-      </article>
-
-      <article class="product" data-name="Chaîne Mercure 1" data-price="8000">
-        <img src="Cha2.jpg" alt="Chaîne Mercure 1">
-        <div class="title">Chaîne Mercure 1</div>
-        <p class="desc">Tour de cou avec pendentif croix</p>
-        <div class="material">Acier inoxydable</div>
-        <div class="price">8 000 FCFA</div>
-        <div class="actions">
-          <button class="heart" aria-label="Like">♡</button>
-          <button class="add-to-cart-btn" aria-label="Ajouter Chaîne Mercure 1 au panier">Ajouter au panier</button>
-        </div>
-      </article>
-
-      <article class="product" data-name="Bracelet motif" data-price="4000">
-        <img src="Bra2.jpg" alt="Bracelet motif">
-        <div class="title">Bracelet motif</div>
-        <p class="desc">Jeu de cordon sur motif religieux Nomad</p>
-        <div class="material">Doré</div>
-        <div class="price">4 000 FCFA</div>
-        <div class="actions">
-          <button class="heart" aria-label="Like">♡</button>
-          <button class="add-to-cart-btn" aria-label="Ajouter Bracelet motif au panier">Ajouter au panier</button>
-        </div>
-      </article>
-
-      <article class="product" data-name="Chaîne Jupiter" data-price="18000">
-        <img src="Cha4.jpg" alt="Chaîne Jupiter">
-        <div class="title">Chaîne Jupiter</div>
-        <p class="desc">Tour de cou Or laminé pendentif croix</p>
-        <div class="material">Or 14 karat</div>
-        <span style="text-decoration: line-through; color: red;">22 000 FCFA</span>
-        <div class="price">18 000 FCFA</div>
-        <div class="actions">
-          <button class="heart" aria-label="Like">♡</button>
-          <button class="add-to-cart-btn" aria-label="Ajouter Chaîne Jupiter au panier">Ajouter au panier</button>
-        </div>
-      </article>
-
-      <article class="product" data-name="Bracelet Sable blanc avec initial" data-price="6000">
-        <img src="Bra6.PNG" alt="Bracelet Sable blanc avec initial">
-        <div class="title">Bracelet Sable blanc avec initial</div>
-        <p class="desc">Bracelet sur chaîne maille figaro avec initial</p>
-        <div class="material">Acier inoxydable</div>
-        <div class="price">6 000 FCFA</div>
-        <div class="actions">
-          <button class="heart" aria-label="Like">♡</button>
-          <button class="add-to-cart-btn" aria-label="Ajouter Bracelet Sable blanc avec initial au panier">Ajouter au panier</button>
-        </div>
-       </article>
-      
     </section>
   </main>
 
@@ -772,6 +831,7 @@ searchIcon.addEventListener('click', () => {
     suggestionsContainer.classList.remove('visible');
     searchInput.focus();
     if (!searchInput.classList.contains('visible')) {
+        // Cacher tous les produits quand la recherche est fermée
         products.forEach(p => p.style.display = 'block');
     }
 });
@@ -882,7 +942,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }, 2000);
 });
 
-// --- Gestion du slider d'images ---
+// --- Gestion du slider d'images (pour la grande bannière) ---
 const sliderTrack = document.querySelector('.slider-track');
 const sliderDots = document.querySelectorAll('.slider-dot');
 const sliderContainer = document.getElementById('image-slider');
@@ -926,6 +986,29 @@ sliderDots.forEach(dot => {
         slideTo(slideIndex);
     });
 });
+
+// --- Gestion des sliders de collections (nouveau) ---
+function setupCollectionSlider(sliderId) {
+    const slider = document.getElementById(sliderId);
+    const prevBtn = document.querySelector(`.prev-btn[data-slider="${sliderId}"]`);
+    const nextBtn = document.querySelector(`.next-btn[data-slider="${sliderId}"]`);
+
+    prevBtn.addEventListener('click', () => {
+        const scrollAmount = slider.offsetWidth; // Défile d'une largeur de conteneur
+        slider.scrollLeft -= scrollAmount;
+    });
+
+    nextBtn.addEventListener('click', () => {
+        const scrollAmount = slider.offsetWidth;
+        slider.scrollLeft += scrollAmount;
+    });
+}
+
+// Appeler la fonction pour chaque slider de collection
+setupCollectionSlider('slider-bracelets-cordons');
+setupCollectionSlider('slider-bracelets-inox');
+setupCollectionSlider('slider-chaines-inox');
+setupCollectionSlider('slider-chaines-precieux');
 </script>
 
 </body>
