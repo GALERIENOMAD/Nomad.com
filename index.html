@@ -22,6 +22,16 @@
     color:#222;
     -webkit-font-smoothing:antialiased;
   }
+
+  /* Bannière de livraison gratuite */
+  #shipping-banner {
+      background-color: var(--primary-color);
+      color: white;
+      text-align: center;
+      padding: 8px;
+      font-size: 0.9em;
+      font-weight: bold;
+  }
   
   /* En-tête */
   header {
@@ -447,6 +457,25 @@
     display: none; /* Masquer les boutons de contrôle des sliders */
   }
 
+   /* Styles pour le tag Nouveauté */
+.new-tag {
+    background-color: #ff5722; /* Une couleur orange vif */
+    color: white;
+    font-weight: bold;
+    font-size: 0.85em;
+    padding: 4px 8px;
+    border-radius: 4px;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 10;
+}
+
+/* Indispensable pour que le positionnement absolu du tag fonctionne */
+.product {
+    position: relative; 
+}
+ 
   /* Footer */
   footer{
     margin-top:28px;
@@ -505,6 +534,10 @@
 </head>
 <body>
 
+ <div id="shipping-banner">
+      Livraison gratuite à partir de 20.000 FCFA
+ </div>
+  
   <div id="preloader">
     <img src="logo1.jpg" alt="Galerie Nomad" class="preloader-logo">
   </div>
@@ -617,6 +650,7 @@
         <div class="collection-slider" id="slider-chaines-precieux">
             <article class="product" data-name="Chaîne Warend 1" data-price="14000">
                 <img src="Cha1.jpg" alt="Chaîne Warend 1">
+                <div class="new-tag">Nouveauté</div>
                 <div class="title">Chaîne Warend 1</div>
                 <p class="desc">Tour de cou Maille forçat alternée, pendentif ancre</p>
                 <div class="material">Argent</div>
