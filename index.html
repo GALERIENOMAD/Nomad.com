@@ -1,320 +1,1185 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Galerie Nomad — Boutique</title>
-    <link rel="stylesheet" href="style.css" />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Galerie Nomad — Boutique</title>
+<style>
+  /* Variables de couleur et styles de base */
+  :root {
+    --bg: #f8f8f8; /* blanc */
+    --card-bg: #ffffff;
+    --muted: #666;
+    --accent: #0b3b45;
+    --wa-green: #25D366;
+    --primary-color: #222;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    background:var(--bg);
+    color:#222;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  /* Bannière de livraison gratuite */
+  #shipping-banner {
+      background-color: var(--primary-color);
+      color: white;
+      text-align: flex;
+      padding: 5px;
+      font-size: 0.7em;
+      font-weight: bold;
+  }
+  
+  /* En-tête */
+  header {
+    position: relative;
+    padding: 16px;
+    border-bottom: 1px solid rgba(0,0,0,0.04);
+  }
+  .header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .logo-container {
+      flex: 1;
+      text-align: center;
+  }
+  header img{ 
+    height:86px; 
+    object-fit:contain; 
+  }
+  header nav{
+    text-align:center;
+    padding:10px 0;
+  }
+
+  /* Menu de navigation */
+  nav[aria-label="menu"] {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    font-weight: bold;
+  }
+  nav[aria-label="menu"] a {
+      text-decoration: none;
+      color: var(--primary-color);
+  }
+
+  /* Styles mobiles pour le menu hamburger */
+  #menu-toggle {
+    position: fixed;
+    top: 37px;
+    left: 20px;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    cursor: pointer;
+    z-index: 1002;
+    background: none;
+  }
+  .menu-bar {
+    width: 110%;
+    height: 2px;
+    background-color: #222;
+    border-radius: 2px;
+    transition: all 0.3s ease-in-out;
+  }
+  @media(max-width: 760px) {
+    nav[aria-label="menu"] {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: white;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+      z-index: 998;
+    }
+    nav[aria-label="menu"].active {
+      display: flex;
+    }
+  }
+
+  /* Icône panier, compteur et recherche */
+  .cart-icon, .search-icon {
+    position: fixed;
+    top: 23px;
+    z-index: 1001;
+    color: var(--primary-color);
+    background: none;
+    padding: 10px 15px;
+    border-radius: 30px;
+    cursor: pointer;
+    border: none;
+  }
+  .search-icon {
+    right: 50px;
+  }
+  .cart-icon {
+    right: 10px;
+  }
+  .cart-icon svg {
+    width: 23px;
+    height: 23px;
+  }
+  .cart-count {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    background: red;
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 2px 6px;
+    border-radius: 50%;
+    z-index: 1002;
+  }
+
+  /* Préchargeur */
+  #preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+  }
+  #preloader.hidden {
+    opacity: 0;
+    visibility: hidden;
+  }
+  .preloader-logo {
+    width: 90px;
+    animation: fadeIn 1s ease-in-out;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  /* Bannière de promotion */
+  #promo-banner {
+    background-color: red;
+    color: white;
+    text-align: center;
+    padding: 8px;
+    font-size: 1em;
+    font-weight: bold;
+    margin-top: 40px;
+  }
+  #countdown {
+    margin-left: 10px;
+    font-family: monospace;
+  }
+
+  /* Panneau panier */
+  #cart-panel {
+    position: fixed;
+    top: 0;
+    right: -350px;
+    width: 300px;
+    height: 100%;
+    background: #f8f8f8;
+    box-shadow: -2px 0px 5px rgba(0,0,0,0.2);
+    padding: 20px;
+    transition: 0.3s;
+    z-index: 2000;
+  }
+  #cart-panel.open {
+    right: 0;
+  }
+  #cart-panel h2 {
+    margin-top: 0;
+  }
+  #cart-items {
+    list-style: none;
+    padding: 0;
+  }
+  #cart-items li {
+    margin-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  #checkout-btn {
+    background: var(--wa-green);
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    font-size: 16px;
+  }
+  .remove-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+  }
+  .cart-item-controls {
+      display: flex;
+      gap: 5px;
+      align-items: center;
+  }
+  .cart-item-controls button {
+      background: #f0f0f0;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      width: 24px;
+      height: 24px;
+      cursor: pointer;
+  }
+
+  /* Champ de recherche avec suggestions */
+  #search-container {
+    position: fixed;
+    top: 70px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    opacity: 0;
+    z-index: 997;
+    transition: width 0.3s ease-in-out, opacity 0.3s ease-in-out;
+    display: flex;
+    align-items: center;
+    border-bottom: 2px solid var(--primary-color);
+    background: white;
+    padding: 5px;
+  }
+  #search-container.visible {
+    width: 80%;
+    opacity: 1;
+  }
+  #search-input {
+    border: none;
+    background: transparent;
+    flex-grow: 1;
+    font-size: 16px;
+  }
+  #search-input:focus {
+    outline: none;
+  }
+  #search-back-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 24px;
+    line-height: 1;
+    padding: 0 5px;
+    color: red;
+    display: none;
+  }
+  #search-suggestions {
+    position: fixed;
+    top: 110px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-top: none;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 997;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: none;
+  }
+  #search-suggestions.visible {
+    display: block;
+  }
+  .suggestion-item {
+    padding: 10px;
+    cursor: pointer;
+    border-bottom: 1px solid #eee;
+  }
+  .suggestion-item:last-child {
+    border-bottom: none;
+  }
+  .suggestion-item:hover {
+    background-color: #f5f5f5;
+  }
+
+  /* Styles pour le bouton de retour sous le produit */
+  .product-return-button-container {
+    text-align: center;
+    margin-top: 20px;
+    display: none;
+  }
+  .product-return-button-container.visible {
+    display: block;
+  }
+  #product-return-button {
+    background-color: #ff3333;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.2s ease;
+  }
+  #product-return-button:hover {
+    background-color: #cc0000;
+  }
+
+  /* Sections de contenu */
+  main{ max-width:1100px; margin:24px auto; padding:0 16px; }
+  .tagline{
+    text-align:center;
+    color:var(--muted);
+    margin:12px 0 0;
+    font-size:0.95rem;
+  }
+  .hero-img {
+      text-align: center;
+  }
+  .hero-img img {
+      width: 100%;
+      max-width: 800px;
+      height: auto;
+      object-fit: cover;
+  }
+  
+  /* Styles pour les collections avec slider */
+  .collection {
+    position: relative;
+    margin-bottom: 40px;
+  }
+  .collection h2 {
+    text-align: center;
+    margin-bottom: 15px;
+  }
+  .collection-slider {
+    display: flex;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    gap: 20px;
+    padding: 10px;
+  }
+  /* Masquer la barre de défilement pour les navigateurs basés sur WebKit */
+  .collection-slider::-webkit-scrollbar {
+    display: none;
+  }
+  .collection-slider {
+    -ms-overflow-style: none;  /* Masquer la barre de défilement pour IE et Edge */
+    scrollbar-width: none;  /* Masquer la barre de défilement pour Firefox */
+  }
+  .product {
+    min-width: 300px; /* Largeur fixe pour chaque produit dans le slider */
+    background:var(--card-bg);
+    border-radius:10px;
+    padding:14px;
+    box-shadow:0 8px 30px rgba(10,10,10,0.04);
+    transition:transform .18s ease, box-shadow .18s ease;
+    text-align:center;
+  }
+  .product:hover{
+    transform:translateY(-6px);
+    box-shadow:0 18px 40px rgba(10,10,10,0.06);
+  }
+  .product img{
+    width:100%;
+    height: auto; /* Rendre la hauteur automatique pour éviter le rognage */
+    object-fit: contain; /* Adapter l'image à la taille du conteneur sans la couper */
+    border-radius:8px;
+    transition:transform .28s ease;
+  }
+  .product img:hover { transform:scale(1.03); }
+  .title{
+    margin:12px 0 6px;
+    font-weight:700;
+    font-size:1.04rem;
+    color:#111;
+  }
+  .desc{ margin:0; color:var(--muted); font-size:0.92rem; line-height:1.2; }
+  .material{ margin:6px 0 8px; color:#777; font-size:0.88rem; font-style:italic; }
+  .price{ font-weight:800; margin:8px 0; color:#111; }
+  .actions{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:12px;
+    margin-top:10px;
+  }
+  .heart{
+    font-size:20px;
+    line-height:1;
+    cursor:pointer;
+    color:#b0b0b0;
+    transition: color .18s ease, transform .12s ease;
+    user-select:none;
+    border:none;
+    background:transparent;
+  }
+  .heart.liked{ color:#e02b4a; transform:scale(1.08); }
+  .add-to-cart-btn{
+    color:var(--wa-green);
+    font-weight:700;
+    text-decoration:none;
+    border:1px solid transparent;
+    padding:8px 12px;
+    border-radius:6px;
+    transition:background .12s ease, color .12s ease, transform .12s ease;
+    background:transparent;
+    cursor: pointer;
+  }
+  .add-to-cart-btn:hover{
+    background: rgba(37,211,102,0.08);
+    transform:translateY(-2px);
+  }
+  .slider-controls {
+    text-align: center;
+    margin-top: 15px;
+  }
+  .slider-controls button {
+    display: none; /* Masquer les boutons de contrôle des sliders */
+  }
+  
+  /* Style du conteneur de l'article pour permettre le positionnement absolu */
+.product {
+    position: relative; 
+    overflow: hidden; 
+}
+
+/* Style du conteneur d'image et du badge */
+.product-media {
+    position: relative; 
+    display: inline-block; 
+}
+
+/* Badge centré sur l'image */
+.stock-badge {
+    position: absolute;
+    top: 50%;           
+    left: 50%;          
+    transform: translate(-50%, -50%); 
+    color: white;       
+    background-color: transparent; 
+    padding: 10px 20px;
+    font-size: 1.2em;
+    font-weight: bold;
+    text-transform: uppercase;
+    z-index: 10;        
+    border-radius: 5px; 
+    display: none; /* Cache le badge par défaut */
+}
+
+/* Affiche le badge seulement quand l'article est en stock épuisé */
+.product.out-of-stock .stock-badge {
+    display: block;
+}
+
+/* Image décolorée */
+.product-image {
+    /* Ce sélecteur n'est pas utilisé dans votre code HTML, car l'image est directement dans le conteneur product-media */
+}
+
+.product.out-of-stock .product-media img {
+    filter: grayscale(70%); /* Applique le filtre à l'image contenue dans le .product-media */
+}
+
+   /* Styles pour le tag Nouveauté */
+.new-tag {
+    background-color: #ff5722; /* Une couleur orange vif */
+    color: white;
+    font-weight: bold;
+    font-size: 0.75em;
+    padding: 4px 8px;
+    border-radius: 4px;
+    position: absolute;
+    top: 15px;
+    right: 10px;
+    z-index: 10;
+}
+
+/* Indispensable pour que le positionnement absolu du tag fonctionne */
+.product {
+    position: relative; 
+}
+ 
+  /* Footer */
+  footer{
+    margin-top:28px;
+    background:var(--card-bg);
+    padding:18px 12px;
+    text-align:center;
+    border-top:1px solid rgba(0,0,0,0.04);
+  }
+  .socials{ display:inline-flex; gap:12px; align-items:center; }
+  .socials a img{ width:28px; height:28px; display:inline-block; }
+  .copyright{ margin-top:10px; color:#666; font-size:0.9rem; }
+
+  /* Styles pour le slider d'images */
+  #image-slider {
+      position: relative;
+      width: 100%;
+      margin-top: 20px;
+      overflow: hidden;
+  }
+  .slider-container {
+      width: 100%;
+      overflow: hidden;
+  }
+  .slider-track {
+      display: flex;
+      transition: transform 0.5s ease-in-out;
+  }
+  .slider-track img {
+      width: 100%;
+      height: 400px; /* Hauteur fixe pour toutes les images */
+      object-fit: cover;
+      flex-shrink: 0; /* Empêche les images de rétrécir */
+  }
+  .slider-dots-container {
+      display: flex;
+      justify-content: center;
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      gap: 10px;
+  }
+  .slider-dot {
+      width: 12px;
+      height: 12px;
+      background-color: rgba(255, 255, 255, 0.5);
+      border-radius: 50%;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      border: 2px solid white;
+  }
+  .slider-dot.active {
+      background-color: white;
+  }
+</style>
 </head>
 <body>
 
-    <div id="shipping-banner">
-        Livraison gratuite à partir de 20.000 FCFA
+ <div id="shipping-banner">
+      Livraison gratuite à partir de 20.000 FCFA
+ </div>
+  
+  <div id="preloader">
+    <img src="logo1.jpg" alt="Galerie Nomad" class="preloader-logo">
+  </div>
+  
+  <button class="search-icon" aria-label="Rechercher">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </svg>
+  </button>
+  <a class="cart-icon" onclick="toggleCart()">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 7l1-3h10l1 3"></path>
+          <path d="M3 7h18l-1.5 14H4.5L3 7z"></path>
+          <path d="M8 10V6a4 4 0 0 1 8 0v4"></path>
+      </svg>
+      <span id="cart-count" class="cart-count">0</span>
+  </a>
+  <div id="menu-toggle" onclick="toggleMenu()">
+      <span class="menu-bar"></span>
+      <span class="menu-bar"></span>
+      <span class="menu-bar"></span>
+  </div>
+  
+  <div id="search-container">
+      <input type="text" id="search-input" placeholder="Rechercher un produit...">
+      <button id="search-back-button" aria-label="Retour à la page principale">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M19 12H5"></path>
+              <polyline points="12 19 5 12 12 5"></polyline>
+          </svg>
+      </button>
+  </div>
+  <div id="search-suggestions"></div>
+
+  <div id="cart-panel">
+    <button onclick="toggleCart()" style="position: absolute; top: 10px; right: 10px; border: none; background: none; font-size: 20px; cursor: pointer;">❌</button>
+    <h2>Votre panier</h2>
+    <ul id="cart-items"></ul>
+    <p id="cart-total">Total : 0 FCFA</p>
+    <button id="checkout-btn">Commander sur WhatsApp</button>
+  </div>
+  
+ <div style="text-align: center; padding: 10px; margin-top: 5px;
+margin-bottom: 5px;">
+    <img src="logo.PNG" alt="Galerie Nomad" style="height: 100px; width: auto; object-fit: contain;">
+</div>
+    <nav aria-label="menu">
+        <a href="#about">l'élégance</a>
+        <a href="#creations">à travers</a>
+        <a href="#contact">le temps</a>
+    </nav>
+  </header>
+
+  <div id="promo-banner">
+      Fin des soldes dans : <span id="countdown"></span>
+  </div>
+
+  <section class="hero" id="intro">
+    <div class="hero-text">
+      <p style="margin-top:12px;"><a class="cta" href="#creations">Découvrez nos collections</a></p>
     </div>
-
-    <div id="preloader">
-        <img src="logo1.jpg" alt="Galerie Nomad" class="preloader-logo">
+    <div class="hero-img">
+      <img src="Man1.jpg" alt="Bracelet Marin — Galerie Nomad">
     </div>
+ </section>
 
-    <button class="search-icon" aria-label="Rechercher">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="11" cy="11" r="8"></circle>
-            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-        </svg>
-    </button>
-    <a class="cart-icon" onclick="toggleCart()">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M6 7l1-3h10l1 3"></path>
-            <path d="M3 7h18l-1.5 14H4.5L3 7z"></path>
-            <path d="M8 10V6a4 4 0 0 1 8 0v4"></path>
-        </svg>
-        <span id="cart-count" class="cart-count">0</span>
-    </a>
-    <div id="menu-toggle" onclick="toggleMenu()">
-        <span class="menu-bar"></span>
-        <span class="menu-bar"></span>
-        <span class="menu-bar"></span>
-    </div>
+  <section id="intro">
+    <h2 class="tagline">L'art des bracelets uniques</h2>
+    <p class="tagline">Forgés avec passion et caractère, nos bracelets et tours de cou allient élégance , résistance et identité.</p>
+  </section>
 
-    <div id="search-container">
-        <input type="text" id="search-input" placeholder="Rechercher un produit...">
-        <button id="search-back-button" aria-label="Retour à la page principale">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M19 12H5"></path>
-                <polyline points="12 19 5 12 12 5"></polyline>
-            </svg>
-        </button>
-    </div>
-    <div id="search-suggestions"></div>
-
-    <div id="cart-panel">
-        <button onclick="toggleCart()" style="position: absolute; top: 10px; right: 10px; border: none; background: none; font-size: 20px; cursor: pointer;">❌</button>
-        <h2>Votre panier</h2>
-        <ul id="cart-items"></ul>
-        <p id="cart-total">Total : 0 FCFA</p>
-        <button id="checkout-btn">Commander sur WhatsApp</button>
-    </div>
-
-    <header>
-        <div style="text-align: center; padding: 10px; margin-top: 5px; margin-bottom: 5px;">
-            <img src="logo.PNG" alt="Galerie Nomad" style="height: 100px; width: auto; object-fit: contain;">
-        </div>
-        <nav aria-label="menu">
-            <a href="#about">l'élégance</a>
-            <a href="#creations">à travers</a>
-            <a href="#contact">le temps</a>
-        </nav>
-    </header>
-
-    <div id="promo-banner">
-        Fin des soldes dans : <span id="countdown"></span>
-    </div>
-
-    <section class="hero" id="intro">
-        <div class="hero-text">
-            <p style="margin-top:12px;"><a class="cta" href="#creations">Découvrez nos collections</a></p>
-        </div>
-        <div class="hero-img">
-            <img src="Man1.jpg" alt="Bracelet Marin — Galerie Nomad">
+  <main>
+    <p class="tagline">Bracelets premium en acier inoxydable, or pur et argent 925</p>
+    
+    <section class="collection" id="chaines-inox">
+        <h2>Chaînes • Acier inoxydable</h2>
+        <div class="collection-slider" id="slider-chaines-inox">
+            <article class="product" data-name="Chaîne Mercure 2" data-price="8000">
+                <img src="Cha3.jpg" alt="Chaîne Mercure 2">
+                <div class="title">Chaîne Mercure 2</div>
+                <p class="desc">Tour de cou avec pendentif argenté fin vieilli</p>
+                <div class="material">Acier inoxydable + argenté fin vieilli</div>
+                <div class="price">8 000 FCFA</div>
+                <div class="actions">
+                  <button class="heart" aria-label="Like">♡</button>
+                  <button class="add-to-cart-btn" aria-label="Ajouter Chaîne Mercure 2 au panier">Ajouter au panier</button>
+                </div>
+            </article>
+            <article class="product" data-name="Chaîne Mercure 1" data-price="8000">
+                <img src="Cha2.jpg" alt="Chaîne Mercure 1">
+                <div class="title">Chaîne Mercure 1</div>
+                <p class="desc">Tour de cou avec pendentif croix</p>
+                <div class="material">Acier inoxydable</div>
+                <div class="price">8 000 FCFA</div>
+                <div class="actions">
+                  <button class="heart" aria-label="Like">♡</button>
+                  <button class="add-to-cart-btn" aria-label="Ajouter Chaîne Mercure 1 au panier">Ajouter au panier</button>
+                </div>
+            </article>
+            </div>
+        <div class="slider-controls">
+            <button class="prev-btn" data-slider="slider-chaines-inox">‹</button>
+            <button class="next-btn" data-slider="slider-chaines-inox">›</button>
         </div>
     </section>
 
-    <section id="intro">
-        <h2 class="tagline">L'art des bracelets uniques</h2>
-        <p class="tagline">Forgés avec passion et caractère, nos bracelets et tours de cou allient élégance, résistance et identité.</p>
+    <section class="collection" id="chaines-precieux">
+        <h2>Chaînes • Métaux précieux</h2>
+        <div class="collection-slider" id="slider-chaines-precieux">
+            <article class="product" data-name="Chaîne Warend 1" data-price="14000">
+                <img src="Cha1.jpg" alt="Chaîne Warend 1">
+                <div class="new-tag">Nouveauté</div>
+                <div class="title">Chaîne Warend 1</div>
+                <p class="desc">Tour de cou Maille forçat alternée, pendentif ancre</p>
+                <div class="material">Argent</div>
+                <span style="text-decoration: line-through; color: red;">18 000 FCFA</span>
+                <div class="price">14 000 FCFA</div>
+                <div class="actions">
+                  <button class="heart" aria-label="Like">♡</button>
+                  <button class="add-to-cart-btn" aria-label="Ajouter Chaîne Warend 1 au panier">Ajouter au panier</button>
+                </div>
+            </article>
+            <article class="product" data-name="Chaîne Warend 2" data-price="14000">
+                <img src="Cha5.jpg" alt="Chaîne Warend 2">
+                <div class="title">Chaîne Warend 2</div>
+                <p class="desc">Tour de cou Maille forçat alternée, pendentif Menottes</p>
+                <div class="material">Argent</div>
+                <span style="text-decoration: line-through; color: red;">18 000 FCFA</span>
+                <div class="price">14 000 FCFA</div>
+                <div class="actions">
+                  <button class="heart" aria-label="Like">♡</button>
+                  <button class="add-to-cart-btn" aria-label="Ajouter Chaîne Warend 2 au panier">Ajouter au panier</button>
+                </div>
+            </article>
+            <article class="product" data-name="Chaîne Jupiter" data-price="18000">
+                <img src="Cha4.jpg" alt="Chaîne Jupiter">
+                <div class="title">Chaîne Jupiter</div>
+                <p class="desc">Tour de cou Or laminé pendentif croix</p>
+                <div class="material">Or 14 karat</div>
+                <span style="text-decoration: line-through; color: red;">22 000 FCFA</span>
+                <div class="price">18 000 FCFA</div>
+                <div class="actions">
+                  <button class="heart" aria-label="Like">♡</button>
+                  <button class="add-to-cart-btn" aria-label="Ajouter Chaîne Jupiter au panier">Ajouter au panier</button>
+                </div>
+            </article>
+            <article class="product out-of-stock" data-name="Chaîne Warend 3" data-price="21000">
+    <div class="product-media">
+        <img src="Cha6.jpg" alt="Chaîne Warend 3" class="product-image">
+        <span class="stock-badge epuise">Épuisé</span>
+    </div>
+    <div class="title">Chaîne Warend 3</div>
+    <p class="desc">Tour de cou Maille forçat alternée, pendentif poisson articulé</p>
+    <div class="material">Argent</div>
+    <span style="text-decoration: line-through; color: red;">25 000 FCFA</span>
+    <div class="price">21 000 FCFA</div>
+    <div class="actions">
+        <button class="heart" aria-label="Like">♡</button>
+        <button class="add-to-cart-btn" aria-label="Ajouter Chaîne Warend 3">Ajouter au panier</button>
+    </div>
+    </article>
+        </div>
+        <div class="slider-controls">
+            <button class="prev-btn" data-slider="slider-chaines-precieux">‹</button>
+            <button class="next-btn" data-slider="slider-chaines-precieux">›</button>
+        </div>
     </section>
-
-    <main>
-        <p class="tagline">Bracelets premium en acier inoxydable, or pur et argent 925</p>
-
-        <section class="collection" id="chaines-inox">
-            <h2>Chaînes • Acier inoxydable</h2>
-            <div class="collection-slider" id="slider-chaines-inox">
-                <article class="product" data-name="Chaîne Mercure 2" data-price="8000">
-                    <img src="Cha3.jpg" alt="Chaîne Mercure 2">
-                    <div class="title">Chaîne Mercure 2</div>
-                    <p class="desc">Tour de cou avec pendentif argenté fin vieilli</p>
-                    <div class="material">Acier inoxydable + argenté fin vieilli</div>
-                    <div class="price">8 000 FCFA</div>
-                    <div class="actions">
-                        <button class="heart" aria-label="Like">♡</button>
-                        <button class="add-to-cart-btn" aria-label="Ajouter Chaîne Mercure 2 au panier">Ajouter au panier</button>
-                    </div>
-                </article>
-                <article class="product" data-name="Chaîne Mercure 1" data-price="8000">
-                    <img src="Cha2.jpg" alt="Chaîne Mercure 1">
-                    <div class="title">Chaîne Mercure 1</div>
-                    <p class="desc">Tour de cou avec pendentif croix</p>
-                    <div class="material">Acier inoxydable</div>
-                    <div class="price">8 000 FCFA</div>
-                    <div class="actions">
-                        <button class="heart" aria-label="Like">♡</button>
-                        <button class="add-to-cart-btn" aria-label="Ajouter Chaîne Mercure 1 au panier">Ajouter au panier</button>
-                    </div>
-                </article>
-            </div>
-            <div class="slider-controls">
-                <button class="prev-btn" data-slider="slider-chaines-inox">‹</button>
-                <button class="next-btn" data-slider="slider-chaines-inox">›</button>
-            </div>
-        </section>
-
-        <section class="collection" id="chaines-precieux">
-            <h2>Chaînes • Métaux précieux</h2>
-            <div class="collection-slider" id="slider-chaines-precieux">
-                <article class="product" data-name="Chaîne Warend 1" data-price="14000">
-                    <img src="Cha1.jpg" alt="Chaîne Warend 1">
-                    <div class="new-tag">Nouveauté</div>
-                    <div class="title">Chaîne Warend 1</div>
-                    <p class="desc">Tour de cou Maille forçat alternée, pendentif ancre</p>
-                    <div class="material">Argent</div>
-                    <span style="text-decoration: line-through; color: red;">18 000 FCFA</span>
-                    <div class="price">14 000 FCFA</div>
-                    <div class="actions">
-                        <button class="heart" aria-label="Like">♡</button>
-                        <button class="add-to-cart-btn" aria-label="Ajouter Chaîne Warend 1 au panier">Ajouter au panier</button>
-                    </div>
-                </article>
-                <article class="product" data-name="Chaîne Warend 2" data-price="14000">
-                    <img src="Cha5.jpg" alt="Chaîne Warend 2">
-                    <div class="title">Chaîne Warend 2</div>
-                    <p class="desc">Tour de cou Maille forçat alternée, pendentif Menottes</p>
-                    <div class="material">Argent</div>
-                    <span style="text-decoration: line-through; color: red;">18 000 FCFA</span>
-                    <div class="price">14 000 FCFA</div>
-                    <div class="actions">
-                        <button class="heart" aria-label="Like">♡</button>
-                        <button class="add-to-cart-btn" aria-label="Ajouter Chaîne Warend 2 au panier">Ajouter au panier</button>
-                    </div>
-                </article>
-                <article class="product" data-name="Chaîne Jupiter" data-price="18000">
-                    <img src="Cha4.jpg" alt="Chaîne Jupiter">
-                    <div class="title">Chaîne Jupiter</div>
-                    <p class="desc">Tour de cou Or laminé pendentif croix</p>
-                    <div class="material">Or 14 karat</div>
-                    <span style="text-decoration: line-through; color: red;">22 000 FCFA</span>
-                    <div class="price">18 000 FCFA</div>
-                    <div class="actions">
-                        <button class="heart" aria-label="Like">♡</button>
-                        <button class="add-to-cart-btn" aria-label="Ajouter Chaîne Jupiter au panier">Ajouter au panier</button>
-                    </div>
-                </article>
-                <article class="product out-of-stock" data-name="Chaîne Warend 3" data-price="21000">
-                    <div class="product-media">
-                        <img src="Cha6.jpg" alt="Chaîne Warend 3" class="product-image">
-                        <span class="stock-badge epuise">Épuisé</span>
-                    </div>
-                    <div class="title">Chaîne Warend 3</div>
-                    <p class="desc">Tour de cou Maille forçat alternée, pendentif poisson articulé</p>
-                    <div class="material">Argent</div>
-                    <span style="text-decoration: line-through; color: red;">25 000 FCFA</span>
-                    <div class="price">21 000 FCFA</div>
-                    <div class="actions">
-                        <button class="heart" aria-label="Like">♡</button>
-                        <button class="add-to-cart-btn" aria-label="Ajouter Chaîne Warend 3">Ajouter au panier</button>
-                    </div>
-                </article>
-            </div>
-            <div class="slider-controls">
-                <button class="prev-btn" data-slider="slider-chaines-precieux">‹</button>
-                <button class="next-btn" data-slider="slider-chaines-precieux">›</button>
-            </div>
-        </section>
-
-        <section class="collection" id="bracelets-cordons">
-            <h2>Bracelets • Cordons</h2>
-            <div class="collection-slider" id="slider-bracelets-cordons">
-                <article class="product" data-name="Bracelet Origine 1" data-price="6000">
-                    <img src="Bra1.jpg" alt="Bracelet Origine 1">
-                    <div class="title">Bracelet Origine 1</div>
-                    <p class="desc">Jeu de cordon sur Menottes Nomad</p>
-                    <div class="material">Argent + polyester tressé</div>
-                    <div class="price">6 000 FCFA</div>
-                    <div class="actions">
-                        <button class="heart" aria-label="Like">♡</button>
-                        <button class="add-to-cart-btn" aria-label="Ajouter Bracelet Origine 1 au panier">Ajouter au panier</button>
-                    </div>
-                </article>
-                <article class="product" data-name="Bracelet simple" data-price="0">
-                    <img src="Bra7.jpg" alt="Bracelet simple">
-                    <div class="title">Bracelet simple</div>
-                    <p class="desc">Gratuit dès la première commande</p>
-                    <div class="material">polyester tressé</div>
-                    <div class="price">0 FCFA</div>
-                    <div class="actions">
-                        <button class="heart" aria-label="Like">♡</button>
-                        <button class="add-to-cart-btn" aria-label="Ajouter Bracelet simple au panier">Ajouter au panier</button>
-                    </div>
-                </article>
-                <article class="product" data-name="Bracelet Marin" data-price="6000">
-                    <img src="Bra4.jpg" alt="Bracelet Marin">
-                    <div class="title">Bracelet Marin</div>
-                    <p class="desc">Jeu de cordon sur fermoir aimantée Nomad</p>
-                    <div class="material">Acier inoxydable + polyester tressé</div>
-                    <div class="price">6 000 FCFA</div>
-                    <div class="actions">
-                        <button class="heart" aria-label="Like">♡</button>
-                        <button class="add-to-cart-btn" aria-label="Ajouter Bracelet Marin au panier">Ajouter au panier</button>
-                    </div>
-                </article>
-                <article class="product" data-name="Bracelet Origine 2" data-price="5000">
-                    <img src="Bra3.jpg" alt="Bracelet Origine 2">
-                    <div class="title">Bracelet Origine 2</div>
-                    <p class="desc">Jeu de cordon sur Menottes Nomad</p>
-                    <div class="material">Doré + polyester tressé</div>
-                    <div class="price">5 000 FCFA</div>
-                    <div class="actions">
-                        <button class="heart" aria-label="Like">♡</button>
-                        <button class="add-to-cart-btn" aria-label="Ajouter Bracelet Origine 2 au panier">Ajouter au panier</button>
-                    </div>
-                </article>
-                <article class="product" data-name="Bracelet motif" data-price="4000">
-                    <img src="Bra2.jpg" alt="Bracelet motif">
-                    <div class="title">Bracelet motif</div>
-                    <p class="desc">Jeu de cordon sur motif religieux Nomad</p>
-                    <div class="material">Doré + polyester tressé</div>
-                    <div class="price">4 000 FCFA</div>
-                    <div class="actions">
-                        <button class="heart" aria-label="Like">♡</button>
-                        <button class="add-to-cart-btn" aria-label="Ajouter Bracelet motif au panier">Ajouter au panier</button>
-                    </div>
-                </article>
-            </div>
-            <div class="slider-controls">
-                <button class="prev-btn" data-slider="slider-bracelets-cordons">‹</button>
-                <button class="next-btn" data-slider="slider-bracelets-cordons">›</button>
-            </div>
-        </section>
-
-        <section class="collection" id="bracelets-inox">
-            <h2>Bracelets • Acier inoxydable</h2>
-            <div class="collection-slider" id="slider-bracelets-inox">
-                <article class="product" data-name="Bracelet Sable blanc" data-price="6000">
-                    <img src="Bra5.jpg" alt="Bracelet Sable blanc">
-                    <div class="title">Bracelet Sable blanc</div>
-                    <p class="desc">Bracelet sur chaîne maille figaro</p>
-                    <div class="material">Acier inoxydable</div>
-                    <div class="price">6 000 FCFA</div>
-                    <div class="actions">
-                        <button class="heart" aria-label="Like">♡</button>
-                        <button class="add-to-cart-btn" aria-label="Ajouter Bracelet Sable blanc au panier">Ajouter au panier</button>
-                    </div>
-                </article>
-                <article class="product" data-name="Bracelet Sable blanc avec initial" data-price="6000">
-                    <img src="Bra6.jpg" alt="Bracelet Sable blanc avec initial">
-                    <div class="title">Bracelet Sable blanc avec initial</div>
-                    <p class="desc">Bracelet sur chaîne maille figaro avec initial au choix</p>
-                    <div class="material">Acier inoxydable</div>
-                    <div class="price">6 000 FCFA</div>
-                    <div class="actions">
-                        <button class="heart" aria-label="Like">♡</button>
-                        <button class="add-to-cart-btn" aria-label="Ajouter Bracelet Sable blanc avec initial au panier">Ajouter au panier</button>
-                    </div>
-                </article>
-            </div>
-            <div class="slider-controls">
-                <button class="prev-btn" data-slider="slider-bracelets-inox">‹</button>
-                <button class="next-btn" data-slider="slider-bracelets-inox">›</button>
-            </div>
-        </section>
-
-        <div class="product-return-button-container" id="product-return-button-container">
-            <button id="product-return-button">Retour</button>
+    
+    <section class="collection" id="bracelets-cordons">
+        <h2>Bracelets • Cordons</h2>
+        <div class="collection-slider" id="slider-bracelets-cordons">
+            <article class="product" data-name="Bracelet Origine 1" data-price="6000">
+                <img src="Bra1.jpg" alt="Bracelet Origine 1">
+                <div class="title">Bracelet Origine 1</div>
+                <p class="desc">Jeu de cordon sur Menottes Nomad</p>
+                <div class="material">Argent + polyester tressé</div>
+                <div class="price">6 000 FCFA</div>
+                <div class="actions">
+                  <button class="heart" aria-label="Like">♡</button>
+                  <button class="add-to-cart-btn" aria-label="Ajouter Bracelet Origine 1 au panier">Ajouter au panier</button>
+                </div>
+            </article>
+            <article class="product" data-name="Bracelet simple" data-price="0">
+                <img src="Bra7.jpg" alt="Bracelet simple">
+                <div class="title">Bracelet simple</div>
+                <p class="desc">Gratuit dès la première commande</p>
+                <div class="material">polyester tressé</div>
+                <div class="price">0 FCFA</div>
+                <div class="actions">
+                  <button class="heart" aria-label="Like">♡</button>
+                  <button class="add-to-cart-btn" aria-label="Ajouter Bracelet simple au panier">Ajouter au panier</button>
+                </div>
+            </article>
+            <article class="product" data-name="Bracelet Marin" data-price="6000">
+                <img src="Bra4.jpg" alt="Bracelet Marin">
+                <div class="title">Bracelet Marin</div>
+                <p class="desc">Jeu de cordon sur fermoir aimantée Nomad</p>
+                <div class="material">Acier inoxydable + polyester tressé</div>
+                <div class="price">6 000 FCFA</div>
+                <div class="actions">
+                  <button class="heart" aria-label="Like">♡</button>
+                  <button class="add-to-cart-btn" aria-label="Ajouter Bracelet Marin au panier">Ajouter au panier</button>
+                </div>
+            </article>
+            <article class="product" data-name="Bracelet Origine 2" data-price="5000">
+                <img src="Bra3.jpg" alt="Bracelet Origine 2">
+                <div class="title">Bracelet Origine 2</div>
+                <p class="desc">Jeu de cordon sur Menottes Nomad</p>
+                <div class="material">Doré + polyester tressé</div>
+                <div class="price">5 000 FCFA</div>
+                <div class="actions">
+                  <button class="heart" aria-label="Like">♡</button>
+                  <button class="add-to-cart-btn" aria-label="Ajouter Bracelet Origine 2 au panier">Ajouter au panier</button>
+                </div>
+            </article>
+            <article class="product" data-name="Bracelet motif" data-price="4000">
+                <img src="Bra2.jpg" alt="Bracelet motif">
+                <div class="title">Bracelet motif</div>
+                <p class="desc">Jeu de cordon sur motif religieux Nomad</p>
+                <div class="material">Doré + polyester tressé</div>
+                <div class="price">4 000 FCFA</div>
+                <div class="actions">
+                  <button class="heart" aria-label="Like">♡</button>
+                  <button class="add-to-cart-btn" aria-label="Ajouter Bracelet motif au panier">Ajouter au panier</button>
+                </div>
+            </article>
         </div>
-
-    </main>
-
-    <section id="image-slider">
-        <div class="slider-container">
-            <div class="slider-track">
-                <img src="slid1.jpg" alt="Slide 1">
-                <img src="slid2.jpg" alt="Slide 2">
-                <img src="slid3.jpg" alt="Slide 3">
-            </div>
-        </div>
-        <div class="slider-dots-container">
-            <div class="slider-dot active" data-slide="0"></div>
-            <div class="slider-dot" data-slide="1"></div>
-            <div class="slider-dot" data-slide="2"></div>
+        <div class="slider-controls">
+            <button class="prev-btn" data-slider="slider-bracelets-cordons">‹</button>
+            <button class="next-btn" data-slider="slider-bracelets-cordons">›</button>
         </div>
     </section>
 
-    <footer>
-        <div class="socials">
-            <a href="https://wa.me/237657697824" target="_blank" aria-label="WhatsApp">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
-            </a>
-            <a href="mailto:galerienomad@yahoo.com" target="_blank" aria-label="Envoyer un email">
-                <img src="logo2.jpg" alt="Yahoo Mail" style="width:48px; height:auto;">
-            </a>
-            <a href="https://instagram.com/galerienomad.officiel" target="_blank" aria-label="Instagram">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram">
-            </a>
+    <section class="collection" id="bracelets-inox">
+        <h2>Bracelets • Acier inoxydable</h2>
+        <div class="collection-slider" id="slider-bracelets-inox">
+            <article class="product" data-name="Bracelet Sable blanc" data-price="6000">
+                <img src="Bra5.jpg" alt="Bracelet Sable blanc">
+                <div class="title">Bracelet Sable blanc</div>
+                <p class="desc">Bracelet sur chaîne maille figaro</p>
+                <div class="material">Acier inoxydable</div>
+                <div class="price">6 000 FCFA</div>
+                <div class="actions">
+                  <button class="heart" aria-label="Like">♡</button>
+                  <button class="add-to-cart-btn" aria-label="Ajouter Bracelet Sable blanc au panier">Ajouter au panier</button>
+                </div>
+            </article>
+            <article class="product" data-name="Bracelet Sable blanc avec initial" data-price="6000">
+                <img src="Bra6.jpg" alt="Bracelet Sable blanc avec initial">
+                <div class="title">Bracelet Sable blanc avec initial</div>
+                <p class="desc">Bracelet sur chaîne maille figaro avec initial au choix</p>
+                <div class="material">Acier inoxydable</div>
+                <div class="price">6 000 FCFA</div>
+                <div class="actions">
+                  <button class="heart" aria-label="Like">♡</button>
+                  <button class="add-to-cart-btn" aria-label="Ajouter Bracelet Sable blanc avec initial au panier">Ajouter au panier</button>
+                </div>
+            </article>
+            </div>
+        <div class="slider-controls">
+            <button class="prev-btn" data-slider="slider-bracelets-inox">‹</button>
+            <button class="next-btn" data-slider="slider-bracelets-inox">›</button>
         </div>
-        <div class="copyright">&copy; 2025 Galerie Nomad — Tous droits réservés</div>
-    </footer>
+    </section>
 
-    <script src="script.js"></script>
+    <div class="product-return-button-container" id="product-return-button-container">
+      <button id="product-return-button">Retour</button>
+    </div>
+
+  </main>
+
+  <section id="image-slider">
+      <div class="slider-container">
+          <div class="slider-track">
+              <img src="slid1.jpg" alt="Slide 1">
+              <img src="slid2.jpg" alt="Slide 2">
+              <img src="slid3.jpg" alt="Slide 3">
+          </div>
+      </div>
+      <div class="slider-dots-container">
+          <div class="slider-dot active" data-slide="0"></div>
+          <div class="slider-dot" data-slide="1"></div>
+          <div class="slider-dot" data-slide="2"></div>
+      </div>
+  </section>
+
+  <footer>
+    <div class="socials">
+      <a href="https://wa.me/237657697824" target="_blank" aria-label="WhatsApp">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
+      </a>
+      <a href="mailto:galerienomad@yahoo.com" target="_blank" aria-label="Envoyer un email">
+        <img src="logo2.jpg" alt="Yahoo Mail" style="width:48px; height:auto;">
+      </a>
+      <a href="https://instagram.com/galerienomad.officiel" target="_blank" aria-label="Instagram">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram">
+      </a>
+    </div>
+    <div class="copyright">&copy; 2025 Galerie Nomad — Tous droits réservés</div>
+  </footer>
+
+<script>
+// --- Constantes et initialisation ---
+const WHATSAPP_NUMBER = "237657697824";
+const promoEndDate = new Date("Dec 31, 2025 23:59:59").getTime();
+let cart = [];
+
+// --- Fonctions de gestion du panier ---
+function addToCart(productName, price) {
+    const existingItem = cart.find(item => item.name === productName);
+    if (existingItem) {
+        existingItem.quantity++;
+    } else {
+        cart.push({ name: productName, price: price, quantity: 1 });
+    }
+    updateCart();
+}
+
+function updateCart() {
+    let totalItems = 0;
+    let total = 0;
+    const cartItemsList = document.getElementById("cart-items");
+    cartItemsList.innerHTML = "";
+
+    cart.forEach((item, index) => {
+        totalItems += item.quantity;
+        total += item.price * item.quantity;
+        cartItemsList.innerHTML += `
+            <li>
+                <div class="cart-item-name">${item.name}</div>
+                <div class="cart-item-controls">
+                    <button data-index="${index}" class="decrease-btn">–</button>
+                    <span>${item.quantity}</span>
+                    <button data-index="${index}" class="increase-btn">+</button>
+                </div>
+                <div class="cart-item-price">${(item.price * item.quantity).toLocaleString()} FCFA</div>
+                <button data-index="${index}" class="remove-btn">❌</button>
+            </li>
+        `;
+    });
+
+    document.getElementById("cart-count").innerText = totalItems;
+    document.getElementById("cart-total").innerText = `Total : ${total.toLocaleString()} FCFA`;
+}
+
+function removeFromCart(index) {
+    cart.splice(index, 1);
+    updateCart();
+}
+
+function increaseQuantity(index) {
+    cart[index].quantity++;
+    updateCart();
+}
+
+function decreaseQuantity(index) {
+    if (cart[index].quantity > 1) {
+        cart[index].quantity--;
+    } else {
+        removeFromCart(index);
+    }
+    updateCart();
+}
+
+function toggleCart() {
+    const cartPanel = document.getElementById("cart-panel");
+    cartPanel.classList.toggle("open");
+}
+
+function checkout() {
+    let message = "Bonjour, je souhaite commander :\n";
+    let total = 0;
+    cart.forEach(item => {
+        message += `- ${item.name} (x${item.quantity}) : ${(item.price * item.quantity).toLocaleString()} FCFA\n`;
+        total += item.price * item.quantity;
+    });
+    message += `\nTotal : ${total.toLocaleString()} FCFA`;
+    const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+    window.open(url, "_blank");
+}
+
+// --- Fonctions de l'interface utilisateur ---
+function toggleMenu() {
+    const navMenu = document.querySelector('nav[aria-label="menu"]');
+    navMenu.classList.toggle('active');
+}
+
+// --- Fonctions de gestion de la barre de recherche ---
+const searchIcon = document.querySelector('.search-icon');
+const searchInput = document.getElementById('search-input');
+const products = document.querySelectorAll('.product');
+const suggestionsContainer = document.getElementById('search-suggestions');
+const searchContainer = document.getElementById('search-container');
+const productReturnButtonContainer = document.getElementById('product-return-button-container');
+
+function showAllProducts() {
+    products.forEach(p => {
+        p.style.display = 'block';
+        p.closest('.collection-slider').style.display = 'flex';
+        p.closest('.collection').querySelector('h2').style.display = 'block';
+    });
+    productReturnButtonContainer.classList.remove('visible');
+}
+
+function showSingleProduct(productElement) {
+    products.forEach(p => {
+        p.style.display = 'none';
+        p.closest('.collection-slider').style.display = 'none';
+        p.closest('.collection').querySelector('h2').style.display = 'none';
+    });
+
+    productElement.style.display = 'block';
+    productElement.closest('.collection-slider').style.display = 'flex';
+    productElement.closest('.collection').querySelector('h2').style.display = 'block';
+
+    const actionsContainer = productElement.querySelector('.actions');
+    actionsContainer.after(productReturnButtonContainer);
+    productReturnButtonContainer.classList.add('visible');
+
+    productElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+// Ouvre et ferme la barre de recherche
+searchIcon.addEventListener('click', () => {
+    searchContainer.classList.toggle('visible');
+    suggestionsContainer.classList.remove('visible');
+    searchInput.focus();
+    if (!searchContainer.classList.contains('visible')) {
+        showAllProducts();
+        searchInput.value = '';
+    }
+});
+
+searchInput.addEventListener('input', (event) => {
+    const searchTerm = event.target.value.toLowerCase();
+    if (searchTerm === '') {
+        suggestionsContainer.classList.remove('visible');
+        return;
+    }
+
+    let matchingProducts = [];
+    products.forEach(product => {
+        const productName = product.dataset.name.toLowerCase();
+        if (productName.includes(searchTerm)) {
+            matchingProducts.push(productName);
+        }
+    });
+
+    suggestionsContainer.innerHTML = '';
+    if (matchingProducts.length > 0) {
+        suggestionsContainer.classList.add('visible');
+        matchingProducts.forEach(name => {
+            const suggestionDiv = document.createElement('div');
+            suggestionDiv.className = 'suggestion-item';
+            suggestionDiv.textContent = name;
+            suggestionsContainer.appendChild(suggestionDiv);
+
+            suggestionDiv.addEventListener('click', () => {
+                searchInput.value = name;
+                suggestionsContainer.classList.remove('visible');
+                const selectedProduct = [...products].find(p => p.dataset.name.toLowerCase() === name.toLowerCase());
+                if (selectedProduct) {
+                    showSingleProduct(selectedProduct);
+                    searchContainer.classList.remove('visible'); // Ferme la barre après la sélection
+                    searchInput.value = '';
+                }
+            });
+        });
+    } else {
+        suggestionsContainer.classList.remove('visible');
+    }
+});
+
+// Écouteur pour la touche "Entrée"
+searchInput.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter') {
+        event.preventDefault();
+        const searchTerm = searchInput.value.toLowerCase();
+        const firstMatchingProduct = [...products].find(p => p.dataset.name.toLowerCase().includes(searchTerm));
+
+        if (firstMatchingProduct) {
+            showSingleProduct(firstMatchingProduct);
+            searchContainer.classList.remove('visible'); // Ferme la barre immédiatement
+            suggestionsContainer.classList.remove('visible');
+            searchInput.value = '';
+        } else {
+            alert("Aucun produit ne correspond à votre recherche.");
+        }
+    }
+});
+
+// Écouteur pour le bouton de retour
+document.getElementById('product-return-button').addEventListener('click', () => {
+    showAllProducts();
+});
+
+// --- Écouteurs d'événements et initialisation ---
+
+// Ajout des produits au panier
+document.querySelectorAll('.add-to-cart-btn').forEach(button => {
+    button.addEventListener('click', function(e) {
+        const productArticle = e.target.closest('.product');
+        const productName = productArticle.dataset.name;
+        const productPrice = parseInt(productArticle.dataset.price);
+        addToCart(productName, productPrice);
+    });
+});
+
+// Écouteur pour le panneau du panier (boutons +, -, ❌)
+document.getElementById('cart-panel').addEventListener('click', function(e) {
+    const target = e.target;
+    if (target.classList.contains('increase-btn')) {
+        increaseQuantity(target.dataset.index);
+    } else if (target.classList.contains('decrease-btn')) {
+        decreaseQuantity(target.dataset.index);
+    } else if (target.classList.contains('remove-btn')) {
+        removeFromCart(target.dataset.index);
+    }
+});
+
+// Écouteur pour le bouton de validation du panier
+document.getElementById('checkout-btn').addEventListener('click', checkout);
+
+// Bouton "J'aime"
+document.querySelectorAll('.heart').forEach(btn => {
+    btn.addEventListener('click', function() {
+        this.classList.toggle('liked');
+        this.textContent = this.classList.contains('liked') ? '♥' : '♡';
+    });
+});
+
+// Minuteur pour la promotion
+let x = setInterval(function() {
+    let now = new Date().getTime();
+    let distance = promoEndDate - now;
+    let days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    document.getElementById("countdown").innerHTML = days + "j " + hours + "h " + minutes + "m " + seconds + "s ";
+    if (distance < 0) {
+        clearInterval(x);
+        document.getElementById("countdown").innerHTML = "Les soldes sont terminés !";
+    }
+}, 1000);
+
+// Gestion du préchargeur
+document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(function() {
+        const preloader = document.getElementById('preloader');
+        if (preloader) {
+            preloader.classList.add('hidden');
+        }
+    }, 2000);
+});
+
+// --- Gestion du slider d'images (pour la grande bannière) ---
+const sliderTrack = document.querySelector('.slider-track');
+const sliderDots = document.querySelectorAll('.slider-dot');
+const sliderContainer = document.getElementById('image-slider');
+const slides = document.querySelectorAll('.slider-track img');
+let currentSlide = 0;
+let slideInterval;
+
+const slideTo = (index) => {
+    currentSlide = index;
+    const offset = -currentSlide * 100;
+    sliderTrack.style.transform = `translateX(${offset}%)`;
+
+    sliderDots.forEach(dot => dot.classList.remove('active'));
+    sliderDots[currentSlide].classList.add('active');
+};
+
+const nextSlide = () => {
+    currentSlide = (currentSlide + 1) % slides.length;
+    slideTo(currentSlide);
+};
+
+const startSlider = () => {
+    slideInterval = setInterval(nextSlide, 3000);
+};
+
+const stopSlider = () => {
+    clearInterval(slideInterval);
+};
+
+startSlider();
+
+sliderContainer.addEventListener('mouseenter', stopSlider);
+sliderContainer.addEventListener('mouseleave', startSlider);
+
+sliderDots.forEach(dot => {
+    dot.addEventListener('click', (e) => {
+        const slideIndex = parseInt(e.target.dataset.slide);
+        slideTo(slideIndex);
+    });
+});
+</script>
 
 </body>
 </html>
