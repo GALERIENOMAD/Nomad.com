@@ -456,6 +456,31 @@
   .slider-controls button {
     display: none; /* Masquer les boutons de contrôle des sliders */
   }
+  
+  /* Style du conteneur de l'article pour permettre le positionnement absolu */
+.article-card {
+    position: relative; /* Indispensable pour que le badge "Épuisé" se positionne par rapport à cet élément */
+    overflow: hidden; /* Cache le contenu qui dépasse de la carte */
+}
+
+/* Style général du badge de stock */
+.stock-badge {
+    position: absolute;
+    top: 10px;        /* Distance depuis le haut de la carte */
+    right: -25px;     /* Position à droite de la carte */
+    padding: 5px 30px; /* Espace interne du badge */
+    color: white;     /* Couleur du texte */
+    font-weight: bold; /* Texte en gras */
+    text-transform: uppercase; /* Met le texte en majuscules */
+    transform: rotate(45deg); /* Fait pivoter le badge pour un effet visuel */
+    width: 150px;      /* Largeur du badge */
+    text-align: center; /* Centre le texte */
+}
+
+    /* Style spécifique pour le badge "Épuisé" */
+.epuise {
+    background-color: #888; /* Couleur de fond grise */
+}
 
    /* Styles pour le tag Nouveauté */
 .new-tag {
@@ -664,7 +689,7 @@ margin-bottom: 5px;">
             <article class="product" data-name="Chaîne Warend 2" data-price="14000">
                 <img src="Cha5.jpg" alt="Chaîne Warend 2">
                 <div class="title">Chaîne Warend 2</div>
-                <p class="desc">Tour de cou avec pendentif Menottes</p>
+                <p class="desc">Tour de cou Maille forçat alternée, pendentif Menottes</p>
                 <div class="material">Argent</div>
                 <span style="text-decoration: line-through; color: red;">18 000 FCFA</span>
                 <div class="price">14 000 FCFA</div>
@@ -683,6 +708,19 @@ margin-bottom: 5px;">
                 <div class="actions">
                   <button class="heart" aria-label="Like">♡</button>
                   <button class="add-to-cart-btn" aria-label="Ajouter Chaîne Jupiter au panier">Ajouter au panier</button>
+                </div>
+            </article>
+            <article class="product" data-name="Chaîne Warend 3" data-price="18000">
+                <img src="Cha6.jpg" alt="Chaîne Warend 3">
+                <div class="title">Chaîne Warend 3</div>
+                <p class="desc">Tour de cou Maille forçat alternée, pendentif poisson articulé</p>
+                <div class="material">Argent</div>
+                <span style="text-decoration: line-through; color: red;">25 000 FCFA</span>
+                 <span class="stock-badge-epuise">Épuisé</ span>
+                <div class="price">21 000 FCFA</div>
+                <div class="actions">
+                  <button class="heart" aria-label="Like">♡</button>
+                  <button class="add-to-cart-btn" aria-label="Ajouter Chaîne Warend 3">Ajouter au panier</button>
                 </div>
             </article>
             </div>
