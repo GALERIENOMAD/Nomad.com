@@ -458,12 +458,12 @@
   }
   
   /* Style du conteneur de l'article pour permettre le positionnement absolu */
-.article-card {
-    position: relative; /* Indispensable pour que le badge "Épuisé" se positionne par rapport à cet élément */
-    overflow: hidden; /* Cache le contenu qui dépasse de la carte */
+.product {
+    position: relative; 
+    overflow: hidden; 
 }
 
-/* Style général du badge de stock */
+/* Style du conteneur d'image et du badge */
 .product-media {
     position: relative; 
     display: inline-block; 
@@ -483,24 +483,21 @@
     text-transform: uppercase;
     z-index: 10;        
     border-radius: 5px; 
+    display: none; /* Cache le badge par défaut */
+}
+
+/* Affiche le badge seulement quand l'article est en stock épuisé */
+.product.out-of-stock .stock-badge {
+    display: block;
 }
 
 /* Image décolorée */
 .product-image {
-    filter: grayscale(70%); /* Vous pouvez ajuster le pourcentage */
+    /* Ce sélecteur n'est pas utilisé dans votre code HTML, car l'image est directement dans le conteneur product-media */
 }
 
-/* Cache le badge par défaut */
-.stock-badge.epuise {
-    display: none;
-}
-
-/* Affiche le badge seulement quand l'article est en stock épuisé */
-.article-card.out-of-stock .product-image {
-    filter: grayscale(70%);
-}
-.article-card.out-of-stock .epuise {
-    display: block;
+.product.out-of-stock .product-media img {
+    filter: grayscale(70%); /* Applique le filtre à l'image contenue dans le .product-media */
 }
 
    /* Styles pour le tag Nouveauté */
