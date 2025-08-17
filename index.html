@@ -464,22 +464,43 @@
 }
 
 /* Style général du badge de stock */
-.stock-badge {
-    position: absolute;
-    top: 10px;        /* Distance depuis le haut de la carte */
-    right: -25px;     /* Position à droite de la carte */
-    padding: 5px 30px; /* Espace interne du badge */
-    color: white;     /* Couleur du texte */
-    font-weight: bold; /* Texte en gras */
-    text-transform: uppercase; /* Met le texte en majuscules */
-    transform: rotate(45deg); /* Fait pivoter le badge pour un effet visuel */
-    width: 150px;      /* Largeur du badge */
-    text-align: center; /* Centre le texte */
+.product-media {
+    position: relative; 
+    display: inline-block; 
 }
 
-    /* Style spécifique pour le badge "Épuisé" */
-.epuise {
-    background-color: #888; /* Couleur de fond grise */
+/* Badge centré sur l'image */
+.stock-badge {
+    position: absolute;
+    top: 50%;           
+    left: 50%;          
+    transform: translate(-50%, -50%); 
+    color: white;       
+    background-color: rgba(0, 0, 0, 0.6); 
+    padding: 10px 20px;
+    font-size: 1.2em;
+    font-weight: bold;
+    text-transform: uppercase;
+    z-index: 10;        
+    border-radius: 5px; 
+}
+
+/* Image décolorée */
+.product-image {
+    filter: grayscale(70%); /* Vous pouvez ajuster le pourcentage */
+}
+
+/* Cache le badge par défaut */
+.stock-badge.epuise {
+    display: none;
+}
+
+/* Affiche le badge seulement quand l'article est en stock épuisé */
+.article-card.out-of-stock .product-image {
+    filter: grayscale(70%);
+}
+.article-card.out-of-stock .epuise {
+    display: block;
 }
 
    /* Styles pour le tag Nouveauté */
@@ -710,7 +731,7 @@ margin-bottom: 5px;">
                   <button class="add-to-cart-btn" aria-label="Ajouter Chaîne Jupiter au panier">Ajouter au panier</button>
                 </div>
             </article>
-            <article class="product" data-name="Chaîne Warend 3" data-price="18000">
+            <article class="product out-of-stock" data-name="Chaîne Warend 3" data-price="18000">
                 <img src="Cha6.jpg" alt="Chaîne Warend 3">
                 <div class="title">Chaîne Warend 3</div>
                 <p class="desc">Tour de cou Maille forçat alternée, pendentif poisson articulé</p>
