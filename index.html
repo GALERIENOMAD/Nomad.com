@@ -27,7 +27,7 @@
   #shipping-banner {
       background-color: var(--primary-color);
       color: white;
-      text-align: center;
+      text-align: flex;
       padding: 5px;
       font-size: 0.7em;
       font-weight: bold;
@@ -361,36 +361,33 @@
       object-fit: cover;
   }
   
-  /* Styles pour les collections */
+  /* Styles pour les collections avec slider */
   .collection {
     position: relative;
     margin-bottom: 40px;
   }
-  
-  /* Styles pour les titres des collections */
-  h2, .collection-title {
-      font-family: 'Futura', 'Avenir', 'Helvetica Neue', sans-serif;
-      font-weight: 300;
-      letter-spacing: 0.05em;
-      text-align: center;
-      margin-bottom: 15px;
+  .collection h2 {
+    text-align: center;
+    margin-bottom: 15px;
   }
-  
-  /* CONTENEUR DE PRODUITS : MISE EN PAGE EN 2 COLONNES */
-  .collection-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 20px;
-      padding: 10px;
+  .collection-slider {
+    display: flex;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    gap: 20px;
+    padding: 10px;
   }
-  
-  /* Cache les boutons de navigation des sliders, qui ne sont plus nécessaires */
-  .slider-controls {
-      display: none;
+  /* Masquer la barre de défilement pour les navigateurs basés sur WebKit */
+  .collection-slider::-webkit-scrollbar {
+    display: none;
   }
-
-  /* Styles pour chaque produit */
+  .collection-slider {
+    -ms-overflow-style: none;  /* Masquer la barre de défilement pour IE et Edge */
+    scrollbar-width: none;  /* Masquer la barre de défilement pour Firefox */
+  }
   .product {
+    min-width: 300px; /* Largeur fixe pour chaque produit dans le slider */
     background:var(--card-bg);
     border-radius:10px;
     padding:14px;
@@ -404,8 +401,8 @@
   }
   .product img{
     width:100%;
-    height: auto;
-    object-fit: contain;
+    height: auto; /* Rendre la hauteur automatique pour éviter le rognage */
+    object-fit: contain; /* Adapter l'image à la taille du conteneur sans la couper */
     border-radius:8px;
     transition:transform .28s ease;
   }
@@ -451,6 +448,13 @@
   .add-to-cart-btn:hover{
     background: rgba(37,211,102,0.08);
     transform:translateY(-2px);
+  }
+  .slider-controls {
+    text-align: center;
+    margin-top: 15px;
+  }
+  .slider-controls button {
+    display: none; /* Masquer les boutons de contrôle des sliders */
   }
   
   /* Style du conteneur de l'article pour permettre le positionnement absolu */
@@ -574,7 +578,7 @@
 <body>
 
  <div id="shipping-banner">
-      Livraison gratuite à partir de 20.000 FCFA
+      Expedition gratuite à partir de 25.000 FCFA
  </div>
   
   <div id="preloader">
@@ -654,7 +658,7 @@ margin-bottom: 5px;">
     
     <section class="collection" id="chaines-inox">
         <h2>Chaînes • Acier inoxydable</h2>
-        <div class="collection-grid" id="grid-chaines-inox">
+        <div class="collection-slider" id="slider-chaines-inox">
             <article class="product" data-name="Chaîne Mercure 2" data-price="8000">
                 <img src="Cha3.jpg" alt="Chaîne Mercure 2">
                 <div class="title">Chaîne Mercure 2</div>
@@ -678,11 +682,15 @@ margin-bottom: 5px;">
                 </div>
             </article>
             </div>
+        <div class="slider-controls">
+            <button class="prev-btn" data-slider="slider-chaines-inox">‹</button>
+            <button class="next-btn" data-slider="slider-chaines-inox">›</button>
+        </div>
     </section>
 
     <section class="collection" id="chaines-precieux">
         <h2>Chaînes • Métaux précieux</h2>
-        <div class="collection-grid" id="grid-chaines-precieux">
+        <div class="collection-slider" id="slider-chaines-precieux">
             <article class="product" data-name="Chaîne Warend 1" data-price="14000">
                 <img src="Cha1.jpg" alt="Chaîne Warend 1">
                 <div class="new-tag">Nouveauté</div>
@@ -736,11 +744,15 @@ margin-bottom: 5px;">
     </div>
     </article>
         </div>
+        <div class="slider-controls">
+            <button class="prev-btn" data-slider="slider-chaines-precieux">‹</button>
+            <button class="next-btn" data-slider="slider-chaines-precieux">›</button>
+        </div>
     </section>
     
     <section class="collection" id="bracelets-cordons">
         <h2>Bracelets • Cordons</h2>
-        <div class="collection-grid" id="grid-bracelets-cordons">
+        <div class="collection-slider" id="slider-bracelets-cordons">
             <article class="product" data-name="Bracelet Origine 1" data-price="6000">
                 <img src="Bra1.jpg" alt="Bracelet Origine 1">
                 <div class="title">Bracelet Origine 1</div>
@@ -797,11 +809,15 @@ margin-bottom: 5px;">
                 </div>
             </article>
         </div>
+        <div class="slider-controls">
+            <button class="prev-btn" data-slider="slider-bracelets-cordons">‹</button>
+            <button class="next-btn" data-slider="slider-bracelets-cordons">›</button>
+        </div>
     </section>
 
     <section class="collection" id="bracelets-inox">
         <h2>Bracelets • Acier inoxydable</h2>
-        <div class="collection-grid" id="grid-bracelets-inox">
+        <div class="collection-slider" id="slider-bracelets-inox">
             <article class="product" data-name="Bracelet Sable blanc" data-price="6000">
                 <img src="Bra5.jpg" alt="Bracelet Sable blanc">
                 <div class="title">Bracelet Sable blanc</div>
@@ -825,6 +841,10 @@ margin-bottom: 5px;">
                 </div>
             </article>
             </div>
+        <div class="slider-controls">
+            <button class="prev-btn" data-slider="slider-bracelets-inox">‹</button>
+            <button class="next-btn" data-slider="slider-bracelets-inox">›</button>
+        </div>
     </section>
 
     <div class="product-return-button-container" id="product-return-button-container">
@@ -952,39 +972,35 @@ function toggleMenu() {
 // --- Fonctions de gestion de la barre de recherche ---
 const searchIcon = document.querySelector('.search-icon');
 const searchInput = document.getElementById('search-input');
-const collections = document.querySelectorAll('.collection');
 const products = document.querySelectorAll('.product');
 const suggestionsContainer = document.getElementById('search-suggestions');
 const searchContainer = document.getElementById('search-container');
 const productReturnButtonContainer = document.getElementById('product-return-button-container');
 
-function showAllCollections() {
-    collections.forEach(c => {
-        c.style.display = 'block';
+function showAllProducts() {
+    products.forEach(p => {
+        p.style.display = 'block';
+        p.closest('.collection-slider').style.display = 'flex';
+        p.closest('.collection').querySelector('h2').style.display = 'block';
     });
     productReturnButtonContainer.classList.remove('visible');
 }
 
 function showSingleProduct(productElement) {
-    collections.forEach(c => {
-        c.style.display = 'none';
-    });
-    
-    // Assurez-vous que le conteneur de la collection et le produit sont visibles
-    const parentCollection = productElement.closest('.collection');
-    parentCollection.style.display = 'block';
-    
-    // Cache tous les produits sauf le produit sélectionné
-    const allProductsInCollection = parentCollection.querySelectorAll('.product');
-    allProductsInCollection.forEach(p => {
+    products.forEach(p => {
         p.style.display = 'none';
+        p.closest('.collection-slider').style.display = 'none';
+        p.closest('.collection').querySelector('h2').style.display = 'none';
     });
+
     productElement.style.display = 'block';
-    
+    productElement.closest('.collection-slider').style.display = 'flex';
+    productElement.closest('.collection').querySelector('h2').style.display = 'block';
+
     const actionsContainer = productElement.querySelector('.actions');
     actionsContainer.after(productReturnButtonContainer);
     productReturnButtonContainer.classList.add('visible');
-    
+
     productElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
 
@@ -994,7 +1010,7 @@ searchIcon.addEventListener('click', () => {
     suggestionsContainer.classList.remove('visible');
     searchInput.focus();
     if (!searchContainer.classList.contains('visible')) {
-        showAllCollections();
+        showAllProducts();
         searchInput.value = '';
     }
 });
@@ -1059,7 +1075,7 @@ searchInput.addEventListener('keydown', (event) => {
 
 // Écouteur pour le bouton de retour
 document.getElementById('product-return-button').addEventListener('click', () => {
-    showAllCollections();
+    showAllProducts();
 });
 
 // --- Écouteurs d'événements et initialisation ---
