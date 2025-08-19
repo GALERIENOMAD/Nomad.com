@@ -514,6 +514,28 @@
     z-index: 10;
 }
 
+.product-container {
+    position: relative; /* Indispensable pour positionner les éléments enfants */
+    display: inline-block; /* Permet au conteneur de s'ajuster à la taille de l'image */
+}
+
+.product-container img {
+    width: 100%; /* S'assure que l'image remplit le conteneur */
+    height: auto;
+}
+
+.stock-badge {
+    position: absolute; /* Permet de le positionner librement */
+    bottom: 5px; /* Ajustez la position verticale */
+    right: 5px; /* Ajustez la position horizontale */
+    background-color: rgba(0, 0, 0, 0.6); /* Fond semi-transparent */
+    color: white; /* Couleur du texte */
+    padding: 3px 6px; /* Espace autour du texte */
+    border-radius: 5px; /* Coins arrondis */
+    font-size: 0.75em; /* Taille de la police plus petite */
+    z-index: 10; /* S'assure que le texte est au-dessus de l'image */
+}
+
 /* Indispensable pour que le positionnement absolu du tag fonctionne */
 .product {
     position: relative; 
@@ -663,6 +685,7 @@
                 <img src="Cha3.jpg" alt="Chaîne Mercure 2">
                 <div class="title">Chaîne Mercure 2</div>
                 <p class="desc">Tour de cou avec pendentif argenté fin vieilli</p>
+                <span class="stock-badge">Stock restant : 5</span>
                 <div class="material">Acier inoxydable + argenté fin vieilli</div>
                 <div class="price">8 000 FCFA</div>
                 <div class="actions">
@@ -674,6 +697,7 @@
                 <img src="Cha2.jpg" alt="Chaîne Mercure 1">
                 <div class="title">Chaîne Mercure 1</div>
                 <p class="desc">Tour de cou avec pendentif croix</p>
+                <span class="stock-badge">Stock restant : 5</span>
                 <div class="material">Acier inoxydable</div>
                 <div class="price">8 000 FCFA</div>
                 <div class="actions">
@@ -696,6 +720,7 @@
                 <div class="new-tag">Nouveauté</div>
                 <div class="title">Chaîne Warend 1</div>
                 <p class="desc">Tour de cou Maille forçat alternée, pendentif ancre</p>
+                <span class="stock-badge">Stock restant : 5</span>
                 <div class="material">Argent</div>
                 <span style="text-decoration: line-through; color: red;">18 000 FCFA</span>
                 <div class="price">14 000 FCFA</div>
@@ -708,6 +733,7 @@
                 <img src="Cha5.jpg" alt="Chaîne Warend 2">
                 <div class="title">Chaîne Warend 2</div>
                 <p class="desc">Tour de cou Maille forçat alternée, pendentif Menottes</p>
+                <span class="stock-badge">Stock restant : 5</span>
                 <div class="material">Argent</div>
                 <span style="text-decoration: line-through; color: red;">18 000 FCFA</span>
                 <div class="price">14 000 FCFA</div>
@@ -720,6 +746,7 @@
                 <img src="Cha4.jpg" alt="Chaîne Jupiter">
                 <div class="title">Chaîne Jupiter</div>
                 <p class="desc">Tour de cou Or laminé pendentif croix</p>
+                <span class="stock-badge">Stock restant : 5</span>
                 <div class="material">Or 14 karat</div>
                 <span style="text-decoration: line-through; color: red;">22 000 FCFA</span>
                 <div class="price">18 000 FCFA</div>
@@ -735,6 +762,7 @@
     </div>
     <div class="title">Chaîne Warend 3</div>
     <p class="desc">Tour de cou Maille forçat alternée, pendentif poisson articulé</p>
+    <span class="stock-badge">Stock restant : 5</span>
     <div class="material">Argent</div>
     <span style="text-decoration: line-through; color: red;">25 000 FCFA</span>
     <div class="price">21 000 FCFA</div>
@@ -757,6 +785,7 @@
                 <img src="Bra1.jpg" alt="Bracelet Origine 1">
                 <div class="title">Bracelet Origine 1</div>
                 <p class="desc">Jeu de cordon sur Menottes Nomad</p>
+                <span class="stock-badge">Stock restant : 5</span>
                 <div class="material">Argent + polyester tressé</div>
                 <div class="price">6 000 FCFA</div>
                 <div class="actions">
@@ -768,6 +797,7 @@
                 <img src="Bra7.jpg" alt="Bracelet simple">
                 <div class="title">Bracelet simple</div>
                 <p class="desc">Gratuit dès la première commande</p>
+                <span class="stock-badge">Stock restant : 5</span>
                 <div class="material">polyester tressé</div>
                 <div class="price">0 FCFA</div>
                 <div class="actions">
@@ -779,6 +809,7 @@
                 <img src="Bra4.jpg" alt="Bracelet Marin">
                 <div class="title">Bracelet Marin</div>
                 <p class="desc">Jeu de cordon sur fermoir aimantée Nomad</p>
+                <span class="stock-badge">Stock restant : 5</span>
                 <div class="material">Acier inoxydable + polyester tressé</div>
                 <div class="price">6 000 FCFA</div>
                 <div class="actions">
@@ -790,6 +821,7 @@
                 <img src="Bra3.jpg" alt="Bracelet Origine 2">
                 <div class="title">Bracelet Origine 2</div>
                 <p class="desc">Jeu de cordon sur Menottes Nomad</p>
+                <span class="stock-badge">Stock restant : 5</span>
                 <div class="material">Doré + polyester tressé</div>
                 <div class="price">5 000 FCFA</div>
                 <div class="actions">
@@ -801,6 +833,7 @@
                 <img src="Bra2.jpg" alt="Bracelet motif">
                 <div class="title">Bracelet motif</div>
                 <p class="desc">Jeu de cordon sur motif religieux Nomad</p>
+                <span class="stock-badge">Stock restant : 5</span>
                 <div class="material">Doré + polyester tressé</div>
                 <div class="price">4 000 FCFA</div>
                 <div class="actions">
@@ -822,6 +855,7 @@
                 <img src="Bra5.jpg" alt="Bracelet Sable blanc">
                 <div class="title">Bracelet Sable blanc</div>
                 <p class="desc">Bracelet sur chaîne maille figaro</p>
+                <span class="stock-badge">Stock restant : 5</span>
                 <div class="material">Acier inoxydable</div>
                 <div class="price">6 000 FCFA</div>
                 <div class="actions">
@@ -833,6 +867,7 @@
                 <img src="Bra6.jpg" alt="Bracelet Sable blanc avec initial">
                 <div class="title">Bracelet Sable blanc avec initial</div>
                 <p class="desc">Bracelet sur chaîne maille figaro avec initial au choix</p>
+                <span class="stock-badge">Stock restant : 5</span>
                 <div class="material">Acier inoxydable</div>
                 <div class="price">6 000 FCFA</div>
                 <div class="actions">
