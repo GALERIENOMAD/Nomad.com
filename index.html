@@ -394,15 +394,20 @@
     box-shadow:0 8px 30px rgba(10,10,10,0.04);
     transition:transform .18s ease, box-shadow .18s ease;
     text-align:center;
+    position: relative; /* Indispensable pour que le positionnement absolu du tag fonctionne */
   }
   .product:hover{
     transform:translateY(-6px);
     box-shadow:0 18px 40px rgba(10,10,10,0.06);
   }
+  .product-media {
+    position: relative; /* Base pour le positionnement du badge */
+    display: inline-block;
+  }
   .product img{
     width:100%;
-    height: auto; /* Rendre la hauteur automatique pour éviter le rognage */
-    object-fit: contain; /* Adapter l'image à la taille du conteneur sans la couper */
+    height: auto;
+    object-fit: contain;
     border-radius:8px;
     transition:transform .28s ease;
   }
@@ -457,52 +462,45 @@
     display: none; /* Masquer les boutons de contrôle des sliders */
   }
   
-  /* Style du conteneur de l'article pour permettre le positionnement absolu */
-.product {
-    position: relative; 
-    overflow: hidden; 
-}
-
-/* Style du conteneur d'image et du badge */
-.product-media {
-    position: relative; 
-    display: inline-block; 
-}
-
-/* Badge centré sur l'image */
-.stock-badge {
+  /* --- STYLES CORRIGÉS POUR LES BADGES DE STOCK --- */
+  
+  /* Style pour le stock restant (en bas à droite) */
+  .stock-remaining-badge {
     position: absolute;
-    top: 50%;           
-    left: 50%;          
-    transform: translate(-50%, -50%); 
-    color: white;       
-    background-color: transparent; 
+    bottom: 5px;
+    right: 5px;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: white;
+    padding: 3px 6px;
+    border-radius: 5px;
+    font-size: 0.75em;
+    z-index: 10;
+  }
+
+  /* Style pour le badge "Épuisé" (centré sur l'image) */
+  .out-of-stock-badge {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(255, 0, 0, 0.8);
+    color: white;
     padding: 10px 20px;
     font-size: 1.2em;
     font-weight: bold;
     text-transform: uppercase;
-    z-index: 10;        
-    border-radius: 5px; 
-    display: none; /* Cache le badge par défaut */
-}
+    z-index: 10;
+    border-radius: 5px;
+  }
+  
+  /* Applique le filtre de gris à l'image des produits en rupture de stock */
+  .product.out-of-stock .product-media img {
+    filter: grayscale(70%);
+  }
 
-/* Affiche le badge seulement quand l'article est en stock épuisé */
-.product.out-of-stock .stock-badge {
-    display: block;
-}
-
-/* Image décolorée */
-.product-image {
-    /* Ce sélecteur n'est pas utilisé dans votre code HTML, car l'image est directement dans le conteneur product-media */
-}
-
-.product.out-of-stock .product-media img {
-    filter: grayscale(70%); /* Applique le filtre à l'image contenue dans le .product-media */
-}
-
-   /* Styles pour le tag Nouveauté */
-.new-tag {
-    background-color: #ff5722; /* Une couleur orange vif */
+  /* Styles pour le tag Nouveauté */
+  .new-tag {
+    background-color: #ff5722;
     color: white;
     font-weight: bold;
     font-size: 0.75em;
@@ -512,34 +510,7 @@
     top: 15px;
     right: 10px;
     z-index: 10;
-}
-
-.product-container {
-    position: relative; /* Indispensable pour positionner les éléments enfants */
-    display: inline-block; /* Permet au conteneur de s'ajuster à la taille de l'image */
-}
-
-.product-container img {
-    width: 100%; /* S'assure que l'image remplit le conteneur */
-    height: auto;
-}
-
-.stock-badge {
-    position: absolute; /* Permet de le positionner librement */
-    bottom: 5px; /* Ajustez la position verticale */
-    right: 5px; /* Ajustez la position horizontale */
-    background-color: rgba(0, 0, 0, 0.6); /* Fond semi-transparent */
-    color: white; /* Couleur du texte */
-    padding: 3px 6px; /* Espace autour du texte */
-    border-radius: 5px; /* Coins arrondis */
-    font-size: 0.75em; /* Taille de la police plus petite */
-    z-index: 10; /* S'assure que le texte est au-dessus de l'image */
-}
-
-/* Indispensable pour que le positionnement absolu du tag fonctionne */
-.product {
-    position: relative; 
-}
+  }
  
   /* Footer */
   footer{
@@ -570,9 +541,9 @@
   }
   .slider-track img {
       width: 100%;
-      height: 400px; /* Hauteur fixe pour toutes les images */
+      height: 400px;
       object-fit: cover;
-      flex-shrink: 0; /* Empêche les images de rétrécir */
+      flex-shrink: 0;
   }
   .slider-dots-container {
       display: flex;
@@ -646,7 +617,8 @@
     <button id="checkout-btn">Commander sur WhatsApp</button>
   </div>
   
- <div style="flex: 1; text-align: center;">
+  <header>
+    <div style="flex: 1; text-align: center;">
         <img src="logo.PNG" alt="Galerie Nomad" 
              style="height: 100px; width: auto; object-fit: contain;">
     </div>
@@ -682,10 +654,12 @@
         <h2>Chaînes • Acier inoxydable</h2>
         <div class="collection-slider" id="slider-chaines-inox">
             <article class="product" data-name="Chaîne Mercure 2" data-price="8000">
-                <img src="Cha3.jpg" alt="Chaîne Mercure 2">
+                <div class="product-media">
+                    <img src="Cha3.jpg" alt="Chaîne Mercure 2">
+                    <span class="stock-remaining-badge">Stock restant : 5</span>
+                </div>
                 <div class="title">Chaîne Mercure 2</div>
                 <p class="desc">Tour de cou avec pendentif argenté fin vieilli</p>
-                <span class="stock-badge">Stock restant : 5</span>
                 <div class="material">Acier inoxydable + argenté fin vieilli</div>
                 <div class="price">8 000 FCFA</div>
                 <div class="actions">
@@ -694,10 +668,12 @@
                 </div>
             </article>
             <article class="product" data-name="Chaîne Mercure 1" data-price="8000">
-                <img src="Cha2.jpg" alt="Chaîne Mercure 1">
+                <div class="product-media">
+                    <img src="Cha2.jpg" alt="Chaîne Mercure 1">
+                    <span class="stock-remaining-badge">Stock restant : 5</span>
+                </div>
                 <div class="title">Chaîne Mercure 1</div>
                 <p class="desc">Tour de cou avec pendentif croix</p>
-                <span class="stock-badge">Stock restant : 5</span>
                 <div class="material">Acier inoxydable</div>
                 <div class="price">8 000 FCFA</div>
                 <div class="actions">
@@ -716,11 +692,13 @@
         <h2>Chaînes • Métaux précieux</h2>
         <div class="collection-slider" id="slider-chaines-precieux">
             <article class="product" data-name="Chaîne Warend 1" data-price="14000">
-                <img src="Cha1.jpg" alt="Chaîne Warend 1">
-                <div class="new-tag">Nouveauté</div>
+                <div class="product-media">
+                    <img src="Cha1.jpg" alt="Chaîne Warend 1">
+                    <div class="new-tag">Nouveauté</div>
+                    <span class="stock-remaining-badge">Stock restant : 5</span>
+                </div>
                 <div class="title">Chaîne Warend 1</div>
                 <p class="desc">Tour de cou Maille forçat alternée, pendentif ancre</p>
-                <span class="stock-badge">Stock restant : 5</span>
                 <div class="material">Argent</div>
                 <span style="text-decoration: line-through; color: red;">18 000 FCFA</span>
                 <div class="price">14 000 FCFA</div>
@@ -730,10 +708,12 @@
                 </div>
             </article>
             <article class="product" data-name="Chaîne Warend 2" data-price="14000">
-                <img src="Cha5.jpg" alt="Chaîne Warend 2">
+                <div class="product-media">
+                    <img src="Cha5.jpg" alt="Chaîne Warend 2">
+                    <span class="stock-remaining-badge">Stock restant : 5</span>
+                </div>
                 <div class="title">Chaîne Warend 2</div>
                 <p class="desc">Tour de cou Maille forçat alternée, pendentif Menottes</p>
-                <span class="stock-badge">Stock restant : 5</span>
                 <div class="material">Argent</div>
                 <span style="text-decoration: line-through; color: red;">18 000 FCFA</span>
                 <div class="price">14 000 FCFA</div>
@@ -743,10 +723,12 @@
                 </div>
             </article>
             <article class="product" data-name="Chaîne Jupiter" data-price="18000">
-                <img src="Cha4.jpg" alt="Chaîne Jupiter">
+                <div class="product-media">
+                    <img src="Cha4.jpg" alt="Chaîne Jupiter">
+                    <span class="stock-remaining-badge">Stock restant : 5</span>
+                </div>
                 <div class="title">Chaîne Jupiter</div>
                 <p class="desc">Tour de cou Or laminé pendentif croix</p>
-                <span class="stock-badge">Stock restant : 5</span>
                 <div class="material">Or 14 karat</div>
                 <span style="text-decoration: line-through; color: red;">22 000 FCFA</span>
                 <div class="price">18 000 FCFA</div>
@@ -756,21 +738,20 @@
                 </div>
             </article>
             <article class="product out-of-stock" data-name="Chaîne Warend 3" data-price="21000">
-    <div class="product-media">
-        <img src="Cha6.jpg" alt="Chaîne Warend 3" class="product-image">
-        <span class="stock-badge epuise">Épuisé</span>
-    </div>
-    <div class="title">Chaîne Warend 3</div>
-    <p class="desc">Tour de cou Maille forçat alternée, pendentif poisson articulé</p>
-    <span class="stock-badge">Stock restant : 5</span>
-    <div class="material">Argent</div>
-    <span style="text-decoration: line-through; color: red;">25 000 FCFA</span>
-    <div class="price">21 000 FCFA</div>
-    <div class="actions">
-        <button class="heart" aria-label="Like">♡</button>
-        <button class="add-to-cart-btn" aria-label="Ajouter Chaîne Warend 3">Ajouter au panier</button>
-    </div>
-    </article>
+                <div class="product-media">
+                    <img src="Cha6.jpg" alt="Chaîne Warend 3" class="product-image">
+                    <span class="out-of-stock-badge">Épuisé</span>
+                </div>
+                <div class="title">Chaîne Warend 3</div>
+                <p class="desc">Tour de cou Maille forçat alternée, pendentif poisson articulé</p>
+                <div class="material">Argent</div>
+                <span style="text-decoration: line-through; color: red;">25 000 FCFA</span>
+                <div class="price">21 000 FCFA</div>
+                <div class="actions">
+                    <button class="heart" aria-label="Like">♡</button>
+                    <button class="add-to-cart-btn" aria-label="Ajouter Chaîne Warend 3">Ajouter au panier</button>
+                </div>
+            </article>
         </div>
         <div class="slider-controls">
             <button class="prev-btn" data-slider="slider-chaines-precieux">‹</button>
@@ -782,10 +763,12 @@
         <h2>Bracelets • Cordons</h2>
         <div class="collection-slider" id="slider-bracelets-cordons">
             <article class="product" data-name="Bracelet Origine 1" data-price="6000">
-                <img src="Bra1.jpg" alt="Bracelet Origine 1">
+                <div class="product-media">
+                    <img src="Bra1.jpg" alt="Bracelet Origine 1">
+                    <span class="stock-remaining-badge">Stock restant : 5</span>
+                </div>
                 <div class="title">Bracelet Origine 1</div>
                 <p class="desc">Jeu de cordon sur Menottes Nomad</p>
-                <span class="stock-badge">Stock restant : 5</span>
                 <div class="material">Argent + polyester tressé</div>
                 <div class="price">6 000 FCFA</div>
                 <div class="actions">
@@ -794,10 +777,12 @@
                 </div>
             </article>
             <article class="product" data-name="Bracelet simple" data-price="0">
-                <img src="Bra7.jpg" alt="Bracelet simple">
+                <div class="product-media">
+                    <img src="Bra7.jpg" alt="Bracelet simple">
+                    <span class="stock-remaining-badge">Stock restant : 5</span>
+                </div>
                 <div class="title">Bracelet simple</div>
                 <p class="desc">Gratuit dès la première commande</p>
-                <span class="stock-badge">Stock restant : 5</span>
                 <div class="material">polyester tressé</div>
                 <div class="price">0 FCFA</div>
                 <div class="actions">
@@ -806,10 +791,12 @@
                 </div>
             </article>
             <article class="product" data-name="Bracelet Marin" data-price="6000">
-                <img src="Bra4.jpg" alt="Bracelet Marin">
+                <div class="product-media">
+                    <img src="Bra4.jpg" alt="Bracelet Marin">
+                    <span class="stock-remaining-badge">Stock restant : 5</span>
+                </div>
                 <div class="title">Bracelet Marin</div>
                 <p class="desc">Jeu de cordon sur fermoir aimantée Nomad</p>
-                <span class="stock-badge">Stock restant : 5</span>
                 <div class="material">Acier inoxydable + polyester tressé</div>
                 <div class="price">6 000 FCFA</div>
                 <div class="actions">
@@ -818,10 +805,12 @@
                 </div>
             </article>
             <article class="product" data-name="Bracelet Origine 2" data-price="5000">
-                <img src="Bra3.jpg" alt="Bracelet Origine 2">
+                <div class="product-media">
+                    <img src="Bra3.jpg" alt="Bracelet Origine 2">
+                    <span class="stock-remaining-badge">Stock restant : 5</span>
+                </div>
                 <div class="title">Bracelet Origine 2</div>
                 <p class="desc">Jeu de cordon sur Menottes Nomad</p>
-                <span class="stock-badge">Stock restant : 5</span>
                 <div class="material">Doré + polyester tressé</div>
                 <div class="price">5 000 FCFA</div>
                 <div class="actions">
@@ -830,10 +819,12 @@
                 </div>
             </article>
             <article class="product" data-name="Bracelet motif" data-price="4000">
-                <img src="Bra2.jpg" alt="Bracelet motif">
+                <div class="product-media">
+                    <img src="Bra2.jpg" alt="Bracelet motif">
+                    <span class="stock-remaining-badge">Stock restant : 5</span>
+                </div>
                 <div class="title">Bracelet motif</div>
                 <p class="desc">Jeu de cordon sur motif religieux Nomad</p>
-                <span class="stock-badge">Stock restant : 5</span>
                 <div class="material">Doré + polyester tressé</div>
                 <div class="price">4 000 FCFA</div>
                 <div class="actions">
@@ -852,10 +843,12 @@
         <h2>Bracelets • Acier inoxydable</h2>
         <div class="collection-slider" id="slider-bracelets-inox">
             <article class="product" data-name="Bracelet Sable blanc" data-price="6000">
-                <img src="Bra5.jpg" alt="Bracelet Sable blanc">
+                <div class="product-media">
+                    <img src="Bra5.jpg" alt="Bracelet Sable blanc">
+                    <span class="stock-remaining-badge">Stock restant : 5</span>
+                </div>
                 <div class="title">Bracelet Sable blanc</div>
                 <p class="desc">Bracelet sur chaîne maille figaro</p>
-                <span class="stock-badge">Stock restant : 5</span>
                 <div class="material">Acier inoxydable</div>
                 <div class="price">6 000 FCFA</div>
                 <div class="actions">
@@ -864,10 +857,12 @@
                 </div>
             </article>
             <article class="product" data-name="Bracelet Sable blanc avec initial" data-price="6000">
-                <img src="Bra6.jpg" alt="Bracelet Sable blanc avec initial">
+                <div class="product-media">
+                    <img src="Bra6.jpg" alt="Bracelet Sable blanc avec initial">
+                    <span class="stock-remaining-badge">Stock restant : 5</span>
+                </div>
                 <div class="title">Bracelet Sable blanc avec initial</div>
                 <p class="desc">Bracelet sur chaîne maille figaro avec initial au choix</p>
-                <span class="stock-badge">Stock restant : 5</span>
                 <div class="material">Acier inoxydable</div>
                 <div class="price">6 000 FCFA</div>
                 <div class="actions">
@@ -1080,7 +1075,7 @@ searchInput.addEventListener('input', (event) => {
                 const selectedProduct = [...products].find(p => p.dataset.name.toLowerCase() === name.toLowerCase());
                 if (selectedProduct) {
                     showSingleProduct(selectedProduct);
-                    searchContainer.classList.remove('visible'); // Ferme la barre après la sélection
+                    searchContainer.classList.remove('visible');
                     searchInput.value = '';
                 }
             });
@@ -1099,7 +1094,7 @@ searchInput.addEventListener('keydown', (event) => {
 
         if (firstMatchingProduct) {
             showSingleProduct(firstMatchingProduct);
-            searchContainer.classList.remove('visible'); // Ferme la barre immédiatement
+            searchContainer.classList.remove('visible');
             suggestionsContainer.classList.remove('visible');
             searchInput.value = '';
         } else {
