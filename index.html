@@ -394,14 +394,14 @@
     box-shadow:0 8px 30px rgba(10,10,10,0.04);
     transition:transform .18s ease, box-shadow .18s ease;
     text-align:center;
-    position: relative; /* Indispensable pour que le positionnement absolu du tag fonctionne */
+    position: relative;
   }
   .product:hover{
     transform:translateY(-6px);
     box-shadow:0 18px 40px rgba(10,10,10,0.06);
   }
   .product-media {
-    position: relative; /* Base pour le positionnement du badge */
+    position: relative;
     display: inline-block;
   }
   .product img{
@@ -459,12 +459,15 @@
     margin-top: 15px;
   }
   .slider-controls button {
-    display: none; /* Masquer les boutons de contrôle des sliders */
+    display: none;
   }
   
-  /* --- STYLES CORRIGÉS POUR LES BADGES DE STOCK --- */
+  /* --- STYLES POUR LES BADGES DE STOCK --- */
   
-  /* Style pour le stock restant (en bas à droite) */
+  .stock-info-badge {
+      display: inline-block; /* Assurez-vous que le span est un bloc */
+  }
+
   .stock-remaining-badge {
     position: absolute;
     bottom: 5px;
@@ -477,7 +480,6 @@
     z-index: 10;
   }
 
-  /* Style pour le badge "Épuisé" (centré sur l'image) */
   .out-of-stock-badge {
     position: absolute;
     top: 50%;
@@ -493,7 +495,6 @@
     border-radius: 5px;
   }
   
-  /* Applique le filtre de gris à l'image des produits en rupture de stock */
   .product.out-of-stock .product-media img {
     filter: grayscale(70%);
   }
@@ -653,10 +654,10 @@
     <section class="collection" id="chaines-inox">
         <h2>Chaînes • Acier inoxydable</h2>
         <div class="collection-slider" id="slider-chaines-inox">
-            <article class="product" data-name="Chaîne Mercure 2" data-price="8000">
+            <article class="product" data-name="Chaîne Mercure 2" data-price="8000" data-stock="5">
                 <div class="product-media">
                     <img src="Cha3.jpg" alt="Chaîne Mercure 2">
-                    <span class="stock-remaining-badge">Stock restant : 5</span>
+                    <span class="stock-info-badge"></span>
                 </div>
                 <div class="title">Chaîne Mercure 2</div>
                 <p class="desc">Tour de cou avec pendentif argenté fin vieilli</p>
@@ -667,10 +668,10 @@
                   <button class="add-to-cart-btn" aria-label="Ajouter Chaîne Mercure 2 au panier">Ajouter au panier</button>
                 </div>
             </article>
-            <article class="product" data-name="Chaîne Mercure 1" data-price="8000">
+            <article class="product" data-name="Chaîne Mercure 1" data-price="8000" data-stock="5">
                 <div class="product-media">
                     <img src="Cha2.jpg" alt="Chaîne Mercure 1">
-                    <span class="stock-remaining-badge">Stock restant : 5</span>
+                    <span class="stock-info-badge"></span>
                 </div>
                 <div class="title">Chaîne Mercure 1</div>
                 <p class="desc">Tour de cou avec pendentif croix</p>
@@ -691,11 +692,11 @@
     <section class="collection" id="chaines-precieux">
         <h2>Chaînes • Métaux précieux</h2>
         <div class="collection-slider" id="slider-chaines-precieux">
-            <article class="product" data-name="Chaîne Warend 1" data-price="14000">
+            <article class="product" data-name="Chaîne Warend 1" data-price="14000" data-stock="5">
                 <div class="product-media">
                     <img src="Cha1.jpg" alt="Chaîne Warend 1">
                     <div class="new-tag">Nouveauté</div>
-                    <span class="stock-remaining-badge">Stock restant : 5</span>
+                    <span class="stock-info-badge"></span>
                 </div>
                 <div class="title">Chaîne Warend 1</div>
                 <p class="desc">Tour de cou Maille forçat alternée, pendentif ancre</p>
@@ -707,10 +708,10 @@
                   <button class="add-to-cart-btn" aria-label="Ajouter Chaîne Warend 1 au panier">Ajouter au panier</button>
                 </div>
             </article>
-            <article class="product" data-name="Chaîne Warend 2" data-price="14000">
+            <article class="product" data-name="Chaîne Warend 2" data-price="14000" data-stock="5">
                 <div class="product-media">
                     <img src="Cha5.jpg" alt="Chaîne Warend 2">
-                    <span class="stock-remaining-badge">Stock restant : 5</span>
+                    <span class="stock-info-badge"></span>
                 </div>
                 <div class="title">Chaîne Warend 2</div>
                 <p class="desc">Tour de cou Maille forçat alternée, pendentif Menottes</p>
@@ -722,10 +723,10 @@
                   <button class="add-to-cart-btn" aria-label="Ajouter Chaîne Warend 2 au panier">Ajouter au panier</button>
                 </div>
             </article>
-            <article class="product" data-name="Chaîne Jupiter" data-price="18000">
+            <article class="product" data-name="Chaîne Jupiter" data-price="18000" data-stock="5">
                 <div class="product-media">
                     <img src="Cha4.jpg" alt="Chaîne Jupiter">
-                    <span class="stock-remaining-badge">Stock restant : 5</span>
+                    <span class="stock-info-badge"></span>
                 </div>
                 <div class="title">Chaîne Jupiter</div>
                 <p class="desc">Tour de cou Or laminé pendentif croix</p>
@@ -737,10 +738,10 @@
                   <button class="add-to-cart-btn" aria-label="Ajouter Chaîne Jupiter au panier">Ajouter au panier</button>
                 </div>
             </article>
-            <article class="product out-of-stock" data-name="Chaîne Warend 3" data-price="21000">
+            <article class="product" data-name="Chaîne Warend 3" data-price="21000" data-stock="0">
                 <div class="product-media">
                     <img src="Cha6.jpg" alt="Chaîne Warend 3" class="product-image">
-                    <span class="out-of-stock-badge">Épuisé</span>
+                    <span class="stock-info-badge"></span>
                 </div>
                 <div class="title">Chaîne Warend 3</div>
                 <p class="desc">Tour de cou Maille forçat alternée, pendentif poisson articulé</p>
@@ -762,24 +763,24 @@
     <section class="collection" id="bracelets-cordons">
         <h2>Bracelets • Cordons</h2>
         <div class="collection-slider" id="slider-bracelets-cordons">
-            <article class="product" data-name="Bracelet Origine 1" data-price="6000">
+            <article class="product" data-name="Bracelet Origine 1" data-price="6000" data-stock="5">
                 <div class="product-media">
                     <img src="Bra1.jpg" alt="Bracelet Origine 1">
-                    <span class="stock-remaining-badge">Stock restant : 5</span>
+                    <span class="stock-info-badge"></span>
                 </div>
                 <div class="title">Bracelet Origine 1</div>
                 <p class="desc">Jeu de cordon sur Menottes Nomad</p>
                 <div class="material">Argent + polyester tressé</div>
-                <div class="price">6 000 FCFA</div>
+                <div class="price">6 00FA</div>
                 <div class="actions">
                   <button class="heart" aria-label="Like">♡</button>
                   <button class="add-to-cart-btn" aria-label="Ajouter Bracelet Origine 1 au panier">Ajouter au panier</button>
                 </div>
             </article>
-            <article class="product" data-name="Bracelet simple" data-price="0">
+            <article class="product" data-name="Bracelet simple" data-price="0" data-stock="5">
                 <div class="product-media">
                     <img src="Bra7.jpg" alt="Bracelet simple">
-                    <span class="stock-remaining-badge">Stock restant : 5</span>
+                    <span class="stock-info-badge"></span>
                 </div>
                 <div class="title">Bracelet simple</div>
                 <p class="desc">Gratuit dès la première commande</p>
@@ -790,10 +791,10 @@
                   <button class="add-to-cart-btn" aria-label="Ajouter Bracelet simple au panier">Ajouter au panier</button>
                 </div>
             </article>
-            <article class="product" data-name="Bracelet Marin" data-price="6000">
+            <article class="product" data-name="Bracelet Marin" data-price="6000" data-stock="5">
                 <div class="product-media">
                     <img src="Bra4.jpg" alt="Bracelet Marin">
-                    <span class="stock-remaining-badge">Stock restant : 5</span>
+                    <span class="stock-info-badge"></span>
                 </div>
                 <div class="title">Bracelet Marin</div>
                 <p class="desc">Jeu de cordon sur fermoir aimantée Nomad</p>
@@ -804,10 +805,10 @@
                   <button class="add-to-cart-btn" aria-label="Ajouter Bracelet Marin au panier">Ajouter au panier</button>
                 </div>
             </article>
-            <article class="product" data-name="Bracelet Origine 2" data-price="5000">
+            <article class="product" data-name="Bracelet Origine 2" data-price="5000" data-stock="5">
                 <div class="product-media">
                     <img src="Bra3.jpg" alt="Bracelet Origine 2">
-                    <span class="stock-remaining-badge">Stock restant : 5</span>
+                    <span class="stock-info-badge"></span>
                 </div>
                 <div class="title">Bracelet Origine 2</div>
                 <p class="desc">Jeu de cordon sur Menottes Nomad</p>
@@ -818,10 +819,10 @@
                   <button class="add-to-cart-btn" aria-label="Ajouter Bracelet Origine 2 au panier">Ajouter au panier</button>
                 </div>
             </article>
-            <article class="product" data-name="Bracelet motif" data-price="4000">
+            <article class="product" data-name="Bracelet motif" data-price="4000" data-stock="5">
                 <div class="product-media">
                     <img src="Bra2.jpg" alt="Bracelet motif">
-                    <span class="stock-remaining-badge">Stock restant : 5</span>
+                    <span class="stock-info-badge"></span>
                 </div>
                 <div class="title">Bracelet motif</div>
                 <p class="desc">Jeu de cordon sur motif religieux Nomad</p>
@@ -842,10 +843,10 @@
     <section class="collection" id="bracelets-inox">
         <h2>Bracelets • Acier inoxydable</h2>
         <div class="collection-slider" id="slider-bracelets-inox">
-            <article class="product" data-name="Bracelet Sable blanc" data-price="6000">
+            <article class="product" data-name="Bracelet Sable blanc" data-price="6000" data-stock="5">
                 <div class="product-media">
                     <img src="Bra5.jpg" alt="Bracelet Sable blanc">
-                    <span class="stock-remaining-badge">Stock restant : 5</span>
+                    <span class="stock-info-badge"></span>
                 </div>
                 <div class="title">Bracelet Sable blanc</div>
                 <p class="desc">Bracelet sur chaîne maille figaro</p>
@@ -856,10 +857,10 @@
                   <button class="add-to-cart-btn" aria-label="Ajouter Bracelet Sable blanc au panier">Ajouter au panier</button>
                 </div>
             </article>
-            <article class="product" data-name="Bracelet Sable blanc avec initial" data-price="6000">
+            <article class="product" data-name="Bracelet Sable blanc avec initial" data-price="6000" data-stock="5">
                 <div class="product-media">
                     <img src="Bra6.jpg" alt="Bracelet Sable blanc avec initial">
-                    <span class="stock-remaining-badge">Stock restant : 5</span>
+                    <span class="stock-info-badge"></span>
                 </div>
                 <div class="title">Bracelet Sable blanc avec initial</div>
                 <p class="desc">Bracelet sur chaîne maille figaro avec initial au choix</p>
@@ -1209,6 +1210,40 @@ sliderDots.forEach(dot => {
         slideTo(slideIndex);
     });
 });
+
+// Fonction pour mettre à jour l'affichage du stock
+function updateStockDisplay() {
+    const products = document.querySelectorAll('.product');
+
+    products.forEach(product => {
+        const stock = parseInt(product.dataset.stock);
+        const stockBadge = product.querySelector('.stock-info-badge');
+        const addToCartButton = product.querySelector('.add-to-cart-btn');
+
+        if (stock === 0) {
+            product.classList.add('out-of-stock');
+            stockBadge.textContent = 'Épuisé';
+            stockBadge.classList.add('out-of-stock-badge');
+            stockBadge.classList.remove('stock-remaining-badge');
+            addToCartButton.disabled = true;
+            addToCartButton.textContent = "Épuisé";
+            addToCartButton.style.color = "#888";
+            addToCartButton.style.cursor = "not-allowed";
+        } else {
+            product.classList.remove('out-of-stock');
+            stockBadge.textContent = `Stock restant : ${stock}`;
+            stockBadge.classList.add('stock-remaining-badge');
+            stockBadge.classList.remove('out-of-stock-badge');
+            addToCartButton.disabled = false;
+            addToCartButton.textContent = "Ajouter au panier";
+            addToCartButton.style.color = "";
+            addToCartButton.style.cursor = "";
+        }
+    });
+}
+
+// Appeler la fonction au chargement de la page
+document.addEventListener('DOMContentLoaded', updateStockDisplay);
 </script>
 
 </body>
