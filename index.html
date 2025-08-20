@@ -570,56 +570,57 @@
   }
   
   /* --- NOUVEAU : STYLES DU MINI-SLIDER --- */
-  .mini-slider {
-      position: relative;
-      overflow: hidden;
-      border-radius: 8px;
-      display: block;
-      width: 100%;
-  }
+.mini-slider {
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+    display: block;
+    width: 100%;
+}
 
-  .mini-slider-track {
-      display: flex;
-      width: 100%;
-      transition: transform 0.4s ease-in-out;
-  }
+.mini-slider-track {
+    display: flex;
+    width: 100%;
+    transition: transform 0.4s ease-in-out;
+}
 
-  .product-image-slide {
-      width: 100%;
-      flex-shrink: 0;
-      object-fit: contain;
-      height: auto;
-      border-radius: 8px;
-  }
+.product-image-slide {
+    width: 100%;
+    flex-shrink: 0;
+    object-fit: contain;
+    height: auto;
+    border-radius: 8px;
+    border: none; /* Ajouté pour supprimer toute bordure par défaut */
+}
 
-  .mini-slider-nav {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      background: rgba(0, 0, 0, 0.4);
-      color: white;
-      border: none;
-      padding: 8px 12px;
-      cursor: pointer;
-      font-size: 1.5em;
-      font-weight: bold;
-      border-radius: 5px;
-      z-index: 20;
-      opacity: 0;
-      transition: opacity 0.3s ease;
-  }
+.mini-slider-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.4);
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    font-size: 1.5em;
+    font-weight: bold;
+    border-radius: 5px;
+    z-index: 20;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
 
-  .mini-slider:hover .mini-slider-nav {
-      opacity: 1;
-  }
+.mini-slider:hover .mini-slider-nav {
+    opacity: 1;
+}
 
-  .mini-slider-nav.prev-btn {
-      left: 10px;
-  }
+.mini-slider-nav.prev-btn {
+    left: 10px;
+}
 
-  .mini-slider-nav.next-btn {
-      right: 10px;
-  }
+.mini-slider-nav.next-btn {
+    right: 10px;
+}
 </style>
 </head>
 <body>
