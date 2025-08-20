@@ -369,7 +369,27 @@
   .collection h2 {
     text-align: center;
     margin-bottom: 15px;
+    position: relative;
+    padding-right: 25px; /* Espace pour la flèche */
   }
+
+  /* Ajoute une flèche à droite du titre de la collection pour indiquer le défilement */
+  .collection h2::after {
+      content: "›";
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 1.5rem;
+      color: var(--muted);
+      transition: transform 0.3s ease;
+  }
+  
+  /* Animation de la flèche sur le survol */
+  .collection:hover h2::after {
+      transform: translateY(-50%) translateX(5px);
+  }
+
   .collection-slider {
     display: flex;
     overflow-x: auto;
