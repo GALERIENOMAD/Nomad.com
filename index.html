@@ -27,12 +27,12 @@
   #shipping-banner {
       background-color: var(--primary-color);
       color: white;
-      text-align: center;
+      text-align: flex;
       padding: 5px;
       font-size: 0.7em;
       font-weight: bold;
   }
-
+  
   /* En-tête */
   header {
     position: relative;
@@ -50,10 +50,9 @@
       flex: 1;
       text-align: center;
   }
-  header img{
-    height:86px;
-    object-fit:contain;
-    border: none; /* S'assurer qu'il n'y a pas de bordure par défaut */
+  header img{ 
+    height:86px; 
+    object-fit:contain; 
   }
   header nav{
     text-align:center;
@@ -171,7 +170,6 @@
   .preloader-logo {
     width: 90px;
     animation: fadeIn 1s ease-in-out;
-    border: none; /* S'assurer qu'il n'y a pas de bordure par défaut */
   }
   @keyframes fadeIn {
     from { opacity: 0; }
@@ -361,9 +359,8 @@
       max-width: 800px;
       height: auto;
       object-fit: cover;
-      border: none; /* S'assurer qu'il n'y a pas de bordure par défaut */
   }
-
+  
   /* Styles pour les collections avec slider */
   .collection {
     position: relative;
@@ -372,27 +369,7 @@
   .collection h2 {
     text-align: center;
     margin-bottom: 15px;
-    position: relative;
-    padding-right: 25px; /* Espace pour la flèche */
   }
-
-  /* Ajoute une flèche à droite du titre de la collection pour indiquer le défilement */
-  .collection h2::after {
-      content: "›";
-      position: absolute;
-      right: 0;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 1.5rem;
-      color: var(--muted);
-      transition: transform 0.3s ease;
-  }
-
-  /* Animation de la flèche sur le survol */
-  .collection:hover h2::after {
-      transform: translateY(-50%) translateX(5px);
-  }
-
   .collection-slider {
     display: flex;
     overflow-x: auto;
@@ -410,7 +387,7 @@
     scrollbar-width: none;  /* Masquer la barre de défilement pour Firefox */
   }
   .product {
-    min-width: 300px;
+    min-width: 300px; /* Largeur fixe pour chaque produit dans le slider */
     background:var(--card-bg);
     border-radius:10px;
     padding:14px;
@@ -423,66 +400,19 @@
     transform:translateY(-6px);
     box-shadow:0 18px 40px rgba(10,10,10,0.06);
   }
-
-  /* Conteneur d'image pour maintenir l'aspect ratio */
   .product-media {
     position: relative;
+    /* Remplacer 'display: inline-block;' par 'display: block;' pour un meilleur rendu des sliders */
     display: block;
-    width: 100%;
-    padding-bottom: 100%; /* Définit la hauteur égale à la largeur pour un aspect 1:1 */
-    overflow: hidden;
   }
-  .product-media img, .product-image-slide {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: contain; /* Redimensionne l'image pour qu'elle s'insère dans le conteneur sans être déformée */
-    border-radius: 8px;
-    transition: transform .28s ease;
-    border: none; /* S'assurer qu'il n'y a pas de bordure par défaut */
+  .product img{
+    width:100%;
+    height: auto;
+    object-fit: contain;
+    border-radius:8px;
+    transition:transform .28s ease;
   }
-  .product-media img:hover { transform:scale(1.03); }
-
-  /* Styles pour la flèche incitant au slider */
-  .slide-indicator {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 1.5em;
-      color: var(--muted);
-      opacity: 0;
-      transition: opacity 0.3s ease, transform 0.3s ease;
-      pointer-events: none;
-  }
-  .slide-indicator.right {
-      right: 15px;
-  }
-  .slide-indicator.left {
-      left: 15px;
-  }
-
-  /* Afficher et animer la flèche si le contenu est défilable */
-  .collection.has-more-right .slide-indicator.right {
-      opacity: 1;
-      animation: slide-right 1s infinite alternate;
-  }
-  .collection.has-more-left .slide-indicator.left {
-      opacity: 1;
-      animation: slide-left 1s infinite alternate;
-  }
-  
-  /* Animations pour les flèches */
-  @keyframes slide-right {
-      0% { transform: translateY(-50%) translateX(0); }
-      100% { transform: translateY(-50%) translateX(5px); }
-  }
-  @keyframes slide-left {
-      0% { transform: translateY(-50%) translateX(0); }
-      100% { transform: translateY(-50%) translateX(-5px); }
-  }
-
+  .product img:hover { transform:scale(1.03); }
   .title{
     margin:12px 0 6px;
     font-weight:700;
@@ -532,9 +462,9 @@
   .slider-controls button {
     display: none;
   }
-
+  
   /* --- STYLES POUR LES BADGES DE STOCK --- */
-
+  
   .stock-info-badge {
       display: inline-block; /* Assurez-vous que le span est un bloc */
   }
@@ -565,7 +495,7 @@
     z-index: 10;
     border-radius: 5px;
   }
-
+  
   .product.out-of-stock .product-media img {
     filter: grayscale(70%);
   }
@@ -583,7 +513,7 @@
     right: 10px;
     z-index: 10;
   }
-
+ 
   /* Footer */
   footer{
     margin-top:28px;
@@ -593,7 +523,7 @@
     border-top:1px solid rgba(0,0,0,0.04);
   }
   .socials{ display:inline-flex; gap:12px; align-items:center; }
-  .socials a img{ width:28px; height:28px; display:inline-block; border: none; /* S'assurer qu'il n'y a pas de bordure par défaut */ }
+  .socials a img{ width:28px; height:28px; display:inline-block; }
   .copyright{ margin-top:10px; color:#666; font-size:0.9rem; }
 
   /* Styles pour le slider d'images */
@@ -616,7 +546,6 @@
       height: 400px;
       object-fit: cover;
       flex-shrink: 0;
-      border: none; /* S'assurer qu'il n'y a pas de bordure par défaut */
   }
   .slider-dots-container {
       display: flex;
@@ -639,8 +568,8 @@
   .slider-dot.active {
       background-color: white;
   }
-
-  /* --- STYLES DU MINI-SLIDER --- */
+  
+  /* --- NOUVEAU : STYLES DU MINI-SLIDER --- */
   .mini-slider {
       position: relative;
       overflow: hidden;
@@ -661,7 +590,6 @@
       object-fit: contain;
       height: auto;
       border-radius: 8px;
-      border: none; /* S'assurer qu'il n'y a pas de bordure par défaut */
   }
 
   /* --- CORRECTION POUR LE DÉCALAGE --- */
@@ -705,11 +633,11 @@
  <div id="shipping-banner">
       Expédition gratuite à partir de 30 000 FCFA
  </div>
-
+  
   <div id="preloader">
     <img src="logo1.jpg" alt="Galerie Nomad" class="preloader-logo">
   </div>
-
+  
   <button class="search-icon" aria-label="Rechercher">
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <circle cx="11" cy="11" r="8"></circle>
@@ -729,7 +657,7 @@
       <span class="menu-bar"></span>
       <span class="menu-bar"></span>
   </div>
-
+  
   <div id="search-container">
       <input type="text" id="search-input" placeholder="Rechercher un produit...">
       <button id="search-back-button" aria-label="Retour à la page principale">
@@ -748,10 +676,10 @@
     <p id="cart-total">Total : 0 FCFA</p>
     <button id="checkout-btn">Commander sur WhatsApp</button>
   </div>
-
+  
   <header>
     <div style="flex: 1; text-align: center;">
-        <img src="logo.PNG" alt="Galerie Nomad"
+        <img src="logo.PNG" alt="Galerie Nomad" 
              style="height: 100px; width: auto; object-fit: contain;">
     </div>
     <nav aria-label="menu">
@@ -781,11 +709,9 @@
 
   <main>
     <p class="tagline">Bracelets premium en acier inoxydable, or pur et argent 925</p>
-
+    
     <section class="collection" id="chaines-inox">
         <h2>Chaînes • Acier inoxydable</h2>
-        <span class="slide-indicator right" aria-label="Faire glisser à droite">→</span>
-        <span class="slide-indicator left" aria-label="Faire glisser à gauche">←</span>
         <div class="collection-slider" id="slider-chaines-inox">
             <article class="product" data-name="Chaîne Mercure 2" data-price="8000" data-stock="0">
                 <div class="product-media mini-slider">
@@ -822,12 +748,14 @@
                 </div>
             </article>
             </div>
+        <div class="slider-controls">
+            <button class="prev-btn" data-slider="slider-chaines-inox">‹</button>
+            <button class="next-btn" data-slider="slider-chaines-inox">›</button>
+        </div>
     </section>
 
     <section class="collection" id="chaines-precieux">
         <h2>Chaînes • Métaux précieux</h2>
-        <span class="slide-indicator right" aria-label="Faire glisser à droite">→</span>
-        <span class="slide-indicator left" aria-label="Faire glisser à gauche">←</span>
         <div class="collection-slider" id="slider-chaines-precieux">
             <article class="product" data-name="Chaîne Warend 1" data-price="14000" data-stock="5">
                 <div class="product-media mini-slider">
@@ -851,325 +779,612 @@
                   <button class="add-to-cart-btn" aria-label="Ajouter Chaîne Warend 1 au panier">Ajouter au panier</button>
                 </div>
             </article>
+            <article class="product" data-name="Chaîne Warend 2" data-price="14000" data-stock="5">
+                <div class="product-media">
+                    <img src="Cha5.jpg" alt="Chaîne Warend 2" class="product-image">
+                     <div class="new-tag">Nouveauté</div>
+                    <span class="stock-info-badge"></span>
+                </div>
+                <div class="title">Chaîne Warend 2</div>
+                <p class="desc">Tour de cou Maille forçat alternée, pendentif Menottes</p>
+                <div class="material">Argent</div>
+                <span style="text-decoration: line-through; color: red;">18 000 FCFA</span>
+                <div class="price">14 000 FCFA</div>
+                <div class="actions">
+                  <button class="heart" aria-label="Like">♡</button>
+                  <button class="add-to-cart-btn" aria-label="Ajouter Chaîne Warend 2 au panier">Ajouter au panier</button>
+                </div>
+            </article>
+            <article class="product" data-name="Chaîne Jupiter" data-price="18000" data-stock="0">
+                <div class="product-media">
+                    <img src="Cha4.jpg" alt="Chaîne Jupiter" class="product-image">
+                    <span class="stock-info-badge"></span>
+                </div>
+                <div class="title">Chaîne Jupiter</div>
+                <p class="desc">Tour de cou Or laminé pendentif croix</p>
+                <div class="material">Or 14 karat</div>
+                <span style="text-decoration: line-through; color: red;">22 000 FCFA</span>
+                <div class="price">18 000 FCFA</div>
+                <div class="actions">
+                  <button class="heart" aria-label="Like">♡</button>
+                  <button class="add-to-cart-btn" aria-label="Ajouter Chaîne Jupiter au panier">Ajouter au panier</button>
+                </div>
+            </article>
+            <article class="product" data-name="Chaîne Warend 3" data-price="21000" data-stock="0">
+                <div class="product-media">
+                    <img src="Cha6.jpg" alt="Chaîne Warend 3" class="product-image">
+                    <span class="stock-info-badge"></span>
+                </div>
+                <div class="title">Chaîne Warend 3</div>
+                <p class="desc">Tour de cou Maille forçat alternée, pendentif poisson articulé</p>
+                <div class="material">Argent</div>
+                <span style="text-decoration: line-through; color: red;">25 000 FCFA</span>
+                <div class="price">21 000 FCFA</div>
+                <div class="actions">
+                    <button class="heart" aria-label="Like">♡</button>
+                    <button class="add-to-cart-btn" aria-label="Ajouter Chaîne Warend 3">Ajouter au panier</button>
+                </div>
+            </article>
+        </div>
+        <div class="slider-controls">
+            <button class="prev-btn" data-slider="slider-chaines-precieux">‹</button>
+            <button class="next-btn" data-slider="slider-chaines-precieux">›</button>
+        </div>
+    </section>
+    
+    <section class="collection" id="bracelets-cordons">
+        <h2>Bracelets • Cordons</h2>
+        <div class="collection-slider" id="slider-bracelets-cordons">
+            <article class="product" data-name="Bracelet Origine 1" data-price="6000" data-stock="0">
+                <div class="product-media mini-slider">
+                    <div class="mini-slider-track">
+                        <img src="Bra1.jpg" alt="Bracelet Origine 1 - vue 1" class="product-image-slide">
+                        <img src="Bra1_2.jpg" alt="Bracelet Origine 1 - vue 2" class="product-image-slide">
+                        <img src="Bra1_3.jpg" alt="Bracelet Origine 1 - vue 3" class="product-image-slide">
+                    </div>
+                    <button class="mini-slider-nav prev-btn" data-direction="prev">‹</button>
+                    <button class="mini-slider-nav next-btn" data-direction="next">›</button>
+                    <span class="stock-info-badge"></span>
+                </div>
+                <div class="title">Bracelet Origine 1</div>
+                <p class="desc">Jeu de cordon sur Menottes Nomad</p>
+                <div class="material">Argent + polyester tressé</div>
+                <div class="price">6 000 FCFA</div>
+                <div class="actions">
+                  <button class="heart" aria-label="Like">♡</button>
+                  <button class="add-to-cart-btn" aria-label="Ajouter Bracelet Origine 1 au panier">Ajouter au panier</button>
+                </div>
+            </article>
+            <article class="product" data-name="Bracelet simple" data-price="0" data-stock="20">
+                <div class="product-media">
+                    <img src="Bra7.jpg" alt="Bracelet simple" class="product-image">
+                    <span class="stock-info-badge"></span>
+                </div>
+                <div class="title">Bracelet simple</div>
+                <p class="desc">Gratuit dès la première commande</p>
+                <div class="material">polyester tressé</div>
+                <div class="price">0 FCFA</div>
+                <div class="actions">
+                  <button class="heart" aria-label="Like">♡</button>
+                  <button class="add-to-cart-btn" aria-label="Ajouter Bracelet simple au panier">Ajouter au panier</button>
+                </div>
+            </article>
+            <article class="product" data-name="Bracelet Marin" data-price="6000" data-stock="12">
+                <div class="product-media">
+                    <img src="Bra4.jpg" alt="Bracelet Marin" class="product-image">
+                    <span class="stock-info-badge"></span>
+                </div>
+                <div class="title">Bracelet Marin</div>
+                <p class="desc">Jeu de cordon sur fermoir aimantée Nomad</p>
+                <div class="material">Acier inoxydable + polyester tressé</div>
+                <div class="price">6 000 FCFA</div>
+                <div class="actions">
+                  <button class="heart" aria-label="Like">♡</button>
+                  <button class="add-to-cart-btn" aria-label="Ajouter Bracelet Marin au panier">Ajouter au panier</button>
+                </div>
+            </article>
+            <article class="product" data-name="Bracelet Origine 2" data-price="5000" data-stock="5">
+                <div class="product-media">
+                    <img src="Bra3.jpg" alt="Bracelet Origine 2" class="product-image">
+                    <span class="stock-info-badge"></span>
+                </div>
+                <div class="title">Bracelet Origine 2</div>
+                <p class="desc">Jeu de cordon sur Menottes Nomad</p>
+                <div class="material">Doré + polyester tressé</div>
+                <div class="price">5 000 FCFA</div>
+                <div class="actions">
+                  <button class="heart" aria-label="Like">♡</button>
+                  <button class="add-to-cart-btn" aria-label="Ajouter Bracelet Origine 2 au panier">Ajouter au panier</button>
+                </div>
+            </article>
+            <article class="product" data-name="Bracelet motif" data-price="4000" data-stock="8">
+                <div class="product-media">
+                    <img src="Bra2.jpg" alt="Bracelet motif" class="product-image">
+                    <span class="stock-info-badge"></span>
+                </div>
+                <div class="title">Bracelet motif</div>
+                <p class="desc">Jeu de cordon sur motif religieux Nomad</p>
+                <div class="material">Doré + polyester tressé</div>
+                <div class="price">4 000 FCFA</div>
+                <div class="actions">
+                  <button class="heart" aria-label="Like">♡</button>
+                  <button class="add-to-cart-btn" aria-label="Ajouter Bracelet motif au panier">Ajouter au panier</button>
+                </div>
+            </article>
+        </div>
+        <div class="slider-controls">
+            <button class="prev-btn" data-slider="slider-bracelets-cordons">‹</button>
+            <button class="next-btn" data-slider="slider-bracelets-cordons">›</button>
         </div>
     </section>
 
+    <section class="collection" id="bracelets-inox">
+        <h2>Bracelets • Acier inoxydable</h2>
+        <div class="collection-slider" id="slider-bracelets-inox">
+            <article class="product" data-name="Bracelet Sable blanc" data-price="6000" data-stock="24">
+                <div class="product-media mini-slider">
+                    <div class="mini-slider-track">
+                        <img src="Bra5.jpg" alt="Bracelet Sable blanc - vue 1" class="product-image-slide">
+                        <img src="Bra5_2.jpg" alt="Bracelet Sable blanc - vue 2" class="product-image-slide">
+                        <img src="Bra5_3.jpg" alt="Bracelet Sable blanc - vue 3" class="product-image-slide">
+                    </div>
+                    <button class="mini-slider-nav prev-btn" data-direction="prev">‹</button>
+                    <button class="mini-slider-nav next-btn" data-direction="next">›</button>
+                    <span class="stock-info-badge"></span>
+                </div>
+                <div class="title">Bracelet Sable blanc</div>
+                <p class="desc">Bracelet sur chaîne maille figaro</p>
+                <div class="material">Acier inoxydable</div>
+                <div class="price">6 000 FCFA</div>
+                <div class="actions">
+                  <button class="heart" aria-label="Like">♡</button>
+                  <button class="add-to-cart-btn" aria-label="Ajouter Bracelet Sable blanc au panier">Ajouter au panier</button>
+                </div>
+            </article>
+            <article class="product" data-name="Bracelet Sable blanc avec initial" data-price="7000" data-stock="8">
+                <div class="product-media">
+                    <img src="Bra6.jpg" alt="Bracelet Sable blanc avec initial" class="product-image">
+                    <span class="stock-info-badge"></span>
+                </div>
+                <div class="title">Bracelet Sable blanc avec initial</div>
+                <p class="desc">Bracelet sur chaîne maille figaro avec initial au choix</p>
+                <div class="material">Acier inoxydable</div>
+                <div class="price">7 000 FCFA</div>
+                <div class="actions">
+                  <button class="heart" aria-label="Like">♡</button>
+                  <button class="add-to-cart-btn" aria-label="Ajouter Bracelet Sable blanc avec initial au panier">Ajouter au panier</button>
+                </div>
+            </article>
+            </div>
+        <div class="slider-controls">
+            <button class="prev-btn" data-slider="slider-bracelets-inox">‹</button>
+            <button class="next-btn" data-slider="slider-bracelets-inox">›</button>
+        </div>
+    </section>
+
+    <div class="product-return-button-container" id="product-return-button-container">
+      <button id="product-return-button">Retour</button>
+    </div>
+
   </main>
+
+  <section id="image-slider">
+      <div class="slider-container">
+          <div class="slider-track">
+              <img src="slid1.jpg" alt="Slide 1">
+              <img src="slid2.jpg" alt="Slide 2">
+              <img src="slid3.jpg" alt="Slide 3">
+          </div>
+      </div>
+      <div class="slider-dots-container">
+          <div class="slider-dot active" data-slide="0"></div>
+          <div class="slider-dot" data-slide="1"></div>
+          <div class="slider-dot" data-slide="2"></div>
+      </div>
+  </section>
 
   <footer>
     <div class="socials">
-      <a href="https://www.instagram.com/votre_profil/" target="_blank">
-        <img src="insta.svg" alt="Instagram">
+      <a href="https://wa.me/237657697824" target="_blank" aria-label="WhatsApp">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
       </a>
-      <a href="https://wa.me/237699999999" target="_blank">
-        <img src="whatsapp.svg" alt="WhatsApp">
+      <a href="mailto:galerienomad@yahoo.com" target="_blank" aria-label="Envoyer un email">
+        <img src="logo2.jpg" alt="Yahoo Mail" style="width:48px; height:auto;">
+      </a>
+      <a href="https://instagram.com/galerienomad.officiel" target="_blank" aria-label="Instagram">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram">
       </a>
     </div>
-    <div class="copyright">
-      &copy; 2023 Galerie Nomad. Tous droits réservés.
-    </div>
+    <div class="copyright">&copy; 2025 Galerie Nomad — Tous droits réservés</div>
   </footer>
 
-  <script>
-    // Data de base des produits pour la recherche et le panier
-    const productsData = [
-        { name: "Chaîne Mercure 2", price: 8000, stock: 0, images: ["Cha3.jpg", "Cha3_2.jpg", "Cha3_3.jpg"] },
-        { name: "Chaîne Mercure 1", price: 8000, stock: 0, images: ["Cha2.jpg"] },
-        { name: "Chaîne Warend 1", price: 14000, stock: 5, images: ["Cha1.jpg", "Cha1_2.jpg", "Cha1_3.jpg"] },
-    ];
+<script>
+// --- Constantes et initialisation ---
+const WHATSAPP_NUMBER = "237657697824";
+const promoEndDate = new Date("Dec 31, 2025 23:59:59").getTime();
+let cart = [];
 
-    // Panier
-    let cart = JSON.parse(localStorage.getItem('cart')) || [];
-    let likes = JSON.parse(localStorage.getItem('likes')) || [];
+// --- Fonctions de gestion du panier ---
+function addToCart(productName, price) {
+    const existingItem = cart.find(item => item.name === productName);
+    if (existingItem) {
+        existingItem.quantity++;
+    } else {
+        cart.push({ name: productName, price: price, quantity: 1 });
+    }
+    updateCart();
+}
 
-    function updateCartUI() {
-        const cartItemsElement = document.getElementById('cart-items');
-        const cartCountElement = document.getElementById('cart-count');
-        const cartTotalElement = document.getElementById('cart-total');
-        cartItemsElement.innerHTML = '';
-        let total = 0;
+function updateCart() {
+    let totalItems = 0;
+    let total = 0;
+    const cartItemsList = document.getElementById("cart-items");
+    cartItemsList.innerHTML = "";
 
-        cart.forEach(item => {
-            const li = document.createElement('li');
-            li.innerHTML = `
-                <span>${item.name} (${item.quantity}) - ${item.price * item.quantity} FCFA</span>
+    cart.forEach((item, index) => {
+        totalItems += item.quantity;
+        total += item.price * item.quantity;
+        cartItemsList.innerHTML += `
+            <li>
+                <div class="cart-item-name">${item.name}</div>
                 <div class="cart-item-controls">
-                    <button onclick="changeQuantity('${item.name}', -1)">-</button>
-                    <button onclick="changeQuantity('${item.name}', 1)">+</button>
-                    <button class="remove-btn" onclick="removeFromCart('${item.name}')">❌</button>
+                    <button data-index="${index}" class="decrease-btn">–</button>
+                    <span>${item.quantity}</span>
+                    <button data-index="${index}" class="increase-btn">+</button>
                 </div>
-            `;
-            cartItemsElement.appendChild(li);
-            total += item.price * item.quantity;
-        });
-
-        cartTotalElement.textContent = `Total : ${total} FCFA`;
-        cartCountElement.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
-        localStorage.setItem('cart', JSON.stringify(cart));
-    }
-
-    function addToCart(productName) {
-        const product = productsData.find(p => p.name === productName);
-        const existingItem = cart.find(item => item.name === productName);
-        if (product.stock > 0 && existingItem && existingItem.quantity < product.stock) {
-            existingItem.quantity++;
-        } else if (product.stock > 0 && !existingItem) {
-            cart.push({ name: productName, price: product.price, quantity: 1 });
-        } else if (product.stock === 0) {
-            alert("Ce produit est actuellement en rupture de stock.");
-        }
-        updateCartUI();
-    }
-
-    function removeFromCart(productName) {
-        cart = cart.filter(item => item.name !== productName);
-        updateCartUI();
-    }
-
-    function changeQuantity(productName, delta) {
-        const product = productsData.find(p => p.name === productName);
-        const item = cart.find(i => i.name === productName);
-        if (item) {
-            if (delta > 0 && item.quantity < product.stock) {
-                item.quantity += delta;
-            } else if (delta < 0 && item.quantity > 1) {
-                item.quantity += delta;
-            } else if (delta < 0 && item.quantity === 1) {
-                removeFromCart(productName);
-                return;
-            }
-        }
-        updateCartUI();
-    }
-
-    function toggleCart() {
-        document.getElementById('cart-panel').classList.toggle('open');
-    }
-
-    // Gère le système de like
-    function toggleLike(productName, button) {
-        const index = likes.indexOf(productName);
-        if (index > -1) {
-            likes.splice(index, 1);
-            button.classList.remove('liked');
-        } else {
-            likes.push(productName);
-            button.classList.add('liked');
-        }
-        localStorage.setItem('likes', JSON.stringify(likes));
-    }
-
-    // Synchronisation de l'affichage des likes
-    function syncLikes() {
-        document.querySelectorAll('.heart').forEach(button => {
-            const product = button.closest('.product').dataset.name;
-            if (likes.includes(product)) {
-                button.classList.add('liked');
-            }
-        });
-    }
-
-    // Gestion du décompte du temps pour la promo
-    function updateCountdown() {
-        const promoDate = new Date();
-        promoDate.setHours(promoDate.getHours() + 2);
-        promoDate.setMinutes(promoDate.getMinutes() + 15);
-        promoDate.setSeconds(promoDate.getSeconds() + 30);
-        const countdownElement = document.getElementById('countdown');
-
-        const interval = setInterval(() => {
-            const now = new Date().getTime();
-            const distance = promoDate.getTime() - now;
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-            countdownElement.textContent = `${hours}h ${minutes}m ${seconds}s`;
-
-            if (distance < 0) {
-                clearInterval(interval);
-                countdownElement.textContent = "Expiré!";
-            }
-        }, 1000);
-    }
-
-    // Préchargeur
-    window.addEventListener('load', () => {
-      setTimeout(() => {
-        document.getElementById('preloader').classList.add('hidden');
-      }, 500); // Règle le temps d'affichage du préchargeur
+                <div class="cart-item-price">${(item.price * item.quantity).toLocaleString()} FCFA</div>
+                <button data-index="${index}" class="remove-btn">❌</button>
+            </li>
+        `;
     });
 
-    // Fonction de recherche
-    function setupSearch() {
-        const searchInput = document.getElementById('search-input');
-        const searchSuggestions = document.getElementById('search-suggestions');
-        const searchBackButton = document.getElementById('search-back-button');
-        const mainContent = document.querySelector('main');
-        const body = document.body;
+    document.getElementById("cart-count").innerText = totalItems;
+    document.getElementById("cart-total").innerText = `Total : ${total.toLocaleString()} FCFA`;
+}
 
-        const showSuggestions = (items) => {
-            searchSuggestions.innerHTML = '';
-            if (items.length > 0) {
-                items.forEach(item => {
-                    const div = document.createElement('div');
-                    div.classList.add('suggestion-item');
-                    div.textContent = item.name;
-                    div.addEventListener('click', () => {
-                        window.location.href = '#' + item.name.toLowerCase().replace(/ /g, '-');
-                        searchInput.value = '';
-                        searchSuggestions.classList.remove('visible');
-                    });
-                    searchSuggestions.appendChild(div);
-                });
-                searchSuggestions.classList.add('visible');
-            } else {
-                searchSuggestions.classList.remove('visible');
-            }
+function removeFromCart(index) {
+    cart.splice(index, 1);
+    updateCart();
+}
+
+function increaseQuantity(index) {
+    cart[index].quantity++;
+    updateCart();
+}
+
+function decreaseQuantity(index) {
+    if (cart[index].quantity > 1) {
+        cart[index].quantity--;
+    } else {
+        removeFromCart(index);
+    }
+    updateCart();
+}
+
+function toggleCart() {
+    const cartPanel = document.getElementById("cart-panel");
+    cartPanel.classList.toggle("open");
+}
+
+function checkout() {
+    let message = "Bonjour, je souhaite commander :\n";
+    let total = 0;
+    cart.forEach(item => {
+        message += `- ${item.name} (x${item.quantity}) : ${(item.price * item.quantity).toLocaleString()} FCFA\n`;
+        total += item.price * item.quantity;
+    });
+    message += `\nTotal : ${total.toLocaleString()} FCFA`;
+    const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+    window.open(url, "_blank");
+}
+
+// --- Fonctions de l'interface utilisateur ---
+function toggleMenu() {
+    const navMenu = document.querySelector('nav[aria-label="menu"]');
+    navMenu.classList.toggle('active');
+}
+
+// --- Fonctions de gestion de la barre de recherche ---
+const searchIcon = document.querySelector('.search-icon');
+const searchInput = document.getElementById('search-input');
+const products = document.querySelectorAll('.product');
+const suggestionsContainer = document.getElementById('search-suggestions');
+const searchContainer = document.getElementById('search-container');
+const productReturnButtonContainer = document.getElementById('product-return-button-container');
+
+function showAllProducts() {
+    products.forEach(p => {
+        p.style.display = 'block';
+        p.closest('.collection-slider').style.display = 'flex';
+        p.closest('.collection').querySelector('h2').style.display = 'block';
+    });
+    productReturnButtonContainer.classList.remove('visible');
+}
+
+function showSingleProduct(productElement) {
+    products.forEach(p => {
+        p.style.display = 'none';
+        p.closest('.collection-slider').style.display = 'none';
+        p.closest('.collection').querySelector('h2').style.display = 'none';
+    });
+
+    productElement.style.display = 'block';
+    productElement.closest('.collection-slider').style.display = 'flex';
+    productElement.closest('.collection').querySelector('h2').style.display = 'block';
+
+    const actionsContainer = productElement.querySelector('.actions');
+    actionsContainer.after(productReturnButtonContainer);
+    productReturnButtonContainer.classList.add('visible');
+
+    productElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+// Ouvre et ferme la barre de recherche
+searchIcon.addEventListener('click', () => {
+    searchContainer.classList.toggle('visible');
+    suggestionsContainer.classList.remove('visible');
+    searchInput.focus();
+    if (!searchContainer.classList.contains('visible')) {
+        showAllProducts();
+        searchInput.value = '';
+    }
+});
+
+searchInput.addEventListener('input', (event) => {
+    const searchTerm = event.target.value.toLowerCase();
+    if (searchTerm === '') {
+        suggestionsContainer.classList.remove('visible');
+        return;
+    }
+
+    let matchingProducts = [];
+    products.forEach(product => {
+        const productName = product.dataset.name.toLowerCase();
+        if (productName.includes(searchTerm)) {
+            matchingProducts.push(productName);
+        }
+    });
+
+    suggestionsContainer.innerHTML = '';
+    if (matchingProducts.length > 0) {
+        suggestionsContainer.classList.add('visible');
+        matchingProducts.forEach(name => {
+            const suggestionDiv = document.createElement('div');
+            suggestionDiv.className = 'suggestion-item';
+            suggestionDiv.textContent = name;
+            suggestionsContainer.appendChild(suggestionDiv);
+
+            suggestionDiv.addEventListener('click', () => {
+                searchInput.value = name;
+                suggestionsContainer.classList.remove('visible');
+                const selectedProduct = [...products].find(p => p.dataset.name.toLowerCase() === name.toLowerCase());
+                if (selectedProduct) {
+                    showSingleProduct(selectedProduct);
+                    searchContainer.classList.remove('visible');
+                    searchInput.value = '';
+                }
+            });
+        });
+    } else {
+        suggestionsContainer.classList.remove('visible');
+    }
+});
+
+// Écouteur pour la touche "Entrée"
+searchInput.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter') {
+        event.preventDefault();
+        const searchTerm = searchInput.value.toLowerCase();
+        const firstMatchingProduct = [...products].find(p => p.dataset.name.toLowerCase().includes(searchTerm));
+
+        if (firstMatchingProduct) {
+            showSingleProduct(firstMatchingProduct);
+            searchContainer.classList.remove('visible');
+            suggestionsContainer.classList.remove('visible');
+            searchInput.value = '';
+        } else {
+            alert("Aucun produit ne correspond à votre recherche.");
+        }
+    }
+});
+
+// Écouteur pour le bouton de retour
+document.getElementById('product-return-button').addEventListener('click', () => {
+    showAllProducts();
+});
+
+// --- Écouteurs d'événements et initialisation ---
+
+// Ajout des produits au panier
+document.querySelectorAll('.add-to-cart-btn').forEach(button => {
+    button.addEventListener('click', function(e) {
+        const productArticle = e.target.closest('.product');
+        const productName = productArticle.dataset.name;
+        const productPrice = parseInt(productArticle.dataset.price);
+        addToCart(productName, productPrice);
+    });
+});
+
+// Écouteur pour le panneau du panier (boutons +, -, ❌)
+document.getElementById('cart-panel').addEventListener('click', function(e) {
+    const target = e.target;
+    if (target.classList.contains('increase-btn')) {
+        increaseQuantity(target.dataset.index);
+    } else if (target.classList.contains('decrease-btn')) {
+        decreaseQuantity(target.dataset.index);
+    } else if (target.classList.contains('remove-btn')) {
+        removeFromCart(target.dataset.index);
+    }
+});
+
+// Écouteur pour le bouton de validation du panier
+document.getElementById('checkout-btn').addEventListener('click', checkout);
+
+// Bouton "J'aime"
+document.querySelectorAll('.heart').forEach(btn => {
+    btn.addEventListener('click', function() {
+        this.classList.toggle('liked');
+        this.textContent = this.classList.contains('liked') ? '♥' : '♡';
+    });
+});
+
+// Minuteur pour la promotion
+let x = setInterval(function() {
+    let now = new Date().getTime();
+    let distance = promoEndDate - now;
+    let days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    document.getElementById("countdown").innerHTML = days + "j " + hours + "h " + minutes + "m " + seconds + "s ";
+    if (distance < 0) {
+        clearInterval(x);
+        document.getElementById("countdown").innerHTML = "Les soldes sont terminés !";
+    }
+}, 1000);
+
+// Gestion du préchargeur
+document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(function() {
+        const preloader = document.getElementById('preloader');
+        if (preloader) {
+            preloader.classList.add('hidden');
+        }
+    }, 2000);
+});
+
+// --- Gestion du slider d'images (pour la grande bannière) ---
+const sliderTrack = document.querySelector('.slider-track');
+const sliderDots = document.querySelectorAll('.slider-dot');
+const sliderContainer = document.getElementById('image-slider');
+const slides = document.querySelectorAll('.slider-track img');
+let currentSlide = 0;
+let slideInterval;
+
+const slideTo = (index) => {
+    currentSlide = index;
+    const offset = -currentSlide * 100;
+    sliderTrack.style.transform = `translateX(${offset}%)`;
+
+    sliderDots.forEach(dot => dot.classList.remove('active'));
+    sliderDots[currentSlide].classList.add('active');
+};
+
+const nextSlide = () => {
+    currentSlide = (currentSlide + 1) % slides.length;
+    slideTo(currentSlide);
+};
+
+const startSlider = () => {
+    slideInterval = setInterval(nextSlide, 3000);
+};
+
+const stopSlider = () => {
+    clearInterval(slideInterval);
+};
+
+startSlider();
+
+sliderContainer.addEventListener('mouseenter', stopSlider);
+sliderContainer.addEventListener('mouseleave', startSlider);
+
+sliderDots.forEach(dot => {
+    dot.addEventListener('click', (e) => {
+        const slideIndex = parseInt(e.target.dataset.slide);
+        slideTo(slideIndex);
+    });
+});
+
+// Fonction pour mettre à jour l'affichage du stock
+function updateStockDisplay() {
+    const products = document.querySelectorAll('.product');
+
+    products.forEach(product => {
+        const stock = parseInt(product.dataset.stock);
+        const stockBadge = product.querySelector('.stock-info-badge');
+        const addToCartButton = product.querySelector('.add-to-cart-btn');
+
+        if (stock === 0) {
+            product.classList.add('out-of-stock');
+            stockBadge.textContent = 'Épuisé';
+            stockBadge.classList.add('out-of-stock-badge');
+            stockBadge.classList.remove('stock-remaining-badge');
+            addToCartButton.disabled = true;
+            addToCartButton.textContent = "Épuisé";
+            addToCartButton.style.color = "#888";
+            addToCartButton.style.cursor = "not-allowed";
+        } else {
+            product.classList.remove('out-of-stock');
+            stockBadge.textContent = `Stock restant : ${stock}`;
+            stockBadge.classList.add('stock-remaining-badge');
+            stockBadge.classList.remove('out-of-stock-badge');
+            addToCartButton.disabled = false;
+            addToCartButton.textContent = "Ajouter au panier";
+            addToCartButton.style.color = "";
+            addToCartButton.style.cursor = "";
+        }
+    });
+}
+
+// Fonction pour initialiser les mini-sliders sur chaque produit
+function initProductSliders() {
+    document.querySelectorAll('.mini-slider').forEach(slider => {
+        const track = slider.querySelector('.mini-slider-track');
+        const slides = slider.querySelectorAll('.product-image-slide');
+        const prevBtn = slider.querySelector('.prev-btn');
+        const nextBtn = slider.querySelector('.next-btn');
+        let currentSlide = 0;
+
+        const updateSlider = () => {
+            const offset = -currentSlide * 100;
+            track.style.transform = `translateX(${offset}%)`;
         };
 
-        searchInput.addEventListener('input', (e) => {
-            const query = e.target.value.toLowerCase();
-            if (query.length > 1) {
-                const filteredProducts = productsData.filter(p => p.name.toLowerCase().includes(query));
-                showSuggestions(filteredProducts);
-            } else {
-                searchSuggestions.classList.remove('visible');
-            }
-        });
-
-        document.querySelector('.search-icon').addEventListener('click', () => {
-            document.getElementById('search-container').classList.add('visible');
-            searchInput.focus();
-            searchBackButton.style.display = 'block';
-            mainContent.style.filter = 'blur(5px)';
-            body.style.overflow = 'hidden';
-        });
-
-        searchBackButton.addEventListener('click', () => {
-            document.getElementById('search-container').classList.remove('visible');
-            searchSuggestions.classList.remove('visible');
-            searchInput.value = '';
-            searchBackButton.style.display = 'none';
-            mainContent.style.filter = 'none';
-            body.style.overflow = 'auto';
-        });
-    }
-
-    // Gestion du menu hamburger
-    function toggleMenu() {
-      const nav = document.querySelector('nav[aria-label="menu"]');
-      nav.classList.toggle('active');
-    }
-
-    // Gestion des mini-sliders
-    function setupMiniSliders() {
-        document.querySelectorAll('.mini-slider').forEach(sliderContainer => {
-            const track = sliderContainer.querySelector('.mini-slider-track');
-            const images = track.querySelectorAll('img');
-            let currentIndex = 0;
-
-            function updateSlider() {
-                track.style.transform = `translateX(-${currentIndex * 100}%)`;
-            }
-
-            sliderContainer.querySelector('.next-btn').addEventListener('click', () => {
-                if (currentIndex < images.length - 1) {
-                    currentIndex++;
-                } else {
-                    currentIndex = 0; // Retour au début
-                }
+        if (slides.length <= 1) {
+            if (prevBtn) prevBtn.style.display = 'none';
+            if (nextBtn) nextBtn.style.display = 'none';
+        } else {
+            nextBtn.addEventListener('click', () => {
+                currentSlide = (currentSlide + 1) % slides.length;
                 updateSlider();
             });
 
-            sliderContainer.querySelector('.prev-btn').addEventListener('click', () => {
-                if (currentIndex > 0) {
-                    currentIndex--;
-                } else {
-                    currentIndex = images.length - 1; // Aller à la fin
-                }
+            prevBtn.addEventListener('click', () => {
+                currentSlide = (currentSlide - 1 + slides.length) % slides.length;
                 updateSlider();
             });
-        });
-    }
+        }
+    });
+}
 
-    // Mettre à jour les badges de stock
-    function updateStockBadges() {
-        document.querySelectorAll('.product').forEach(productElement => {
-            const productName = productElement.dataset.name;
-            const product = productsData.find(p => p.name === productName);
-            const badgeContainer = productElement.querySelector('.stock-info-badge');
-            
-            if (product && product.stock === 0) {
-                productElement.classList.add('out-of-stock');
-                badgeContainer.innerHTML = `<span class="out-of-stock-badge">Rupture de stock</span>`;
-                productElement.querySelector('.add-to-cart-btn').disabled = true;
-                productElement.querySelector('.add-to-cart-btn').textContent = "Indisponible";
-            } else if (product && product.stock > 0 && product.stock <= 5) {
-                badgeContainer.innerHTML = `<span class="stock-remaining-badge">${product.stock} restants</span>`;
-            } else {
-                badgeContainer.innerHTML = '';
-            }
-        });
-    }
+// Appeler toutes les fonctions d'initialisation au chargement de la page
+document.addEventListener('DOMContentLoaded', () => {
+    updateStockDisplay();
+    initProductSliders();
+    // Le reste de votre code qui est déjà dans le DOMContentLoaded
+    setTimeout(() => {
+        const preloader = document.getElementById('preloader');
+        if (preloader) {
+            preloader.classList.add('hidden');
+        }
+    }, 2000);
 
-    // NOUVEAU: Fonction pour gérer les flèches de slider dynamiques
-    function setupDynamicSliderArrows() {
-        document.querySelectorAll('.collection').forEach(collection => {
-            const slider = collection.querySelector('.collection-slider');
-            const rightArrow = collection.querySelector('.slide-indicator.right');
-            const leftArrow = collection.querySelector('.slide-indicator.left');
+    const sliderContainer = document.getElementById('image-slider');
+    startSlider();
+    sliderContainer.addEventListener('mouseenter', stopSlider);
+    sliderContainer.addEventListener('mouseleave', startSlider);
 
-            function updateArrowVisibility() {
-                const hasMoreLeft = slider.scrollLeft > 0;
-                const hasMoreRight = slider.scrollWidth > slider.clientWidth + slider.scrollLeft + 1;
-
-                if (hasMoreLeft) {
-                    collection.classList.add('has-more-left');
-                } else {
-                    collection.classList.remove('has-more-left');
-                }
-
-                if (hasMoreRight) {
-                    collection.classList.add('has-more-right');
-                } else {
-                    collection.classList.remove('has-more-right');
-                }
-            }
-
-            slider.addEventListener('scroll', updateArrowVisibility);
-            window.addEventListener('resize', updateArrowVisibility);
-
-            // Appel initial
-            updateArrowVisibility();
-        });
-    }
-
-    // Événements
-    document.addEventListener('DOMContentLoaded', () => {
-        updateCartUI();
-        syncLikes();
-        updateCountdown();
-        setupSearch();
-        updateStockBadges();
-        setupMiniSliders();
-        setupDynamicSliderArrows();
-
-        document.querySelectorAll('.add-to-cart-btn').forEach(button => {
-            button.addEventListener('click', (e) => {
-                const productName = e.target.closest('.product').dataset.name;
-                addToCart(productName);
-            });
-        });
-
-        document.querySelectorAll('.heart').forEach(button => {
-            button.addEventListener('click', (e) => {
-                const productName = e.target.closest('.product').dataset.name;
-                toggleLike(productName, e.target);
-            });
+    const sliderDots = document.querySelectorAll('.slider-dot');
+    sliderDots.forEach(dot => {
+        dot.addEventListener('click', (e) => {
+            const slideIndex = parseInt(e.target.dataset.slide);
+            slideTo(slideIndex);
         });
     });
 
-  </script>
+    // ... autres listeners déjà présents
+});
+</script>
+
 </body>
 </html>
